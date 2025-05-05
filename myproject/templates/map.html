@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>정당 지도 시각화</title>
+  <link rel="stylesheet" href="{% static 'css/map.css' %}">
+</head>
+<body>
+  <div class="div">    
+    <!-- 1) 상단 배너 & 메뉴 -->
+    <div class="header">
+      {% include 'svg/banner.svg' %}
+      <div class="menu-icon">
+        {% include 'svg/menu.svg' %}
+      <div class="rectangle-24"></div>
+      <div class="div5">연도별 지역 정당 비율</div>
+    </div>
+
+    <!-- 3) 지도 + 슬라이더 묶음 -->
+    <div class="content">
+      <!-- 지도 -->
+      <div id="map" class="map-container">
+        {% include 'svg/korea_map.svg' %}
+      </div>
+
+      <!-- 슬라이더 -->
+      <div class="slider-wrapper">
+        <input type="range" id="daesu-slider" min="10" max="21" value="21">
+        <span id="selected-daesu">21대</span>
+      </div>
+    </div>
+
+    <!-- 4) 상세 지역 정보 (초기 hidden) -->
+    <div id="region-info" class="hidden info-box">
+      <h3 id="region-name"></h3>
+      <ul id="party-list"></ul>
+    </div>
+
+  <script src="{% static 'js/map.js' %}"></script>
+</body>
+</html>

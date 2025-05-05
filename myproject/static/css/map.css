@@ -1,0 +1,214 @@
+/* 공통 박스 사이징 */
+.div, .div * {
+    box-sizing: border-box;
+  }
+  
+  /* 전체 래퍼 */
+  .div {
+    width: 100%;
+    margin: 0;
+    position: relative;
+    padding: 0;
+  }
+  
+  /* 헤더 */
+  .header {
+    position: relative;
+  }
+  .header svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .menu-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 68px;
+    height: 68px;
+  }
+  
+  .rectangle-24,
+  .rectangle-24 * {
+    box-sizing: border-box;
+  }
+  .rectangle-24 {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 6.730769574642181%,
+      rgba(255, 255, 255, 0) 95.67307829856873%
+    );
+    height: 130px;
+    position: relative;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  
+  .div5,
+  .div5 * {
+    box-sizing: border-box;
+  }
+  .div5 {
+    color: #000000;
+    text-align: left;
+    font-family: "KoPubWorldDotum-Medium", sans-serif;
+    font-size: 42px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    position: relative;
+    height: 94px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  
+  
+  /* 콘텐츠 영역 */
+  .content {
+    text-align: center;
+  }
+  
+  /* 지도 */
+  .map-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 20px;
+  }
+  .map-container svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* 슬라이더 래퍼 */
+  .slider-wrapper {
+    position: relative;
+    width: 1106px;
+    max-width: 100%;
+    height: 40px;
+    margin: 0 auto 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #selected-daesu {
+    min-width: 50px;
+    text-align: right;
+    font-weight: 500;
+  }
+  
+  /* 슬라이더 기본 제거 및 커스텀 */
+  #daesu-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    height: 40px;
+    background: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  /* 슬라이더 트랙 (웹킷) */
+  #daesu-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 40px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0,0,0,0.5) 10px,
+      rgba(0,0,0,0.5) 20px
+    );
+  }
+  
+  /* 슬라이더 Thumb (웹킷) */
+  #daesu-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 60px;
+    height: 60px;
+    background-color: #FFE957;
+    border: 2px solid #000;
+    border-radius: 6px;
+    margin-top: -10px;
+  }
+  
+  /* Firefox용 트랙 */
+  #daesu-slider::-moz-range-track {
+    width: 100%;
+    height: 40px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0,0,0,0.5) 10px,
+      rgba(0,0,0,0.5) 20px
+    );
+  }
+  
+  /* Firefox용 Thumb */
+  #daesu-slider::-moz-range-thumb {
+    width: 40px;
+    height: 40px;
+    background-color: #FFE957;
+    border: 2px solid #000;
+    border-radius: 6px;
+  }
+  
+  /* 포커스 제거 */
+  #daesu-slider:focus {
+    outline: none;
+  }
+  
+  /* 상세 지역 정보 박스 */
+  .info-box {
+    max-width: 400px;
+    margin: 0 auto 40px;
+    background: #fafafa;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+  }
+  .info-box h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .info-box li {
+    padding: 4px 0;
+  }
+  
+  /* 하단 요소 */
+  .footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .logo {
+    width: 83px;
+    height: auto;
+  }
+  .rectangle-19 {
+    width: 80px;
+    height: 80px;
+    background: #ffe957;
+    border: 3px solid #000;
+    border-radius: 6px;
+  }
+  .line-1 {
+    flex: 1;
+    height: 1px;
+    background: #939393;
+  }
+  
