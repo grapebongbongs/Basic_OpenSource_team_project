@@ -1,9 +1,10 @@
 import requests
 from decouple import config
-from api.models import Bill,PartyDistribution
+from api.models import Bill,PartyDistribution, Representative
 import xml.etree.ElementTree as ET
 import re
-
+from django.shortcuts import render
+from bs4 import BeautifulSoup
 
 def test_api():
     """
@@ -82,8 +83,7 @@ def save_bills_to_db():
 
     print(f"[save_bills_to_db] 총 {len(rows)}건 중 {created_count}건이 새로 저장되었습니다.")
 
-
-def extract_sido(location: str) -> str:
+def extract_sido(location: str) :
     """
     전체 지역명(예: '서귀포시', '제주시', '경기도 수원시무')에서
     SVG data-region 값(시·도 단위)인 '제주', '경기' 등으로 매핑합니다.
@@ -104,9 +104,7 @@ def extract_sido(location: str) -> str:
         '제주특별자치도': '제주', '제주도': '제주', '제주': '제주',
         # 제주 하위 시
         '서귀포시': '제주', '제주시': '제주',
-    }
-
-    # 키 중 하나가 location에 포함되어 있으면 매핑값 반환
+        }
     for key, val in mapping.items():
         if key in location:
             return val
@@ -115,78 +113,118 @@ def extract_sido(location: str) -> str:
     return '기타'
 
 
-def get_party_distribution_by_daesu(daesu):
-    bills = Bill.objects.filter(daesu=daesu)  # daesu에 맞는 법안 가져오기
-    
-    region_party_count = {}
-    total_counts = {}  # 각 지역구의 총 후보자 수
 
-    # 각 법안에 대해 지역구와 정당 정보 처리
-    for bill in bills:
-        region = bill.electionDistrict.strip()  # 지역구
-        parties = bill.proposerParty.strip()    # 정당
-        print("▶ 원본 region:", repr(region))
-        
-        if not region or not parties:
-            continue
+def load_distribution_to_db(daesu: int):
+    API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
+    params = {
+        "KEY": config("ASSEMBLY_API_KEY"),
+        "Type": "xml",
+        "pIndex": 1,
+        "pSize": 300,
+        "DAESU": str(daesu),
+    }
+    resp = requests.get(API_URL, params=params)
+    resp.raise_for_status()
 
-        # 비례대표 따로 처리
-        if "비례대표" in region:
-            region_key = "비례대표"
-        else:
-            region_key = extract_sido(region)  # 시·도 단위 추출
-            print("   → 추출된 region_key:", repr(region_key))
+    # BeautifulSoup을 이용한 XML 파싱 (불량 문자 방지)
+    soup = BeautifulSoup(resp.content, 'lxml-xml')
 
-        # 정당이 여러 개인 경우 쉼표 기준으로 분리
-        for party in parties.split(','):
-            party = party.strip()
-            if not party:
-                continue
+    pattern = re.compile(
+        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*"
+        r"(?P<party>[^제]+?)(?=(?:제\d+대국회의원|$))"
+    )
 
-            # 지역구와 정당 정보를 딕셔너리에 통합
-            if region_key not in region_party_count:
-                region_party_count[region_key] = {}
+    raw_count = {}
+    total_count = {}
 
-            region_party_count[region_key][party] = region_party_count[region_key].get(party, 0) + 1
+    rows = soup.find_all("row")
+    for row in rows:
+        text_tag = row.find("DAE")
+        text = text_tag.text.strip() if text_tag and text_tag.text else ""
 
-            # 총 후보자 수 집계
-            if region_key not in total_counts:
-                total_counts[region_key] = 0
-            total_counts[region_key] += 1
+        print(f"텍스트: {text}")
 
-    # 통합된 결과 출력 (확인용)
-    integrated_region_party_count = {}
+        for m in pattern.finditer(text):
+            full_region = m.group("region").strip()
+            party = m.group("party").strip()
 
-    # 지역별로 정당 수치를 통합
-    for region, party_counts in region_party_count.items():
-        if region not in integrated_region_party_count:
-            integrated_region_party_count[region] = {}
+            print(f"전체 지역: {full_region}, 정당: {party}")
 
-        for party, count in party_counts.items():
-            integrated_region_party_count[region][party] = integrated_region_party_count[region].get(party, 0) + count
+            if "비례대표" in full_region:
+                sido = "비례대표"
+            else:
+                sido = extract_sido(full_region)
 
-    # 결과를 PartyDistribution 모델에 저장
-    for region, party_counts in integrated_region_party_count.items():
-        total_count = total_counts.get(region, 0)
-        
-        for party, count in party_counts.items():
-            # 새로운 PartyDistribution 객체 생성
-            distribution = PartyDistribution.objects.create(
-                daesu=daesu,  # 여기서 대수를 넣어줍니다.
+            print(f"시·도: {sido}")
+
+            raw_count.setdefault(sido, {})
+            raw_count[sido][party] = raw_count[sido].get(party, 0) + 1
+            total_count[sido] = total_count.get(sido, 0) + 1
+
+    print(f"raw_count: {raw_count}")
+    print(f"total_count: {total_count}")
+
+    # 기존 데이터 삭제
+    PartyDistribution.objects.filter(daesu=daesu).delete()
+
+    # 저장
+    for region, parties in raw_count.items():
+        tot = total_count.get(region, 0)
+        for party, cnt in parties.items():
+            PartyDistribution.objects.create(
+                daesu=daesu,
                 region=region,
                 party=party,
-                count=count
+                count=cnt,
+                percentage=(cnt / tot * 100) if tot else 0,
             )
-            # 비율 계산 후 저장
-            distribution.calculate_percentage(total_count)
-            distribution.save()
 
-    # 결과 출력 (확인용)
-    for region, party_counts in integrated_region_party_count.items():
-        print(f"[{region}]")
-        for party, count in party_counts.items():
-            print(f"  {party}: {count}")
+def normalize_party_name(party: str) -> str:
+    """정당 이름 정규화"""
+    return party.replace("·", "·").replace(".", "·").replace("ㆍ", "·").strip()
 
-    return integrated_region_party_count
+def load_representatives_to_db(daesu: int):
+    API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
+    params = {
+        "KEY": config("ASSEMBLY_API_KEY"),
+        "Type": "xml",
+        "pIndex": 1,
+        "pSize": 300,
+        "DAESU": str(daesu),
+    }
+    resp = requests.get(API_URL, params=params)
+    resp.raise_for_status()
 
+    # lxml을 사용하여 XML을 파싱
+    soup = BeautifulSoup(resp.content, 'lxml-xml')
 
+    # 기존 레코드 삭제 (갱신)
+    Representative.objects.filter(year=daesu).delete()
+
+    # 예: "제21대국회의원(경남 창원시성산구) 새누리당"
+    rep_pattern = re.compile(
+        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*(?P<party>[^제]+)"
+    )
+
+    for row in soup.find_all("row"):
+        name = row.find("NAME").text.strip()
+        dae = row.find("DAE").text.strip()
+        m = rep_pattern.search(dae)
+        if not (name and m):
+            continue
+
+        full_region = m.group("region").strip()
+        party = normalize_party_name(m.group("party").strip())
+
+        # 시·도 키 결정
+        if "비례대표" in full_region:
+            region_key = "비례대표"
+        else:
+            region_key = extract_sido(full_region)
+
+        Representative.objects.create(
+            name=name,
+            party=party,
+            region=region_key,
+            year=daesu,
+        )

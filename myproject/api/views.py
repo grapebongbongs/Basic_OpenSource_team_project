@@ -7,13 +7,14 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from decouple import config
 from .models import Bill, PartyDistribution,Representative
+from utils.api_handler import load_distribution_to_db, load_representatives_to_db
 
 # ------------------------------------------------------------------
 # 1) 기존 Bill / Calendar / Search 뷰 (변경 없음)
@@ -96,6 +97,7 @@ def search_page(request):
     })
 
 
+
 @api_view(['GET'])
 def search_bills(request):
     """
@@ -126,159 +128,32 @@ def search_bills(request):
     return Response({"data": results})
 
 
-def extract_sido(location: str) -> str:
-    mapping = {
-        '서울': '서울', '부산': '부산', '대구': '대구', '인천': '인천',
-        '광주': '광주', '대전': '대전', '울산': '울산', '세종': '세종',
-        '경기도': '경기', '경기': '경기',
-        '강원도': '강원', '강원': '강원',
-        '충청북도': '충북', '충북': '충북',
-        '충청남도': '충남', '충남': '충남',
-        '전라북도': '전북', '전북': '전북',
-        '전라남도': '전남', '전남': '전남',
-        '경상북도': '경북', '경북': '경북',
-        '경상남도': '경남', '경남': '경남',
-        '제주특별자치도': '제주', '제주도': '제주',
-        '서귀포시': '제주', '제주시': '제주',
-    }
-    for key, val in mapping.items():
-        if key in location:
-            return val
-    return '기타'
-
-
-# —————————————————————————————————————
-# 2) 외부 API 파싱 + PartyDistribution 저장
-# —————————————————————————————————————
-def load_distribution_to_db(daesu: int):
-    API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
-    params = {
-        "KEY": config("ASSEMBLY_API_KEY"),
-        "Type": "xml",
-        "pIndex": 1,
-        "pSize": 300,
-        "DAESU": str(daesu),
-    }
-    resp = requests.get(API_URL, params=params)
-    resp.raise_for_status()
-
-    root = ET.fromstring(resp.content)
-
-    # “제{daesu}대국회의원(지역) 정당” 패턴
-    pattern = re.compile(
-        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*"
-        r"(?P<party>[^제]+?)(?=(?:제\d+대국회의원|$))"
-    )
-
-    raw_count = {}
-    total_count = {}
-
-    for row in root.iter("row"):
-        text = row.findtext("DAE", "")
-        for m in pattern.finditer(text):
-            full_region = m.group("region").strip()
-            party = m.group("party").strip()
-
-            # 시·도 키 결정
-            if "비례대표" in full_region:
-                sido = "비례대표"
-            else:
-                sido = extract_sido(full_region)
-
-            # 후보 수 집계
-            raw_count.setdefault(sido, {})
-            raw_count[sido][party] = raw_count[sido].get(party, 0) + 1
-            total_count[sido] = total_count.get(sido, 0) + 1
-
-    # 기존 레코드 삭제(갱신)
-    PartyDistribution.objects.filter(daesu=daesu).delete()
-
-    # DB 저장
-    for region, parties in raw_count.items():
-        tot = total_count.get(region, 0)
-        for party, cnt in parties.items():
-            dist = PartyDistribution(
-                daesu=daesu,
-                region=region,
-                party=party,
-                count=cnt,
-                percentage=(cnt / tot * 100) if tot else 0,
-            )
-            dist.save()
-
-
-# —————————————————————————————————————
-# 3) 외부 API 파싱 + Representative 저장
-# —————————————————————————————————————
-def load_representatives_to_db(daesu: int):
-    API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
-    params = {
-        "KEY": config("ASSEMBLY_API_KEY"),
-        "Type": "xml",
-        "pIndex": 1,
-        "pSize": 300,
-        "DAESU": str(daesu),
-    }
-    resp = requests.get(API_URL, params=params)
-    resp.raise_for_status()
-
-    root = ET.fromstring(resp.content)
-
-    # 기존 레코드 삭제(갱신)
-    Representative.objects.filter(year=daesu).delete()
-
-    # XML에는 NAME, DAE, DAE 필드만 있으니 region/party는 DAE 문자열에서 파싱
-    # 예: DAE="제21대국회의원(경남 창원시성산구) 새누리당"
-    rep_pattern = re.compile(
-        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*(?P<party>[^제]+)"
-    )
-
-    for row in root.iter("row"):
-        name = row.findtext("NAME", "").strip()
-        dae = row.findtext("DAE", "")
-        m = rep_pattern.search(dae)
-        if not (name and m):
-            continue
-        full_region = m.group("region").strip()
-        party = m.group("party").strip()
-
-        # 시·도 키 결정
-        if "비례대표" in full_region:
-            region_key = "비례대표"
-        else:
-            region_key = extract_sido(full_region)
-
-        Representative.objects.create(
-            name=name,
-            party=party,
-            region=region_key,
-            year=daesu,
-        )
-
-
-# —————————————————————————————————————
-# 4) 지도 페이지 렌더링
-# —————————————————————————————————————
 def party_map_view(request):
-    daesu = int(request.GET.get('daesu', 21))
+    for daesu in range(10, 22):
+        load_representatives_to_db(daesu)
+        load_distribution_to_db(daesu)
+    daesu = int(request.GET.get('daesu', 21))  # 대수 파라미터 받기
     return render(request, 'map.html', {'daesu': daesu})
 
 
-# —————————————————————————————————————
-# 5) 분포 데이터 API
-# —————————————————————————————————————
+# -----------------------------------------------------------
+# 정당 분포 데이터 API
+# -----------------------------------------------------------
+
 @api_view(['GET'])
-@csrf_exempt
+
 def party_data_api(request):
     daesu = request.GET.get('daesu')
     if not daesu:
         return Response({"error": "daesu parameter is required"}, status=400)
-    daesu = int(daesu)
+    
+    daesu = int(daesu)  # daesu 값을 정수로 변환
 
     # DB에 데이터가 없으면 외부 API에서 로드
     if not PartyDistribution.objects.filter(daesu=daesu).exists():
         load_distribution_to_db(daesu)
 
+    # PartyDistribution 모델에서 데이터를 가져오기
     qs = PartyDistribution.objects.filter(daesu=daesu)
     result = {}
     for pd in qs:
@@ -290,22 +165,30 @@ def party_data_api(request):
     return JsonResponse(result)
 
 
-# —————————————————————————————————————
-# 6) 의원 정보 API
-# —————————————————————————————————————
+# -----------------------------------------------------------
+# 의원 데이터 API
+# -----------------------------------------------------------
+
 @api_view(['GET'])
-@csrf_exempt
 def representative_data_api(request):
     daesu = request.GET.get('daesu')
+    region = request.GET.get('region')  # 지역도 함께 받음
     if not daesu:
         return Response({"error": "daesu parameter is required"}, status=400)
-    daesu = int(daesu)
+    
+    daesu = int(daesu)  # daesu 값을 정수로 변환
 
     # DB에 데이터가 없으면 외부 API에서 로드
     if not Representative.objects.filter(year=daesu).exists():
         load_representatives_to_db(daesu)
 
+    # Representative 모델에서 데이터를 가져오기
     qs = Representative.objects.filter(year=daesu)
+
+    # region이 요청되었을 경우 해당 지역만 필터링
+    if region:
+        qs = qs.filter(region=region)
+
     data = {}
     for rep in qs:
         data.setdefault(rep.region, []).append({

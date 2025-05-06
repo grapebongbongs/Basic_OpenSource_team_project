@@ -1,5 +1,7 @@
-    <svg
-    class="frame"
+<!-- 드롭다운 토글용 버튼 -->
+<button id="menu-button" class="menu-button">
+  <svg
+    class="menu-icon"
     width="68"
     height="68"
     viewBox="0 0 68 68"
@@ -18,3 +20,4 @@
       stroke-linejoin="round"
     />
   </svg>
+</button>
