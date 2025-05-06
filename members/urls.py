@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import member_list
+from .views import update_and_show_main
 
 urlpatterns = [
-    path('', member_list, name='member_list'),
+    path('', update_and_show_main, name='member_list'),
 ]
-

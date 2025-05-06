@@ -35,6 +35,10 @@ def fetch_and_store_members():  # 국회의원 인적사항 api에서 가져오�
                     homepage=row.findtext('HOMEPAGE'),
                     unit=row.findtext('UNITS'),
                     title=row.findtext('MEM_TITLE'),
+                    staff=row.findtext('STAFF'),
+                    secretary=row.findtext('SECRETARY'),
+                    assem_addr=row.findtext('ASSEMBLY_ADDR'),
+                    hj_nm=row.findtext('HJ_NM'),  
                 )
                 count += 1
         pIndex += 1

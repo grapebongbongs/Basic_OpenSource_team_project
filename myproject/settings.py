@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'members',
     'agendas',
+    'vote',
 ]
 
 MIDDLEWARE = [

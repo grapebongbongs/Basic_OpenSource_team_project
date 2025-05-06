@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>표결 결과 목록</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>표결 결과 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>의원 이름</th>
+                <th>법안 제목</th>
+                <th>투표 결과</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vote in votes %}
+            <tr>
+                <td>{{ vote.member.name }}</td>
+                <td>{{ vote.bill.bill_name }}</td>
+                <td>{{ vote.vote_result }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">표결 정보가 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
