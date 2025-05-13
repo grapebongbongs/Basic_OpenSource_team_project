@@ -1,0 +1,57 @@
+/* 공통 스타일 */
+body {
+    font-family: sans-serif;
+    margin: 2rem;
+  }
+  
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  .fc-event-title, .fc-event-time {
+    white-space: normal !important;
+  }
+  
+  .fc-event {
+    font-size: 0.9em;
+    padding: 2px;
+    line-height: 1.2;
+  }
+  
+  .fc .fc-daygrid-event {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  
+  .fc .fc-event {
+    overflow: visible;
+  }
+  
+  /* 일정 유형별 색상 */
+  .fc-event[data-kind="본회의"] {
+    background-color: #2196F3; /* 파란색 */
+  }
+  
+  .fc-event[data-kind="위원회"] {
+    background-color: #4CAF50; /* 초록색 */
+  }
+  
+  .fc-event[data-kind="의장단"] {
+    background-color: #FF9800; /* 주황색 */
+  }
+  
+  .fc-event[data-kind="세미나"] {
+    background-color: #FFC107; /* 노란색 */
+  }
+  
+  .fc-event[data-kind="국회행사"] {
+    background-color: #F44336; /* 빨간색 */
+  }
+  
+  /* 팝업 모달 스타일 */
+  .modal-header {
+    font-size: 1.5em;
+    text-align: center;
+  }
+  

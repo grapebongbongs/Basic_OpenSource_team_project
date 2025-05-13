@@ -1,74 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>국회 일정 캘린더</title>
+  <!-- 외부 CSS 파일 링크 -->
+  <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+  
+  <!-- FullCalendar CSS -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 2rem;
-    }
-
-    #calendar {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .fc-event-title, .fc-event-time {
-      white-space: normal !important;
-    }
-
-    .fc-event {
-      font-size: 0.9em;
-      padding: 2px;
-      line-height: 1.2;
-    }
-
-    .fc .fc-daygrid-event {
-      word-break: keep-all;
-      overflow-wrap: break-word;
-    }
-
-    .fc .fc-event {
-      overflow: visible;
-    }
-  </style>
 </head>
 <body>
   <h1>국회 일정 캘린더</h1>
   <div id="calendar"></div>
 
+  <!-- 일정 세부 정보 팝업 모달 -->
+  <div class="modal fade" id="eventDetailModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventDetailModalLabel">일정 상세 정보</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- 세부 정보가 여기에 동적으로 로드됩니다 -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FullCalendar JS -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/ko.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'ko',
-        height: 'auto',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events: {
-          url: "{% url 'calendar-events' %}",
-          failure() {
-            alert('이벤트 로딩에 실패했습니다.');
-          }
-        },
-        eventDidMount(info) {
-          info.el.setAttribute('title', info.event.extendedProps.place);
-        },
-        dayMaxEvents: 5,  // ← 하루 최대 표시할 이벤트 수
-        moreLinkText: function(n) {
-          return `+${n}개 더보기`;
-        }
-      });
-      calendar.render();
-    });
-  </script>
+
+  <!-- 외부 JS 파일 링크 -->
+  <script src="{% static 'js/calendar.js' %}"></script>
 </body>
 </html>

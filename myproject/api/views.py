@@ -26,17 +26,17 @@ def calendar_page(request):
     """
     return render(request, 'api/calendar.html')
 
-
 def calendar_events(request):
-    """
-    FullCalendar 이벤트 리스트(JSON) 반환
-    """
     start = request.GET.get('start')
-    end   = request.GET.get('end')
+    end = request.GET.get('end')
+
+    print(f"Start: {start}, End: {end}")  # start와 end 값 출력
 
     qs = Bill.objects.all()
     if start and end:
         qs = qs.filter(SCH_DT__gte=start, SCH_DT__lte=end)
+    
+    print(f"Filtered events count: {qs.count()}")  # 필터링된 결과 수 출력
 
     events = []
     for b in qs:
@@ -62,6 +62,7 @@ def calendar_events(request):
         })
 
     return JsonResponse(events, safe=False)
+
 
 
 def search_page(request):

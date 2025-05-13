@@ -83,14 +83,29 @@ def save_bills_to_db():
 
     print(f"[save_bills_to_db] 총 {len(rows)}건 중 {created_count}건이 새로 저장되었습니다.")
 
-def extract_sido(location: str) :
-    """
-    전체 지역명(예: '서귀포시', '제주시', '경기도 수원시무')에서
-    SVG data-region 값(시·도 단위)인 '제주', '경기' 등으로 매핑합니다.
-    """
-    # 시·군·구 → 시·도 매핑 테이블
+
+# 정당 이름 정규화 매핑 테이블
+PARTY_NAME_MAP = {
+    '평민당': '평화민주당',
+    '민정당': '민주정의당',
+    '국민회의' : '새정치국민회의',
+    '민주' : '민주당',
+    '민자당': '민주자유당',
+    '국민당' : '통일국민당',
+}
+
+def normalize_party_name(party: str) -> str:
+    party = (
+        party.replace("ㆍ", "·")  # 유사한 특수문자 통일
+             .replace("·", "·")     # 점 문자 통일 (필요 시 유지)
+             .replace(".", "·")      # 마침표(.)를 중점으로 통일
+             .replace(" ", "")       # 불필요한 공백 제거
+             .strip()
+    )
+    return PARTY_NAME_MAP.get(party, party)
+
+def extract_sido(location: str):
     mapping = {
-        # 광역시·도
         '서울': '서울', '부산': '부산', '대구': '대구', '인천': '인천',
         '광주': '광주', '대전': '대전', '울산': '울산', '세종': '세종',
         '경기도': '경기', '경기': '경기',
@@ -102,17 +117,12 @@ def extract_sido(location: str) :
         '경상북도': '경북', '경북': '경북',
         '경상남도': '경남', '경남': '경남',
         '제주특별자치도': '제주', '제주도': '제주', '제주': '제주',
-        # 제주 하위 시
         '서귀포시': '제주', '제주시': '제주',
-        }
+    }
     for key, val in mapping.items():
         if key in location:
             return val
-
-    # 그 외
     return '기타'
-
-
 
 def load_distribution_to_db(daesu: int):
     API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
@@ -126,12 +136,10 @@ def load_distribution_to_db(daesu: int):
     resp = requests.get(API_URL, params=params)
     resp.raise_for_status()
 
-    # BeautifulSoup을 이용한 XML 파싱 (불량 문자 방지)
     soup = BeautifulSoup(resp.content, 'lxml-xml')
 
     pattern = re.compile(
-        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*"
-        r"(?P<party>[^제]+?)(?=(?:제\d+대국회의원|$))"
+        rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*(?P<party>[^제]+?)(?=(?:제\d+대국회의원|$))"
     )
 
     raw_count = {}
@@ -142,32 +150,17 @@ def load_distribution_to_db(daesu: int):
         text_tag = row.find("DAE")
         text = text_tag.text.strip() if text_tag and text_tag.text else ""
 
-        print(f"텍스트: {text}")
-
         for m in pattern.finditer(text):
             full_region = m.group("region").strip()
-            party = m.group("party").strip()
+            party = normalize_party_name(m.group("party").strip())
 
-            print(f"전체 지역: {full_region}, 정당: {party}")
-
-            if "비례대표" in full_region:
-                sido = "비례대표"
-            else:
-                sido = extract_sido(full_region)
-
-            print(f"시·도: {sido}")
+            sido = "비례대표" if "비례대표" in full_region else extract_sido(full_region)
 
             raw_count.setdefault(sido, {})
             raw_count[sido][party] = raw_count[sido].get(party, 0) + 1
             total_count[sido] = total_count.get(sido, 0) + 1
 
-    print(f"raw_count: {raw_count}")
-    print(f"total_count: {total_count}")
-
-    # 기존 데이터 삭제
     PartyDistribution.objects.filter(daesu=daesu).delete()
-
-    # 저장
     for region, parties in raw_count.items():
         tot = total_count.get(region, 0)
         for party, cnt in parties.items():
@@ -178,10 +171,6 @@ def load_distribution_to_db(daesu: int):
                 count=cnt,
                 percentage=(cnt / tot * 100) if tot else 0,
             )
-
-def normalize_party_name(party: str) -> str:
-    """정당 이름 정규화"""
-    return party.replace("·", "·").replace(".", "·").replace("ㆍ", "·").strip()
 
 def load_representatives_to_db(daesu: int):
     API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
@@ -195,13 +184,9 @@ def load_representatives_to_db(daesu: int):
     resp = requests.get(API_URL, params=params)
     resp.raise_for_status()
 
-    # lxml을 사용하여 XML을 파싱
     soup = BeautifulSoup(resp.content, 'lxml-xml')
-
-    # 기존 레코드 삭제 (갱신)
     Representative.objects.filter(year=daesu).delete()
 
-    # 예: "제21대국회의원(경남 창원시성산구) 새누리당"
     rep_pattern = re.compile(
         rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*(?P<party>[^제]+)"
     )
@@ -216,11 +201,7 @@ def load_representatives_to_db(daesu: int):
         full_region = m.group("region").strip()
         party = normalize_party_name(m.group("party").strip())
 
-        # 시·도 키 결정
-        if "비례대표" in full_region:
-            region_key = "비례대표"
-        else:
-            region_key = extract_sido(full_region)
+        region_key = "비례대표" if "비례대표" in full_region else extract_sido(full_region)
 
         Representative.objects.create(
             name=name,

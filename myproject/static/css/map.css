@@ -58,16 +58,28 @@
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   list-style: none;
   padding: 8px 0;
   margin: 0;
   width: 160px;
   z-index: 4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 
+/* 드롭다운 메뉴가 보일 때 */
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s 0s;
+}
+
+/* 드롭다운 메뉴 항목에 대한 스타일 */
 .dropdown-menu li {
   padding: 10px 16px;
+  cursor: pointer;
 }
 
 .dropdown-menu li:hover {
@@ -202,3 +214,81 @@
 .info-box li {
   padding: 4px 0;
 }
+/* 기본 g[region] 요소 스타일 */
+#map svg g[region] {
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, stroke 0.2s ease, fill-opacity 0.2s ease, filter 0.2s ease;
+  z-index: 1;
+  pointer-events: all;
+}
+
+/* hover 시 살짝 확대 */
+#map svg g[region]:hover {
+  transform: scale(1.03);
+  z-index: 10;
+}
+
+/* hover 시 내부 강조 */
+#map svg g[region]:hover path,
+#map svg g[region]:hover polygon {
+  stroke: #000;
+  stroke-width: 2;
+  fill-opacity: 0.85;
+}
+
+/* 클릭 시 (선택 상태) 강조 효과 */
+#map svg g[region].active-region {
+  transform: scale(1.07);
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  z-index: 20;
+}
+
+/* 선택된 지역의 내부 path/polygon 스타일 */
+#map svg g[region].active-region path,
+#map svg g[region].active-region polygon {
+  fill: #FFD54F; /* 강조 배경색 */
+  stroke: #FF6F00; /* 강조 테두리색 */
+  stroke-width: 3;
+  fill-opacity: 0.95;
+}
+/* path 기본 스타일 */
+#map svg path {
+  fill: transparent ;
+  stroke: #333 !important;
+  stroke-width: 1.5 !important;
+  transition: stroke 0.2s, fill-opacity 0.2s;
+  pointer-events: all;
+}
+
+/* polygon 기본 스타일 */
+#map svg polygon {
+  fill: transparent;
+  stroke: #333 !important;
+  stroke-width: 1.5 !important;
+  transition: stroke 0.2s, fill-opacity 0.2s;
+  pointer-events: all;
+}
+
+
+/* 드롭다운 메뉴 활성화 효과 */
+.menu-wrapper:hover .menu-icon {
+  opacity: 0.8;
+}
+
+.menu-icon:active {
+  transform: scale(0.95);
+  transition: transform 0.2s;
+}
+
+/* 슬라이더 클릭/드래그 시 효과 */
+#daesu-slider:active::-webkit-slider-thumb {
+  background-color: #ffcc00;
+  border-color: #000;
+}
+
+#daesu-slider:active::-moz-range-thumb {
+  background-color: #ffcc00;
+  border-color: #000;
+}
+
