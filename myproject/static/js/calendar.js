@@ -1,65 +1,146 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar');
-    
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale: 'ko',
-      height: 'auto',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      events: {
-        url: '/api/calendar/events/', // 실제 이벤트 로딩 경로
-        failure() {
-          alert('이벤트 로딩에 실패했습니다.');
-        }
-      },
-      eventContent: function(info) {
-        const eventType = info.event.extendedProps.kind;
-        const eventDate = info.event.startStr;  // 이벤트 시작 날짜
-        
-        // 같은 날짜와 종류의 일정은 한 번만 표시하도록 처리
-        const eventsOnSameDay = calendar.getEvents().filter(event => 
-          event.startStr === eventDate && event.extendedProps.kind === eventType
-        );
-        
-        // 첫 번째 일정만 표시하고 그 이후 일정은 숨김
-        if (eventsOnSameDay.indexOf(info.event) > 0) {
-          info.el.style.display = 'none';  // 두 번째 이후 일정은 숨기기
-        }
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+  const renderedKindsOnDates = new Set(); // 중복 방지용 메모리
 
-        // 일정 종류만 표시하고 기본 제목을 숨깁니다.
-        const customHtml = `<div class="event-kind">${eventType}</div>`;
-        return { html: customHtml };  // 이벤트에 일정 종류만 표시
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale: 'ko',
+    height: 'auto',
+    headerToolbar: false,
+    events: {
+      url: '/api/calendar/events/',
+      failure() {
+        alert('이벤트 로딩에 실패했습니다.');
       },
-      // 클릭한 이벤트에 대한 세부 정보 표시
-      eventClick: function(info) {
-        const eventType = info.event.extendedProps.kind;
-        const eventDate = info.event.startStr;
-
-        // 동일한 날짜와 종류를 가진 모든 일정들을 필터링
-        const relatedEvents = calendar.getEvents().filter(event => 
-          event.startStr === eventDate && event.extendedProps.kind === eventType
-        );
-        
-        // 해당 종류의 일정들을 모달에 표시
-        let content = `<h3>${eventType}</h3><ul>`;
-        relatedEvents.forEach(event => {
-          content += `<li>${event.title} (${event.startStr})</li>`;
+      eventSourceSuccess(events) {
+        return events.map(event => {
+          if (!event.extendedProps.committee) {
+            event.extendedProps.committee = "미정";
+          }
+          return event;
         });
-        content += '</ul>';
-        
-        // 세부 내용 팝업 모달에 동적으로 삽입
-        document.querySelector('#eventDetailModal .modal-body').innerHTML = content;
-        $('#eventDetailModal').modal('show');  // 모달 띄우기
-      },
-      dayMaxEvents: 5,  // 하루 최대 표시할 이벤트 수
-      moreLinkText: function(n) {
-        return `+${n}개 더보기`;
       }
-    });
-    
-    calendar.render();
+    },
+    eventDidMount(info) {
+      const eventType = info.event.extendedProps.kind;
+      const eventDate = info.event.startStr.split('T')[0];
+      const key = `${eventDate}_${eventType}`;
+
+      if (!eventType || eventType.trim() === "") {
+        info.el.style.display = 'none';
+        return;
+      }
+
+      if (renderedKindsOnDates.has(key)) {
+        info.el.style.display = 'none';
+        return;
+      }
+
+      renderedKindsOnDates.add(key);
+
+      const colorMap = {
+        "본회의": "#2196F3",
+        "위원회": "#4CAF50",
+        "의장단": "#FF9800",
+        "세미나": "#FFC107",
+        "국회행사": "#F44336"
+      };
+      const color = colorMap[eventType] || "#999";
+
+      const timeEl = info.el.querySelector('.fc-event-time');
+      if (timeEl) {
+        timeEl.remove();
+      }
+
+      const titleEl = info.el.querySelector('.fc-event-title');
+      if (titleEl) {
+        titleEl.textContent = '';
+
+        const dot = document.createElement('span');
+        dot.textContent = '●';
+        dot.style.color = color;
+        dot.style.marginRight = '4px';
+
+        const text = document.createTextNode(eventType);
+
+        titleEl.appendChild(dot);
+        titleEl.appendChild(text);
+      } else {
+        const div = document.createElement('div');
+        div.className = 'fc-event-title';
+
+        const dot = document.createElement('span');
+        dot.textContent = '●';
+        dot.style.color = color;
+        dot.style.marginRight = '4px';
+
+        const text = document.createTextNode(eventType);
+
+        div.appendChild(dot);
+        div.appendChild(text);
+        info.el.appendChild(div);
+      }
+
+      info.el.style.margin = '0';
+      info.el.style.padding = '0';
+      info.el.style.border = 'none';
+
+      const titleDiv = info.el.querySelector('.fc-event-title');
+      if (titleDiv) {
+        titleDiv.style.margin = '0';
+        titleDiv.style.padding = '0';
+        titleDiv.style.lineHeight = '1.2';
+      }
+    },
+    eventClick(info) {
+      const eventType = info.event.extendedProps.kind;
+      const eventDate = info.event.startStr.split('T')[0];
+      const relatedEvents = calendar.getEvents().filter(event =>
+        event.startStr.startsWith(eventDate) &&
+        event.extendedProps.kind === eventType
+      );
+
+      let content = `<h3>${eventType}</h3><ul>`;
+      relatedEvents.forEach(event => {
+        content += `
+          <li>
+            <strong>${event.title}</strong><br/>
+            장소: ${event.extendedProps.place || '장소 없음'}
+          </li>`;
+      });
+      content += '</ul>';
+
+      document.querySelector('#eventDetailModal .modal-body').innerHTML = content;
+      $('#eventDetailModal').modal('show');
+    },
+    dayMaxEvents: 10,
+    moreLinkText(n) {
+      return n === 0 ? '' : `+${n}개 더보기`;
+    },
+    datesSet() {
+      renderedKindsOnDates.clear();
+
+      // 현재 날짜 기준으로 연도/월 텍스트 갱신
+      const currentDate = calendar.getDate();
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
+
+      const yearEl = document.querySelector('.text-wrapper-2');
+      const monthEl = document.querySelector('.text-wrapper-3');
+      if (yearEl && monthEl) {
+        yearEl.textContent = `${year}년`;
+        monthEl.textContent = `${month}월`;
+      }
+    }
+  });
+
+  calendar.render();
+
+  document.querySelector('.left').addEventListener('click', function () {
+    calendar.prev();
+  });
+
+  document.querySelector('.right').addEventListener('click', function () {
+    calendar.next();
+  });
 });

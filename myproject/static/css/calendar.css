@@ -1,57 +1,85 @@
-/* 공통 스타일 */
+/* 기본 폰트 및 레이아웃 */
 body {
-    font-family: sans-serif;
-    margin: 2rem;
-  }
-  
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  
-  .fc-event-title, .fc-event-time {
-    white-space: normal !important;
-  }
-  
-  .fc-event {
-    font-size: 0.9em;
-    padding: 2px;
-    line-height: 1.2;
-  }
-  
-  .fc .fc-daygrid-event {
-    word-break: keep-all;
-    overflow-wrap: break-word;
-  }
-  
-  .fc .fc-event {
-    overflow: visible;
-  }
-  
-  /* 일정 유형별 색상 */
-  .fc-event[data-kind="본회의"] {
-    background-color: #2196F3; /* 파란색 */
-  }
-  
-  .fc-event[data-kind="위원회"] {
-    background-color: #4CAF50; /* 초록색 */
-  }
-  
-  .fc-event[data-kind="의장단"] {
-    background-color: #FF9800; /* 주황색 */
-  }
-  
-  .fc-event[data-kind="세미나"] {
-    background-color: #FFC107; /* 노란색 */
-  }
-  
-  .fc-event[data-kind="국회행사"] {
-    background-color: #F44336; /* 빨간색 */
-  }
-  
-  /* 팝업 모달 스타일 */
-  .modal-header {
-    font-size: 1.5em;
-    text-align: center;
-  }
-  
+  font-family: sans-serif;
+  margin: 2rem;
+}
+
+#calendar {
+  flex: none;
+  width: 600px;
+  margin-left: -100px;
+  margin-top: 40px;
+}
+
+/* 이벤트 요소 스타일 */
+.fc-event {
+  font-size: 0.9em;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  overflow: visible;
+}
+
+/* 이벤트 타이틀 줄맞춤 */
+.fc-event-title {
+  white-space: nowrap;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* 시간 제거 */
+.fc-event-time {
+  display: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 전체 dot 스타일 없애기 */
+#calendar .fc-event {
+  --fc-event-border-color: transparent !important;
+  --fc-event-bg-color: transparent !important;
+  border: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 도트 렌더링 가상요소 제거 */
+#calendar .fc-event::before {
+  display: none !important;
+  content: none !important;
+}
+
+
+
+/* 이벤트 감싸는 div */
+.fc-daygrid-event-harness {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* 이벤트 전체 컨테이너 정렬 */
+.fc .fc-daygrid-event {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  margin-top: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+/* 점과 텍스트 사이 여백 조절 */
+.fc-event-title::before {
+  margin-right: 4px;
+  content: none !important;
+}
+
+
+/* 모달 */
+.modal-header {
+  font-size: 1.5em;
+  text-align: center;
+}
