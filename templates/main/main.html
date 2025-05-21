@@ -1,45 +1,78 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DaeguCatholicUniversity:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500&display=swap" />
     <title>국회의원 목록</title>
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 16px;
-            padding: 16px;
-        }
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-    </style>
 </head>
+
 <body>
-    <h1 style="text-align:center;">국회의원 목록</h1>
-    <div class="grid-container">
-        {% for m in members %}
-        <div class="card">
-            {% if m.image_url %}
-                <img src="{{ m.image_url }}" alt="{{ m.name }} 사진">
-            {% else %}
-                <p>사진 없음</p>
-            {% endif %}
-            <h3>{{ m.name }}</h3>
-            <p><strong>정당:</strong> {{ m.party }}</p>
-            <p><strong>지역구:</strong> {{ m.origin }}</p>
-            <p><strong>이메일:</strong> {{ m.email }}</p>
+    <div class="div">
+        <div class="rectangle-parent">
+            <div class="group-child"></div>
+            <div class="background"></div>
+            <div class="group-item"></div>
+            <div class="asona">ASONA</div>
         </div>
-        {% endfor %}
+
+        <div class="parent">
+            {% for m in members %}
+            <div class="div1" data-mona-cd="{{ m.mona_cd }}">
+                <div class="profile-pic">
+                    <img src="{{ m.image_url }}" alt="{{ m.name }}" class="profile-pic">
+                </div>
+                <div class="ex1"></div>
+                <div class="div2">{{ m.name }}</div>
+                <div class="ex11"></div>
+                <div class="div3">{{ m.origin }}</div>
+                <div class="ex12"></div>
+                <div class="div4">{{ m.party }}</div>
+                <div class="ex13"></div>
+                <div class="div5">{{ m.committee }}</div>
+            </div>
+            {% empty %}
+            <div class="no-data">데이터가 없습니다.</div>
+            {% endfor %}
+        </div>
+
+        <img class="frame-icon" alt="" src="{% static 'images/Menu.svg' %}">
+        <div class="frame"></div>
+
+        <div class="test-parent">
+            <div class="test">test</div>
+            <img class="vector-icon" alt="" src="{% static 'images/Vector.svg' %}">
+            <img class="frame-icon1" alt="" src="{% static 'images/Frame.svg' %}">
+        </div>
+
+        <div class="logo">
+            <div class="logo-child"></div>
+            <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const memberDivs = document.querySelectorAll('.div1');
+
+            memberDivs.forEach(div => {
+                div.addEventListener('click', function () {
+                    const monaCd = this.getAttribute('data-mona-cd');
+
+                    if (monaCd) {
+                        window.location.href = `/vote/${monaCd}/`;
+                    } else {
+                        console.warn("mona_cd가 존재하지 않습니다.");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>

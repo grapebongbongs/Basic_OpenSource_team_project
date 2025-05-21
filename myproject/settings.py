@@ -130,3 +130,7 @@ ASSEMBLY_API_KEY = '96c6d34ae0424060a039608f0123451e'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

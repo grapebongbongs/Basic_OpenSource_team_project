@@ -1,0 +1,328 @@
+.group-child {
+    position: absolute;
+    top: 122px;
+    left: 0px;
+    background-color: #ffe093;
+    width: 1512.5px;
+    height: 232px;
+}
+
+.background {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #ffee9a;
+    width: 1512.5px;
+    height: 122px;
+}
+
+.group-item {
+    position: absolute;
+    top: 24px;
+    left: 0px;
+    border-radius: 120px 120px 0px 0px;
+    background-color: #fff;
+    width: 1512.5px;
+    height: 142px;
+}
+
+.asona {
+    position: absolute;
+    top: 191px;
+    left: 455px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 644px;
+    height: 138px;
+}
+
+.rectangle-parent {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1512.5px;
+    height: 354px;
+    color: #fff9e7;
+    font-family: DaeguCatholicUniversity;
+}
+
+.profile-pic {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25) inset;
+    border-radius: 9px;
+    background-color: #d9d9d9;
+    width: 118.2px;
+    height: 125.2px;
+}
+
+.ex1 {
+    position: absolute;
+    top: 0px;
+    left: 125.51px;
+    border-radius: 9px;
+    background-color: #feeda7;
+    width: 215.7px;
+    height: 58.7px;
+}
+
+.div2 {
+    position: absolute;
+    top: 17px;
+    left: 140.25px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.ex11 {
+    position: absolute;
+    top: 0px;
+    left: 347.7px;
+    border-radius: 9px;
+    background-color: #feeda7;
+    width: 215.7px;
+    height: 58.7px;
+}
+
+.div3 {
+    position: absolute;
+    top: 17.16px;
+    left: 365.15px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.ex12 {
+    position: absolute;
+    top: 66.91px;
+    left: 125.24px;
+    border-radius: 9px;
+    background-color: #feeda7;
+    width: 215.7px;
+    height: 58.7px;
+}
+
+.div4 {
+    position: absolute;
+    top: 84.07px;
+    left: 140.82px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.ex13 {
+    position: absolute;
+    top: 66.91px;
+    left: 347.7px;
+    border-radius: 9px;
+    background-color: #feeda7;
+    width: 215.7px;
+    height: 58.7px;
+}
+
+.div5 {
+    position: absolute;
+    top: 83.37px;
+    left: 365.01px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.div1 {
+    width: 563.4px;
+    position: relative;
+    height: 125.6px;
+}
+
+.div7 {
+    position: absolute;
+    top: 20.84px;
+    left: 147.63px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.div8 {
+    position: absolute;
+    top: 20.84px;
+    left: 374.63px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.div9 {
+    position: absolute;
+    top: 79.84px;
+    left: 147.63px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.div10 {
+    position: absolute;
+    top: 86.84px;
+    left: 370.63px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170.6px;
+    height: 24.5px;
+}
+
+.parent {
+    position: absolute;
+    top: 647px;
+    left: calc(50% - 575px);
+    width: 1150.7px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 23px 24px;
+    font-size: 14px;
+}
+
+.frame-icon {
+    position: absolute;
+    top: 41px;
+    left: 1349px;
+    border-radius: 9px;
+    width: 41px;
+    height: 41px;
+    overflow: hidden;
+}
+
+.frame {
+    position: absolute;
+    top: 443px;
+    left: 1238px;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+}
+
+.test {
+    width: 559px;
+    position: relative;
+    letter-spacing: 0.09em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    flex-shrink: 0;
+    text-shadow: 1px 0 0 #000, 0 1px 0 #000, -1px 0 0 #000, 0 -1px 0 #000;
+}
+
+.vector-icon {
+    width: 17px;
+    position: relative;
+    max-height: 100%;
+}
+
+.frame-icon1 {
+    width: 24px;
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.test-parent {
+    position: absolute;
+    top: 519px;
+    left: calc(50% - 359px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 60px;
+    background-color: #fff;
+    width: 717px;
+    height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 38px;
+    box-sizing: border-box;
+    gap: 21px;
+    text-align: left;
+    font-size: 21px;
+}
+
+.logo-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #c98e53;
+    width: 34px;
+    height: 34px;
+}
+
+.logoo-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+}
+
+.logo {
+    position: absolute;
+    top: 41px;
+    left: 113px;
+    width: 34px;
+    height: 34px;
+}
+
+.div {
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    height: 982px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 157px;
+    color: #000;
+    font-family: KoPubWorldDotum;   }

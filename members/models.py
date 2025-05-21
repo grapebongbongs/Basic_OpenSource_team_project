@@ -1,7 +1,7 @@
 from django.db import models
 
 class AssemblyMember(models.Model):
-    name = models.CharField(max_length=20)  # 의원 이름름
+    name = models.CharField(max_length=20)  # 의원 이름
     mona_cd = models.CharField(max_length=20, unique=True, null=True)  # 의원번호
     party = models.CharField(max_length=100, null=True)  # 정당당
     committee = models.CharField(max_length=100, null=True)  # 위원회 이름

@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('members.urls')),  # api 앱으로 라우팅
+    path('', include(('members.urls', 'members'), namespace='members')),  # api 앱으로 라우팅
     path('agendas/', include('agendas.urls')),
-    path('member/', include('vote.urls')),  # api 앱으로 라우팅
+    path('member/', include('vote.urls', namespace='vote')),  # api 앱으로 라우팅
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
