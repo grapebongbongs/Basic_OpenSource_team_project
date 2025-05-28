@@ -164,6 +164,7 @@
     padding: 10px;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
+    user-select: none;
 }
 
 .div7 {
@@ -341,14 +342,15 @@
 }
 
 .div1:hover {
-    border-color: #3498db !important;
+    border-color: #0d47a1 !important;
     /* 테두리 색상 */
-    background-color: #f0f8ff;
+    background-color: #bbdefb;
     /* 배경색 */
     cursor: pointer;
 }
 
-.div1, .div1 * {
+.div1,
+.div1 * {
     cursor: pointer;
     pointer-events: auto;
 }

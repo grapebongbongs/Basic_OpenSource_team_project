@@ -18,6 +18,7 @@ class AssemblyMember(models.Model):
     assem_addr = models.TextField(null=True)  # 사무실 주소
     hj_nm = models.CharField(max_length=20, null=True)  # 의원 한자 이름
     image_url = models.URLField(blank=True, unique=True, null=True)  # 의원 사진 URL
+    unit_cd = models.CharField(max_length=100, blank=True, null=True)  # "100020,100021"
     
     def __str__(self):
         return self.name

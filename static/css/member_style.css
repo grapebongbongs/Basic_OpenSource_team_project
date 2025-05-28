@@ -1,28 +1,28 @@
-.background {
-    position: absolute;
+.background1 {
+    position: relative;
     top: 0px;
     left: 0px;
     background-color: #ffee9a;
-    width: 1512px;
+    width: 100%;
     height: 128.8px;
 }
 
-.group-child {
-    position: absolute;
-    top: 16.62px;
+.background-child {
+    position: relative;
+    top: 27px;
     left: 0px;
     border-radius: 120px 120px 0px 0px;
-    background-color: #e2fcff;
-    width: 1512px;
-    height: 375.4px;
+    background-color: #fff;
+    width: 100%;
+    height: 244px;
 }
 
-.background-parent {
-    position: absolute;
-    top: -3px;
+.background {
+    position: relative;
+    top: 0px;
     left: 0px;
-    width: 1512px;
-    height: 392px;
+    width: 100%;
+    height: 271px;
 }
 
 .child {
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 223px;
+    width: 222.1px;
     height: 76px;
 }
 
@@ -62,7 +62,7 @@
 .answer {
     position: absolute;
     top: -75.5px;
-    left: 355.57px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -70,7 +70,7 @@
     height: 58px;
 }
 
-.frame-child {
+.item {
     position: absolute;
     top: -18px;
     left: -0.5px;
@@ -94,7 +94,7 @@
 .answer1 {
     position: absolute;
     top: -17.5px;
-    left: 348.99px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -102,7 +102,7 @@
     height: 55px;
 }
 
-.frame-item {
+.inner {
     position: absolute;
     top: 37px;
     left: -0.5px;
@@ -126,7 +126,7 @@
 .answer2 {
     position: absolute;
     top: 37.5px;
-    left: 352.28px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -134,7 +134,7 @@
     height: 58px;
 }
 
-.frame-inner {
+.line-div {
     position: absolute;
     top: 95px;
     left: -0.5px;
@@ -158,7 +158,7 @@
 .answer3 {
     position: absolute;
     top: 95.5px;
-    left: 348.99px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -166,7 +166,7 @@
     height: 58px;
 }
 
-.line-div {
+.child1 {
     position: absolute;
     top: 153px;
     left: -0.5px;
@@ -190,7 +190,7 @@
 .answer4 {
     position: absolute;
     top: 153.5px;
-    left: 352.28px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -198,7 +198,7 @@
     height: 56px;
 }
 
-.frame-child1 {
+.child2 {
     position: absolute;
     top: 209px;
     left: -0.5px;
@@ -222,7 +222,7 @@
 .answer5 {
     position: absolute;
     top: 210.5px;
-    left: 358.86px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -230,7 +230,7 @@
     height: 56px;
 }
 
-.frame-child2 {
+.child3 {
     position: absolute;
     top: 267px;
     left: -0.5px;
@@ -254,7 +254,7 @@
 .answer6 {
     position: absolute;
     top: 269px;
-    left: 358.86px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -262,7 +262,7 @@
     height: 55px;
 }
 
-.frame-child3 {
+.child4 {
     position: absolute;
     top: 325px;
     left: -0.5px;
@@ -286,7 +286,7 @@
 .answer7 {
     position: absolute;
     top: 325.5px;
-    left: 352.28px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -294,7 +294,7 @@
     height: 57px;
 }
 
-.frame-child4 {
+.child5 {
     position: absolute;
     top: 382px;
     left: -0.5px;
@@ -318,7 +318,7 @@
 .answer8 {
     position: absolute;
     top: 382.5px;
-    left: 348.99px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -326,7 +326,7 @@
     height: 58px;
 }
 
-.frame-child5 {
+.child6 {
     position: absolute;
     top: 440px;
     left: -0.5px;
@@ -350,7 +350,7 @@
 .answer9 {
     position: absolute;
     top: 440.5px;
-    left: 348.99px;
+    left: 341px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
@@ -358,11 +358,11 @@
     height: 55px;
 }
 
-.parent {
-    position: absolute;
-    top: 646px;
-    left: 587px;
-    width: 537px;
+.div1 {
+    position: relative;
+    top: unset;
+    left: 812px;
+    width: 537.9px;
     height: 395px;
     text-align: left;
 }
@@ -394,11 +394,11 @@
     object-fit: contain;
 }
 
-.group {
-    position: absolute;
-    top: 1382px;
-    left: calc(50% - 684px);
-    width: 1367px;
+.div2 {
+    position: relative;
+    top: unset;
+    left: calc(50% - 691.03px);
+    width: 1381.1px;
     height: 36px;
     display: flex;
     flex-direction: row;
@@ -410,7 +410,7 @@
     font-size: 19px;
 }
 
-.div1 {
+.div4 {
     width: 138.9px;
     position: relative;
     font-weight: 500;
@@ -419,9 +419,17 @@
     justify-content: center;
     height: 37.7px;
     flex-shrink: 0;
+    word-break: keep-all;
+    /* 한글 줄바꿈 */
+    white-space: normal;
+    /* 줄바꿈 허용 */
+    max-width: 200px;
+    /* 너무 넓어지지 않게 제한 */
+    overflow-wrap: break-word;
+    /* 긴 단어도 잘라서 줄바꿈 */
 }
 
-.div5 {
+.div8 {
     width: 160.2px;
     position: relative;
     font-weight: 500;
@@ -430,14 +438,22 @@
     justify-content: center;
     height: 37.7px;
     flex-shrink: 0;
+    word-break: keep-all;
+    /* 한글 줄바꿈 */
+    white-space: normal;
+    /* 줄바꿈 허용 */
+    max-width: 200px;
+    /* 너무 넓어지지 않게 제한 */
+    overflow-wrap: break-word;
+    /* 긴 단어도 잘라서 줄바꿈 */
 }
 
-.container {
-    position: absolute;
-    top: 1457px;
-    left: calc(50% - 684px);
-    width: 1367px;
-    height: 59px;
+.div3 {
+    position: relative;
+    top: unset;
+    left: calc(50% - 686.46px);
+    width: 1371.9px;
+    height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -445,14 +461,15 @@
     flex-wrap: wrap;
     align-content: center;
     gap: 13px 51px;
+    margin-top: 20px;
 }
 
-.frame-div {
-    position: absolute;
-    top: 1573px;
-    left: calc(50% - 684px);
-    width: 1367px;
-    height: 59px;
+.div11 {
+    position: relative;
+    top: unset;
+    left: calc(50% - 686.46px);
+    width: 1371.9px;
+    height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -460,6 +477,7 @@
     flex-wrap: wrap;
     align-content: center;
     gap: 13px 51px;
+    margin-top: 20px;
 }
 
 .b18 {
@@ -467,12 +485,12 @@
     letter-spacing: 0.03em;
 }
 
-.wrapper {
+.title {
     position: absolute;
-    top: 504px;
-    left: 545px;
-    width: 795px;
-    height: 85px;
+    top: 532px;
+    left: 770px;
+    width: 620px;
+    height: 46px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -483,10 +501,10 @@
     font-size: 21px;
 }
 
-.frame-icon {
+.menu-icon {
     position: absolute;
     top: 41px;
-    left: 1349px;
+    left: 1756px;
     border-radius: 9px;
     width: 41px;
     height: 41px;
@@ -514,14 +532,14 @@
 .logo {
     position: absolute;
     top: 41px;
-    left: 140px;
+    left: 113px;
     width: 34px;
     height: 34px;
 }
 
-.group-item {
+.group-child {
     position: absolute;
-    top: 86.56px;
+    top: 77.56px;
     left: 0.09px;
     border-radius: 55px 55px 0px 0px;
     border: 1px solid #625858;
@@ -530,7 +548,7 @@
     height: 622.4px;
 }
 
-.group-inner {
+.group-item {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -543,36 +561,60 @@
 
 .rectangle-parent {
     position: absolute;
-    top: 473px;
-    left: 480px;
+    top: 506px;
+    left: 705px;
     width: 788px;
-    height: 709px;
+    height: 700px;
 }
 
 .profile-picture {
     position: absolute;
     top: 0px;
-    left: 0.47px;
+    left: 0px;
     box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.25) inset;
     background-color: #d9d9d9;
-    width: 121.1px;
-    height: 147.4px;
+    width: 160px;
+    height: 195px;
 }
 
 .name {
     position: absolute;
-    top: 147px;
+    top: 194.47px;
     left: 0px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     background-color: #fff;
-    width: 121.1px;
-    height: 35.7px;
+    width: 160px;
+    height: 47px;
 }
 
-.div15 {
+.name1 {
     position: absolute;
-    top: 154px;
-    left: calc(50% - 60.75px);
+    top: 241.37px;
+    left: 0px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    width: 160px;
+    height: 30px;
+}
+
+.div19 {
+    position: relative;
+    top: unset;
+    left: calc(50% - 61px);
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 121.1px;
+    height: 21.8px;
+}
+
+.div20 {
+    position: relative;
+    top: unset;
+    left: calc(50% - 62px);
+    font-size: 14px;
     letter-spacing: 0.03em;
     font-weight: 500;
     display: flex;
@@ -583,25 +625,120 @@
 }
 
 .profile-picture-parent {
-    width: 121.5px;
+    width: 160px;
     position: relative;
-    height: 182.7px;
+    height: 271.4px;
 }
 
-.frame-child6 {
-    width: 84px;
+.picture-child {
+    width: 117px;
     position: relative;
     max-height: 100%;
 }
 
-.group-parent {
+.picture {
     position: absolute;
-    top: 774px;
-    left: 274px;
+    top: 734px;
+    left: 427px;
+    width: 278px;
+    height: 312px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    font-size: 16px;
+    color: #000;
+}
+
+.div21 {
+    width: 209px;
+    position: relative;
+    letter-spacing: 0.09em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.vector-icon {
+    width: 17px;
+    position: relative;
+    max-height: 100%;
+}
+
+.frame-icon {
+    width: 24px;
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.search-bar {
+    position: absolute;
+    top: 390px;
+    left: calc(50% + 188px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 60px;
+    background-color: #fff;
+    width: 345px;
+    height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 38px;
+    box-sizing: border-box;
+    gap: 21px;
+    text-align: left;
+    font-size: 21px;
+    color: #938e8e;
+}
+
+.rectangle-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 9px;
+    background-color: rgba(128, 178, 228, 0.69);
+    width: 462px;
+    height: 175px;
+}
+
+.div23 {
+    position: relative;
+    top: unset;
+    left: 63px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    width: 85px;
+    height: 25px;
+}
+
+.div24 {
+    position: relative;
+    top: unset;
+    left: 262px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    width: 85px;
+    height: 25px;
+}
+
+.div22 {
+    position: relative;
+    top: unset;
+    left: 728px;
+    width: 462px;
+    height: 175px;
+    display: none;
+    text-align: left;
+    font-size: 16px;
     color: #000;
 }
 
@@ -609,8 +746,45 @@
     width: 100%;
     position: relative;
     background-color: #fff;
-    height: 2012px;
+    min-height: 100vh;
+    /* 최소 높이는 보장 */
+    overflow-y: auto;
     text-align: center;
     font-size: 14px;
     color: #625858;
-    font-family: KoPubWorldDotum;   }
+    font-family: KoPubWorldDotum;
+    padding-bottom: 120px;
+}
+
+.vote-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+.pagination {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 16px;
+}
+
+.pagination a,
+.pagination strong {
+    padding: 6px 12px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+}
+
+.pagination strong {
+    font-weight: bold;
+    background-color: #e0e0e0;
+}

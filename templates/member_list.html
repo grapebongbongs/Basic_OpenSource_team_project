@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>국회의원 명단</title>
+    <style>
+        .member {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .member img {
+            width: 100px;
+            height: auto;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>국회의원 명단</h1>
+    {% for member in members %}
+    <div class="member">
+        {% if member.image_url %}
+        <img src="{{ member.image_url }}" alt="{{ member.name }}">
+        {% endif %}
+        <div>
+            <strong>{{ member.name }}</strong><br>
+            정당: {{ member.party }}<br>
+            선거구: {{ member.origin }}<br>
+            UNIT_CD: {{ member.unit_cd }}
+        </div>
+    </div>
+    {% empty %}
+    <p>의원 정보가 없습니다.</p>
+    {% endfor %}
+</body>
+
+</html>

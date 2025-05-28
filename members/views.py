@@ -8,7 +8,7 @@ def update_and_show_main(request):
     members = AssemblyMember.objects.order_by('name')
     for member in members:
         c= member.committee
-        if "," in member.committee:
+        if member.committee and "," in member.committee:
             c = member.committee.split(",")[0] + " 등"
         modified_members.append({
             "name": member.name,
@@ -16,6 +16,7 @@ def update_and_show_main(request):
             "party": member.party,
             "image_url": member.image_url,
             "origin": member.origin,
+            "mona_cd": member.mona_cd,
         })
     return render(request, 'main/main.html', {'members': modified_members})
 
@@ -29,3 +30,5 @@ def redirect_to_vote(request, mona_cd):
     
     # vote 앱의 member_detail 뷰로 리다이렉트
     return redirect('vote:member_detail', mona_cd=mona_cd)
+
+

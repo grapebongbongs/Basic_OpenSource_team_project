@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('members.urls', 'members'), namespace='members')),  # api 앱으로 라우팅
     path('agendas/', include('agendas.urls')),
-    path('member/', include('vote.urls', namespace='vote')),  # api 앱으로 라우팅
+    path('vote/', include('vote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
