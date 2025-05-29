@@ -1,24 +1,27 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Inter:400");
+
 * {
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
 }
-html,
-body {
-  margin: 0px;
-  height: 100%;
-}
-/* a blue color as a generic focus style */
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-x: hidden !important;
+    background-color: #f3f3f3 !important;
+    
+    padding-bottom: 50px !important;
+  }
+
+/* 포커스 스타일, 링크 등 기타 */
 button:focus-visible {
-  outline: 2px solid #4a90e2 !important;
-  outline: -webkit-focus-ring-color auto 5px !important;
+    outline: 2px solid #4a90e2 !important;
+    outline: -webkit-focus-ring-color auto 5px !important;
 }
+
 a {
-  text-decoration: none;
-}
-@font-face {
-  font-family: "KoPubWorldDotum-Bold";
-  src: url("https://anima-uploads.s3.amazonaws.com/projects/61838df7c0542dd581a29201/fonts/kopub-dotum-bold.ttf")
-    format("truetype");
+    text-decoration: none;
 }

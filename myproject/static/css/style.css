@@ -1,129 +1,122 @@
 .screen {
-    background-color: #ffffff;
+    background-color: #f3f3f3;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: relative;
+    padding-bottom: 1500px !important;
+}
+
+.screen .div {
+    background-color: #f3f3f3;
     width: 100%;
-  }
-  
-  .screen .div {
-    background-color: #ffffff;
-    width: 1512px;
     height: 1080px;
-    position: relative;
-  }
-  
-  .screen .div-2 {
     position: absolute;
-    width: 1512px;
-    height: 276px;
-    top: 0;
-    left: 0;
-  }
-  
-  .screen .overlap-group {
-    position: relative;
-    height: 276px;
-  }
-  
-  .screen .background {
+}
+
+.screen .overlap {
     position: absolute;
-    width: 1512px;
+    width: 100%;
     height: 122px;
     top: 0;
     left: 0;
-    background-color: #feed99;
-  }
-  
-  .screen .rectangle {
-    width: 1512px;
-    height: 244px;
-    top: 32px;
-    border-radius: 120px 120px 0px 0px;
+}
+
+.screen .background {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 10px;
     position: absolute;
+    top: 0;
     left: 0;
-    background-color: #ffffff;
-  }
-  
-  .screen .MENU {
+}
+
+.screen .background-2 {
+    width: 100%;
+    height: 122px;
+    background-color: #727272;
+}
+
+.screen .MENU {
     position: absolute;
     width: 61px;
     height: 61px;
     top: 36px;
-    left: 1338px;
-  }
-  
-  .screen .logo {
+    right: 46px;
+    all: unset; 
+    cursor: pointer;
+}
+
+.screen .logo {
     position: absolute;
     width: 34px;
     height: 34px;
     top: 41px;
-    left: 129px;
+    left: 113px;
     background-color: #c98e53;
-  }
-  
-  .screen .logoo {
+}
+
+.screen .logoo {
     position: absolute;
     width: 38px;
     height: 38px;
     top: -2px;
     left: -2px;
     object-fit: cover;
-  }
-  
-  .screen .view {
+}
+
+.screen .view {
     display: flex;
     flex-direction: column;
-    width: 1512px;
+    width:  100%;
     height: 69px;
-    align-items: flex-start;
-    gap: 10px;
     padding: 11px 229px;
     position: absolute;
     top: 296px;
     left: 0;
-    background-color: #feed99;
-  }
-  
-  .screen .group {
+    background-color: #727272cc;
+}
+
+.screen .group {
     position: relative;
     width: 175px;
     height: 46px;
-  }
-  
-  .screen .overlap-group-2 {
+}
+
+.screen .overlap-group {
     position: relative;
     width: 173px;
     height: 46px;
-  }
-  
-  .screen .rectangle-2 {
+}
+
+.screen .rectangle {
+    position: absolute;
     width: 173px;
     height: 45px;
-    top: 0;
+    background-color: #ffffff;
     border-radius: 20px 0px 20px 0px;
     box-shadow: 0px 4px 4px #00000040;
-    position: absolute;
-    left: 0;
-    background-color: #ffffff;
-  }
-  
-  .screen .text-wrapper {
+}
+
+.screen .text-wrapper {
     position: absolute;
     width: 164px;
     height: 46px;
-    top: 0;
     left: 3px;
+    top : 15px;
     font-family: "KoPubWorldDotum-Bold", Helvetica;
     font-weight: 700;
     color: #615757;
     font-size: 21px;
     text-align: center;
     letter-spacing: 1.05px;
-    line-height: normal;
-  }
-  
-  .screen .view-2 {
+}
+
+.screen .view-2 {
     display: flex;
     width: 592px;
     height: 46px;
@@ -131,219 +124,244 @@
     gap: 18px;
     padding: 2px 33px;
     position: absolute;
-    top: 496px;
-    left: 219px;
-  }
-  
-  .screen .frame {
+    top: 481px;
+    left: 232px;
+}
+
+.screen .frame {
+    display: flex;
     flex-direction: column;
     width: 592px;
     height: 46px;
     gap: 1px;
-    display: flex;
     align-items: flex-start;
     position: absolute;
     top: 0;
     left: 0;
-  }
-  
-  .screen .group-2 {
-    position: relative;
+}
+
+.screen .group-2 {
     width: 251px;
     height: 45px;
-    background-color: #feed99;
-  }
-  
-  .screen .line {
-    position: relative;
-    align-self: stretch;
+    background-color: #72727280;
+}
+
+
+.date-bg {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 또는 contain */
+    z-index: 0;
+}
+
+.screen .line {
+    margin-top: 40px;
     width: 100%;
     height: 1px;
     object-fit: cover;
-  }
-  
-  .screen .left {
-    position: relative;
-    width: 24.75px;
-    height: 26.71px;
-    margin-left: -2.00px;
-  }
-  
-  .screen .overlap-group-wrapper {
-    position: relative;
+}
+
+
+.screen .overlap-group-wrapper {
     width: 196.62px;
     height: 38.12px;
-  }
-  
-  .screen .overlap-group-3 {
+}
+
+.screen .overlap-group-2 {
     position: relative;
     width: 193px;
     height: 38px;
-  }
-  
-  .screen .text-wrapper-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen .text-wrapper-2,
+.screen .text-wrapper-3 {
     position: absolute;
-    width: 125px;
     height: 38px;
-    top: 0;
+    font-family: "KoPubWorldDotum-Bold", Helvetica;
+    font-weight: 700;
+    color: #615757;
+    font-size: 19px;
+    letter-spacing: 0.57px;
+    line-height: normal;
+    z-index: 1;
+}
+
+.screen .text-wrapper-2 {
+    width: 125px;
     left: 0;
-    font-family: "KoPubWorldDotum-Bold", Helvetica;
-    font-weight: 700;
-    color: #615757;
-    font-size: 19px;
-    letter-spacing: 0.57px;
-    line-height: normal;
-  }
-  
-  .screen .text-wrapper-3 {
-    position: absolute;
+}
+
+.screen .text-wrapper-3 {
     width: 125px;
-    height: 38px;
-    top: 0;
     left: 68px;
-    font-family: "KoPubWorldDotum-Bold", Helvetica;
-    font-weight: 700;
-    color: #615757;
-    font-size: 19px;
-    letter-spacing: 0.57px;
-    line-height: normal;
-  }
-  
-  .screen .right {
+}
+
+.screen .left {
     position: absolute;
     width: 24px;
     height: 27px;
     top: 13px;
-    left: 185px;
-  }
-  
-  .screen .img {
+    left: 0px;
+    z-index: 1;
+}
+
+.screen .right {
+    position: absolute;
+    width: 24px;
+    height: 27px;
+    top: 13px;
+    left: 150px;
+    z-index: 1;
+}
+
+.screen .img {
     position: absolute;
     width: 127px;
     height: 5px;
     top: 798px;
-    left: 724px;
+    left: 1224px;
+    margin-top: 100px;
     object-fit: cover;
-  }
-  
-  .screen .overlap {
+}
+
+.screen .overlap-2 {
     position: absolute;
     width: 474px;
     height: 314px;
-    top: 644px;
-    left: 853px;
-  }
-  
-  .screen .view-3 {
-    display: inline-flex;
-    align-items: center;
+    top: 638px;
+    left: 868px;
+}
+
+.screen .frame-2 {
     position: absolute;
-    top: 22px;
-    left: 74px;
-  }
-  
-  .screen .text-wrapper-4 {
-    position: relative;
-    width: 55px;
-    height: 37px;
-    margin-top: -1.00px;
-    font-family: "KoPubWorldDotum-Bold", Helvetica;
-    font-weight: 700;
-    color: #000000;
-    font-size: 19px;
-    text-align: center;
-    letter-spacing: 0.57px;
-    line-height: normal;
-  }
-  
-  .screen .text-wrapper-5 {
-    position: relative;
-    width: 55px;
-    height: 37px;
-    margin-top: -1.00px;
-    margin-left: -9px;
-    font-family: "KoPubWorldDotum-Bold", Helvetica;
-    font-weight: 700;
-    color: #000000;
-    font-size: 19px;
-    text-align: center;
-    letter-spacing: 0.57px;
-    line-height: normal;
-  }
-  
-  .screen .frame-2 {
-    flex-wrap: wrap;
-    width: 474px;
-    gap: 0px 7px;
+    left: 544px;
     display: flex;
+    flex-wrap: wrap;
+    width: 900px;
+    height: 700px;
+    gap: 0px 7px;
+    margin-top: -50px;
     align-items: flex-start;
+    overflow: visible !important;
+}
+
+/* 모달 및 필터 버튼 영역 */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    background-color: #dbdbdb;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: "KoPubWorldDotum-Medium", Helvetica;
+    font-size: 14px;
+}
+
+.filter-btn.active {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.modal-body {
+    font-family: "KoPubWorldDotum-Light", Helvetica;
+    font-size: 14px;
+    padding: 10px;
+}
+
+/* 스크롤 영역 */
+.view-4 {
+    position: relative;
+    width: 890px;
+    height: 550px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.view-4::-webkit-scrollbar {
+    display: none;
+}
+
+.view-5 {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+
+.view-5 > div {
     position: absolute;
     top: 0;
     left: 0;
-  }
-  
-  .screen .div-wrapper {
-    display: flex;
-    width: 79px;
-    height: 34px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 6px 12px;
-    position: relative;
-    margin-top: -1.00px;
-    margin-left: -1.00px;
-    background-color: #dbdbdb;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  
-  .screen .text-wrapper-6 {
-    position: relative;
-    width: fit-content;
-    font-family: "Inter", Helvetica;
-    font-weight: 400;
-    color: #000000;
-    font-size: 14px;
-    text-align: center;
-    letter-spacing: 0.42px;
-    line-height: normal;
-  }
-  
-  .screen .div-wrapper-2 {
-    display: flex;
-    width: 79px;
-    height: 34px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 6px 12px;
-    position: relative;
-    margin-top: -1.00px;
-    background-color: #d8d8d8;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  
-  .screen .view-4 {
-    position: relative;
-    width: 476px;
-    height: 284px;
-    margin-bottom: -1.00px;
-    margin-left: -1.00px;
-    margin-right: -1.00px;
-    background-color: #ffffff;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  
-  .screen .view-5 {
-    position: absolute;
-    width: 4px;
-    height: 65px;
-    top: 73px;
-    left: 468px;
+    width: 8px;
+    height: 50px;
     background-color: #c1c1c1;
     border-radius: 30px;
+    transition: top 0.1s ease;
+}
+
+
+/* 메뉴 전체 */
+.menubar {
+    position: fixed;
+    top: -300px; /* 처음엔 화면 밖 */
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: top 0.4s ease;
+    z-index: 2000;
   }
   
+  /* 활성화되면 화면 위에 보이도록 */
+  .menubar.active {
+    top: 0;
+  }
+  
+  /* 메뉴 내부 정렬 스타일 */
+  .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .menubar .menu {
+    position: fixed;
+
+    }
+  
+  .menuframe {
+    text-align: center;
+  }
+  
+  .menuframe .text-wrapper,
+  .menuframe .div {
+    font-size: 18px;
+    margin: 10px 0;
+    cursor: pointer;
+    color: #333;
+  }
+
+
