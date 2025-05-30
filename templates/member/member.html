@@ -7,139 +7,207 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/member_style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500;700&display=swap" />
-    <title>국회의원 상세 정보</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/chart.js' %}"></script>
+
+
+
 </head>
 
 <body>
+
     <div class="div">
         <div class="background">
-            <div class="background1"></div>
-            <div class="background-child"></div>
-        </div>
-
-        <div class="child"></div>
-        <b class="b">본회의 표결정보</b>
-
-        <div class="div1">
-            <b class="b1">선거구</b>
-            <b class="answer">{{ member.origin }}</b>
-            <div class="item"></div>
-            <b class="b2">소속위원회</b>
-            <b class="answer1">{{ member.committee }}</b>
-            <div class="inner"></div>
-            <b class="b3">당선 대수</b>
-            <b class="answer2">{{ member.unit }}</b>
-            <div class="line-div"></div>
-            <b class="b4">사무실 전화</b>
-            <b class="answer3">{{ member.phone }}</b>
-            <div class="child1"></div>
-            <b class="b5">사무실 호실</b>
-            <b class="answer4">{{ member.assem_addr }}</b>
-            <div class="child2"></div>
-            <b class="b6">개별 홈페이지</b>
-            <b class="answer5">{{ member.homepage }}</b>
-            <div class="child3"></div>
-            <b class="b7">이메일</b>
-            <b class="answer6">{{ member.email }}</b>
-            <div class="child4"></div>
-            <b class="b8">보좌관</b>
-            <b class="answer7">{{ member.staff }}</b>
-            <div class="child5"></div>
-            <b class="b9">선임비서관</b>
-            <b class="answer8">{{ member.secretary }}</b>
-            <div class="child6"></div>
-            <b class="b10">의원실 안내</b>
-            <b class="answer9"></b>       
-        </div>
-
-        <div class="div2">
-            <b class="b11">연번</b>
-            <b class="b11">대수</b>
-            <b class="b11">의결일자</b>
-            <b class="b11">의안명</b>
-            <b class="b15">소관위원회</b>
-            <b class="b15">표결정보</b>
-            <b class="b15">표결결과</b>
-            <img class="line-icon" alt="" src="Line 15.svg">
-        </div>
-
-        <div class="votes-list">
-            {% for vote in votes %}
-            <div class="div3">
-                <div class="div4">{{ forloop.counter }}</div>
-                <div class="div4">제 {{ vote.bill.age }}대</div>
-                <div class="div4">{{ vote.bill.rgs_proc_dt }}</div>
-                <div class="div4">{{ vote.bill.bill_name }}</div>
-                <div class="div8">{{ vote.bill.committee }}</div>
-                <div class="div8">{{ vote.vote_result }}</div>
-                <div class="div8">{{ vote.bill.proc_result }}</div>
+            <div class="background1">
             </div>
-            {% endfor %}
+            <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
+            
+            
+            <div class="logo">
+                <div class="logo-child">
+                </div>
+                <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
+            
+            </div>
         </div>
-
-        <div class="title">
-            <b class="b18">국회의원 인물 정보</b>
+        <div class="child">
         </div>
-
-        <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
-        <div class="logo">
-            <div class="logo-child"></div>
-            <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
-        </div>
-
-        <div class="rectangle-parent">
-            <div class="group-child"></div>
-            <div class="group-item"></div>
-        </div>
-
+        
         <div class="picture">
             <div class="profile-picture-parent">
                 <div class="profile-picture">
                     <img src="{{ member.image_url }}" alt="{{ member.name }}" class="profile-picture">
                 </div>
-                <div class="name"></div>
-                <div class="name1"></div>
-                <div class="div19">{{ member.name }} ({{ member.hj_nm }})</div>
-                <div class="div20">{{ member.party }}</div>
+                <div class="name-wrapper">
+                    <div class="name">
+                    </div>
+                </div>
+                <div class="name-parent">
+                    <div class="name1">
+                    </div>
+                    <div class="div1">{{ member.name }} ({{ member.hj_nm }})</div>
+                </div>
+                <div class="div2">{{ member.party }}</div>
             </div>
             <img class="picture-child" alt="" src="{% static 'images/Line_23.svg' %}">
-        </div>
 
+
+
+            <div class="rectangle-parent">
+                <div class="group-child">
+                </div>
+                <div class="div22">
+                    <div class="title">
+                        <b class="b8">국회의원 상세 정보</b>
+                    </div>
+                    <div class="div23">
+                        <b class="b9">선거구</b>
+                        <b class="answer">{{ member.origin }}</b>
+                        <div class="inner">
+                        </div>
+                        <b class="b10">소속위원회</b>
+                        <b class="answer1">{{ member.committee }}</b>
+                        <div class="line-div">
+                        </div>
+                        <b class="b11">당선 대수</b>
+                        <b class="answer2">{{ member.unit }}</b>
+                        <div class="child1">
+                        </div>
+                        <b class="b12">사무실 전화</b>
+                        <b class="answer3">{{ member.phone }}</b>
+                        <div class="child2">
+                        </div>
+                        <b class="b13">사무실 호실</b>
+                        <b class="answer4">{{ member.assem_addr }}</b>
+                        <div class="child3">
+                        </div>
+                        <b class="b14">개별 홈페이지</b>
+                        <b class="answer5">{{ member.homepage }}</b>
+                        <div class="child4">
+                        </div>
+                        <b class="b15">이메일</b>
+                        <b class="answer6">{{ member.email }}</b>
+                        <div class="child5">
+                        </div>
+                        <b class="b16">보좌관</b>
+                        <b class="answer7">{{ member.staff }}</b>
+                        <div class="child6">
+                        </div>
+                        <b class="b17">선임비서관</b>
+                        <b class="answer8">{{ member.secretary }}</b>
+                        <div class="child7">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="div24">
+                <div class="rectangle-div">
+                </div>
+                <div class="title1">
+                    <b class="b8">본회의 출석률</b>
+            
+            
+            
+                    {% for data in chart_data %}
+                    <div class="chart-container">
+                        <h4>{{ data.age }}대 국회</h4>
+                        <canvas id="chart-age-{{ data.age }}"></canvas>
+                    </div>
+                    {% endfor %}
+            
+                    <script>
+                        const chartDataList = {{ chart_data| safe }};
+
+                        chartDataList.forEach(data => {
+                            const ctx = document.getElementById(`chart-age-${data.age}`).getContext('2d');
+                            new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['출석', '결석'],
+                                    datasets: [{
+                                        data: [data.attendance_rate, data.absent_rate],
+                                        backgroundColor: [
+                                            'rgba(54, 162, 235, 0.7)',  // 출석
+                                            'rgba(255, 99, 132, 0.7)'   // 결석
+                                        ],
+                                        borderColor: [
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 99, 132, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom'
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: `출석률`
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+            
+                </div>
+            </div>
+
+        </div>
         <div class="search-bar">
-            <div class="div21">다른 의원 정보 검색</div>
+            <div class="div3">다른 의원 정보 검색</div>
             <img class="vector-icon" alt="" src="{% static 'images/Vector.svg' %}">
+
             <img class="frame-icon" alt="" src="{% static 'images/Frame.svg' %}">
+
         </div>
 
-        <div class="div22">
-            <div class="rectangle-div"></div>
-            <div class="div23">정당</div>
-            <div class="div24">{{ member.party }}</div>
-        </div>
+        <div class="div4">
+            <b class="b">본회의 표결정보</b>
 
-        <div class="pagination">
-            {% if votes.has_previous %}
-            <a href="?page={{ votes.previous_page_number }}">&laquo; 이전</a>
-            {% endif %}
-        
-            {% for num in custom_page_range %}
-            {% if votes.number == num %}
-            <strong>{{ num }}</strong>
-            {% else %}
-            <a href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
+            
+            <div class="div5">
+                <b class="b1">연번</b>
+                <b class="b1">대수</b>
+                <b class="b1">의결일자</b>
+                <b class="b1">의안명</b>
+                <b class="b5">소관위원회</b>
+                <b class="b5">표결정보</b>
+                <b class="b5">표결결과</b>
+                <img class="item" alt="" src="Line 15.svg">
+
+            </div>
+            {% for vote in votes %}
+            <div class="div6">
+                <div class="div7">{{ forloop.counter }}</div>
+                <div class="div7">제 {{ vote.bill.age }}대</div>
+                <div class="div7">{{ vote.bill.rgs_proc_dt }}</div>
+                <div class="div7">{{ vote.bill.bill_name }}</div>
+                <div class="div11">{{ vote.bill.committee }}</div>
+                <div class="div11">{{ vote.vote_result }}</div>
+                <div class="div11">{{ vote.bill.proc_result }}</div>
+            </div>
             {% endfor %}
-        
-            {% if votes.has_next %}
-            <a href="?page={{ votes.next_page_number }}">다음 &raquo;</a>
-            {% endif %}
         </div>
 
-
+        
+        <div class="div25">
+            <div class="child8">
+            </div>
+            <div class="div26">정당</div>
+            <div class="div27">정당</div>
+        </div>
     </div>
 
 
-    
+
 
 </body>
 

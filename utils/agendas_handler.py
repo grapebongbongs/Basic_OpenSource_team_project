@@ -10,32 +10,46 @@ def fetch_and_store_bills():
     count = 0
 
     for AGE in range(20, 23):
-        pIndex = 1  # ← 위치 중요
+        pIndex = 1
         while True:
             url = f'{base_url}?KEY={key}&AGE={AGE}&pIndex={pIndex}&pSize={pSize}'
-            res = requests.get(url)
-            res.encoding = 'utf-8'
-            root = ET.fromstring(res.text)
+            try:
+                res = requests.get(url, timeout=10)
+                res.raise_for_status()
+                res.encoding = 'utf-8'
+                root = ET.fromstring(res.text)
+            except Exception as e:
+                print(f"[ERROR] Failed to fetch or parse page {pIndex} of AGE {AGE}: {e}")
+                break  # 다음 AGE로 넘어감
+
             rows = root.findall('row')
             if not rows:
+                print(f"[INFO] No more data for AGE {AGE} at page {pIndex}.")
                 break
 
             for row in rows:
                 bill_id = row.findtext('BILL_ID')
                 if not bill_id or Bill.objects.filter(bill_id=bill_id).exists():
+                    continue  # skip duplicates or invalid
+
+                try:
+                    Bill.objects.create(
+                        bill_no=row.findtext('BILL_NO'),
+                        age=row.findtext('AGE'),
+                        bill_name=row.findtext('BILL_NM'),
+                        bill_kind=row.findtext('BILL_KIND'),
+                        proposer=row.findtext('PROPOSER'),
+                        rgs_proc_dt=row.findtext('RGS_PROC_DT'),
+                        committee=row.findtext('COMMITTEE_NM'),
+                        proc_result=row.findtext('PROC_RESULT_CD'),
+                        bill_id=bill_id,
+                    )
+                    count += 1
+                except Exception as e:
+                    print(f"[SAVE ERROR] Failed to save BILL_ID={bill_id}: {e}")
                     continue
-                Bill.objects.create(
-                    bill_no=row.findtext('BILL_NO'),
-                    age=row.findtext('AGE'),
-                    bill_name=row.findtext('BILL_NM'),
-                    bill_kind=row.findtext('BILL_KIND'),
-                    proposer=row.findtext('PROPOSER'),
-                    rgs_proc_dt=row.findtext('RGS_PROC_DT'),
-                    committee=row.findtext('COMMITTEE_NM'),
-                    proc_result=row.findtext('PROC_RESULT_CD'),
-                    bill_id=bill_id,
-                )
-                count += 1  # ← 저장된 건수 증가
+
             pIndex += 1
 
+    print(f"[SUMMARY] Total bills saved: {count}")
     return count

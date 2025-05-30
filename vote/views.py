@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from members.models import AssemblyMember
 from vote.models import Vote
 from agendas.models import Bill
+from django.db.models import Count, Q
 
 def member_detail(request, mona_cd):
     member = get_object_or_404(AssemblyMember, mona_cd=mona_cd)
@@ -24,11 +25,36 @@ def member_detail(request, mona_cd):
     # 의원이 발의한 법률안 (이름이 proposer에 포함됨)
     proposed_bills = Bill.objects.filter(proposer__icontains=member.name)
 
+
+
+
+    # 출석률 계산
+    votes = Vote.objects.filter(member__mona_cd=mona_cd)
+    age_groups = votes.values('bill__age').annotate(
+        total=Count('id'),
+        absents=Count('id', filter=Q(vote_result='불참'))
+    )
+
+    chart_data = []
+    for group in age_groups:
+        age = group['bill__age']
+        total = group['total']
+        absent = group['absents']
+        attendance = round((total - absent) / total * 100, 2)
+        chart_data.append({
+            'age': age,
+            'attendance_rate': attendance,
+            'absent_rate': 100 - attendance
+        })
+
+
+
     context = {
         'member': member,
         'votes': votes,  # 페이지네이션된 객체
         'proposed_bills': proposed_bills,
         'custom_page_range': custom_range,
+        'chart_data': chart_data,
     }
 
     return render(request, 'member/member.html', context)
