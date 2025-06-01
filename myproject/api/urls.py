@@ -1,13 +1,12 @@
 from django.urls import path
 from .views import (
-    search_bills, search_page,
+    search_bills,
     calendar_events, calendar_page,
     party_map_view, party_data_api, representative_data_api
 )
 
 urlpatterns = [
-    # 기존 기능
-    path('', search_page, name='bill-search-page'),
+    
     path('bills/', search_bills, name='bill-search'),
     path('json/', search_bills, name='bill-search-api'),
     path('calendar/', calendar_page, name='calendar-page'),  # calendar 페이지

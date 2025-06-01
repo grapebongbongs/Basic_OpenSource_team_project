@@ -24,7 +24,7 @@ def calendar_page(request):
     """
     캘린더 페이지를 렌더링합니다.
     """
-    return render(request, 'api/calendar.html')
+    return render(request, 'calendar/calendar.html')
 
 def calendar_events(request):
     start = request.GET.get('start')
@@ -65,37 +65,6 @@ def calendar_events(request):
 
 
 
-def search_page(request):
-    """
-    검색 UI 페이지 렌더링
-    """
-    query = request.GET.get('q', '')
-    page_num = request.GET.get('page', 1)
-
-    if query:
-        qs = Bill.objects.filter(
-            Q(SCH_KIND__icontains=query) |
-            Q(SCH_CN__icontains=query) |
-            Q(CMIT_NM__icontains=query) |
-            Q(EV_INST_NM__icontains=query) |
-            Q(EV_PLC__icontains=query)
-        )
-    else:
-        qs = Bill.objects.none()
-
-    paginator = Paginator(qs, 20)
-    try:
-        results = paginator.page(page_num)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        results = paginator.page(paginator.num_pages)
-
-    return render(request, 'api/search.html', {
-        'query': query,
-        'results': results,
-        'paginator': paginator,
-    })
 
 
 
@@ -130,12 +99,15 @@ def search_bills(request):
 
 
 def party_map_view(request):
-    for daesu in range(10, 22):
-        load_representatives_to_db(daesu)
-        load_distribution_to_db(daesu)
-    daesu = int(request.GET.get('daesu', 21))  # 대수 파라미터 받기
-    return render(request, 'map.html', {'daesu': daesu})
+    daesu = int(request.GET.get('daesu', 21))  # 기본값: 21대
 
+    # 초기 요청 시점에 해당 대수의 데이터만 로드
+    if not Representative.objects.filter(year=daesu).exists():
+        load_representatives_to_db(daesu)
+    if not PartyDistribution.objects.filter(daesu=daesu).exists():
+        load_distribution_to_db(daesu)
+
+    return render(request, 'map/map.html', {'daesu': daesu})
 
 # -----------------------------------------------------------
 # 정당 분포 데이터 API

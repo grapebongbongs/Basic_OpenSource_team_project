@@ -9,6 +9,77 @@ function loadRepresentativeData(daesu, region) {
     });
 }
 
+
+function loadRegionData(regionId) {
+  const regionInfoBox = document.getElementById('region-info'); // 상세 정보 박스
+  const regionName = document.getElementById('region-name');
+  const partyList = document.getElementById('party-list');
+  const repList = document.getElementById('rep-list');
+
+  // 대수를 사용하여 API 호출
+  fetch(`/api/representative-data/?daesu=${regionId}`)
+    .then(res => res.json())
+    .then(data => {
+      // 지역 이름 업데이트
+      regionName.textContent = data.regionName;
+
+      // 정당 목록 업데이트
+      partyList.innerHTML = '<li><strong>정당 분포</strong></li>';
+      data.parties.forEach(party => {
+        const li = document.createElement('li');
+        li.textContent = `${party.name} - ${party.percentage}%`;
+        partyList.appendChild(li);
+      });
+
+      // 국회의원 목록 업데이트
+      repList.innerHTML = '<li><strong>국회의원</strong></li>';
+      data.representatives.forEach(rep => {
+        const li = document.createElement('li');
+        li.textContent = `${rep.name} (${rep.party})`;
+        repList.appendChild(li);
+      });
+
+      // 상세 정보 박스를 보여주기
+      regionInfoBox.style.display = 'block';
+    })
+    .catch(err => {
+      console.error('지역 데이터 로딩 오류:', err);
+    });
+}
+
+// 페이지 로딩 후 지역 클릭 이벤트 설정
+document.addEventListener('DOMContentLoaded', () => {
+  const paths = document.querySelectorAll('#map svg path');
+  
+  paths.forEach(path => {
+    path.addEventListener('click', () => {
+      const regionId = path.id;  // 지역의 ID를 가져옵니다.
+      console.log('Clicked region:', regionId);
+      
+      // 슬라이더 대수 값 가져오기
+      const daesu = document.getElementById('daesu-slider').value;
+      // 클릭한 지역의 정보 로딩
+      loadRegionData(daesu, regionId);
+    });
+  });
+
+  // 슬라이더 변경 시 대수 정보 업데이트
+  const slider = document.getElementById('daesu-slider');
+  const selectedDaesu = document.getElementById('selected-daesu');
+  
+  slider.addEventListener('input', () => {
+    const daesu = slider.value;  // 슬라이더에서 대수를 가져옴
+    selectedDaesu.textContent = `${daesu}대`;
+    // 슬라이더 값에 따라 지역 데이터 로드
+    const region = document.getElementById('region-name').textContent;
+    loadRegionData(daesu, region);  // 대수와 지역을 전달하여 지역 데이터 로드
+  });
+
+  // 초기 데이터 로드
+  selectedDaesu.textContent = `${slider.value}대`;
+  loadRegionData(slider.value, '서울');  // 첫 페이지 로딩 시 기본 지역 '서울'에 대한 데이터 로드
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const slider = document.getElementById('daesu-slider');
   const selectedDaesu = document.getElementById('selected-daesu');
@@ -16,8 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const regionInfo = document.getElementById('region-info'); // 중괄호 추가
   const regionName = document.getElementById('region-name');
 
-  const menuButton = document.getElementById('menu-button');
-  const dropdownMenu = document.getElementById('dropdown-menu');
 
   let partyData = {};
   let repData = {};
@@ -182,16 +251,5 @@ document.addEventListener('DOMContentLoaded', () => {
   selectedDaesu.textContent = `${slider.value}대`;
   loadAllData(slider.value);
 
-  if (menuButton && dropdownMenu) {
-    menuButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
 
-    document.addEventListener('click', (e) => {
-      if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.classList.remove('show');
-      }
-    });
-  }
 });

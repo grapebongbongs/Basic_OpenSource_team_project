@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="{% static 'css/map_globals.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/map_style.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/map.css' %}">
+        <script defer src="{% static 'js/map.js' %}"></script>
+    </head>
+    <body>
+        <div class="div-wrapper">
+            <div class="div">
+                <div class="overlap-group">
+                    <div class="background"><div class="background-2"></div></div>
+                    <img class="MENU" src="{% static 'svg/MENU.svg' %}" />
+                    <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
+                </div>
+                <div class="overlap">
+                    <img class="image" src="{%  static 'img/Rectangle 17.png'%}" />
+                    <div class="view"></div>
+                </div>
+                <div class="title">
+                    <div class="text-wrapper">연도별 지역 정당 비율</div>
+                    <img class="vector" src="{%  static 'svg/Group 19.svg'%}" />
+                </div>
+                <div class="overlap-2">
+                    <div class="svg-map-container">
+                      <object type="image/svg+xml" data="{% static 'svg/korea_map.svg' %}" class="svg-map"></object>
+                    </div>
+                    <img class="line" src="{% static 'svg/line-24.svg' %}" />
+                    <div class="rectangle"></div>
+                    <div class="view-2"></div>
+                    <div class="title-2">
+                        <div class="text-wrapper-2">지역 이름</div>
+                        <div class="text-wrapper-3">정당별 의원 비율</div>
+                    </div>
+                </div>
+                <div class="view-wrapper"><div class="view-3"></div></div>
+            </div>
+        </div>
+    </body>
+</html>
