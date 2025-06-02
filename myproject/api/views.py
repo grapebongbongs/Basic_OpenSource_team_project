@@ -141,18 +141,18 @@ def party_data_api(request):
 # -----------------------------------------------------------
 # 의원 데이터 API
 # -----------------------------------------------------------
-
 @api_view(['GET'])
 def representative_data_api(request):
     daesu = request.GET.get('daesu')
     region = request.GET.get('region')  # 지역도 함께 받음
     if not daesu:
         return Response({"error": "daesu parameter is required"}, status=400)
-    
+
     daesu = int(daesu)  # daesu 값을 정수로 변환
 
     # DB에 데이터가 없으면 외부 API에서 로드
     if not Representative.objects.filter(year=daesu).exists():
+        print(f"[DEBUG] Loading representatives for {daesu}대")
         load_representatives_to_db(daesu)
 
     # Representative 모델에서 데이터를 가져오기
@@ -160,7 +160,10 @@ def representative_data_api(request):
 
     # region이 요청되었을 경우 해당 지역만 필터링
     if region:
+        print(f"[DEBUG] Filtering by region: {region}")
         qs = qs.filter(region=region)
+
+    print(f"[DEBUG] Representatives count: {qs.count()}")
 
     data = {}
     for rep in qs:

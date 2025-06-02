@@ -179,7 +179,7 @@
     width: 100px;
     height: 41px;
     color: #000000;
-    font-size: 19px;
+    font-size:30px;
     text-align: center;
     letter-spacing: 0;
     position: relative;
@@ -190,7 +190,7 @@
 }
 
 .div-wrapper .text-wrapper-3 {
-    width: 129px;
+    width: 200px;
     height: 41px;
     color: #000000;
     font-size: 19px;
@@ -241,3 +241,10 @@
     width: 100%;
     height: auto;
 }
+
+#party-chart {
+
+    display: block;
+    margin: 70px auto 0 20px;
+  }
+  
