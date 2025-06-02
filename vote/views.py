@@ -57,7 +57,7 @@ def member_detail(request, mona_cd):
 
     # unit 값에 따라 다른 출결정보 등 처리 가능
     if selected_unit == '20':
-        attendance = get_member_attendance_20(excel_path_20, member.name, member.party)
+        attendance = get_member_attendance_20(excel_path_20, member.name, member.party, member.origin)
         pass
     elif selected_unit == '21':
         attendance = get_member_attendance_21(excel_path_21, member.name, member.party)

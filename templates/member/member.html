@@ -164,7 +164,7 @@
                     </a>
                     {% endif %}
                 
-                    {% if member.phone %}
+                    {% if member.phone or "100022" in member.unit_cd|stringformat:"s" %}
                     <a href="?unit=22">
                         <button class="unit-btn {% if selected_unit == '22' %}active{% endif %}">22대</button>
                     </a>

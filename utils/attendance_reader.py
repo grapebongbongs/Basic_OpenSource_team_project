@@ -53,7 +53,7 @@ def get_member_attendance_from_424(filepath, name, party):
     }
 
 
-def get_member_attendance_20(filepath, name, party):
+def get_member_attendance_20(filepath, name, party, district):
     # ❶ 헤더가 4번째 행(0-index 3)에 있으므로 header=3
     df = pd.read_excel(filepath, header=3).rename(columns=str.strip)
 
@@ -69,15 +69,25 @@ def get_member_attendance_20(filepath, name, party):
         "name": "의원이름",
     }
 
+
     # ❸ 숫자 열 안전 변환
     num_cols = [col["total"], col["attend"], col["absent"],
                 col["leave"], col["trip"]]
     df[num_cols] = df[num_cols].apply(
         lambda s: pd.to_numeric(s, errors="coerce").fillna(0).astype(int))
+    
 
-    row = df[(df[col["name"]] == name) & (df[col["party"]]  == party)]
-    if row.empty:
-        return None                 # 이름이 없으면 None
+    if name == "김성태":
+        row = df[(df[col["name"]] == name) & (df[col["party"]]  == party) & (df[col["district"]] == district)]
+        if row.empty:
+            return None
+    else:
+        row = df[(df[col["name"]] == name) & (df[col["party"]]  == party)]
+        if row.empty:
+            return None                 # 이름이 없으면 None
+
+
+    
     
 
     row = row.iloc[0]

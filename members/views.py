@@ -1,15 +1,43 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import AssemblyMember
 from utils.members_handler import fetch_and_store_current_members
+from django.db.models import Q
 
 def update_and_show_main(request):
     fetch_and_store_current_members()
+
+
+    unit_cd = request.GET.get('unit_cd')
+    query = request.GET.get('q', '').strip()  #query를 받아옴
+
+
+    if unit_cd == '100022':
+        base_qs = AssemblyMember.objects.filter(Q(unit_cd='100022') | (Q(phone__isnull=False) & ~Q(phone='')))
+    elif unit_cd:
+        base_qs = AssemblyMember.objects.filter(unit_cd=unit_cd)
+    else:
+        base_qs = AssemblyMember.objects.all()
+
+
+    # 검색어가 있을 경우 name, origin, party에 대해 OR 검색
+    if query:
+        base_qs = base_qs.filter(
+            Q(name__iexact=query) |          # 이름: 정확히 일치 (대소문자 무시)
+            Q(origin__icontains=query) |     # 출신지: 포함 검색
+            Q(party__iexact=query)           # 정당: 정확히 일치 (대소문자 무시)
+        )
+
+    # 이름 기준 정렬
+    members = base_qs.order_by('name')
+
+    # 최종 데이터 구조 생성
     modified_members = []
-    members = AssemblyMember.objects.order_by('name')
     for member in members:
-        c= member.committee
+        c = member.committee
         if member.committee and "," in member.committee:
             c = member.committee.split(",")[0] + " 등"
+
+
         modified_members.append({
             "name": member.name,
             "committee": c,
@@ -17,6 +45,7 @@ def update_and_show_main(request):
             "image_url": member.image_url,
             "origin": member.origin,
             "mona_cd": member.mona_cd,
+
         })
     return render(request, 'main/main.html', {'members': modified_members})
 

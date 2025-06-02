@@ -1,51 +1,35 @@
-.group-child {
+.background-child {
     position: absolute;
-    top: 122px;
-    left: 0px;
-    background-color: #ffe093;
-    width: 1512.5px;
-    height: 232px;
-}
-
-.background {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: #ffee9a;
-    width: 1512.5px;
-    height: 122px;
-}
-
-.group-item {
-    position: absolute;
-    top: 24px;
-    left: 0px;
-    border-radius: 120px 120px 0px 0px;
-    background-color: #fff;
-    width: 1512.5px;
-    height: 142px;
+    box-shadow: 45px 45px 75px rgba(0, 0, 0, 0.3);
+    border-radius: 11px;
+    background-color: #35c8d0;
+    width: 100%;    /* 부모 폭 그대로(=1513px) */
+    height: 100%;    /* 문서 전체 높이 비율 채움 */
+    display: flex;
+    overflow-y: auto;
 }
 
 .asona {
     position: absolute;
-    top: 191px;
-    left: 455px;
+    top: 193px;
+    left: 50%;
+    transform: translateX(-49.5%);
     letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 644px;
-    height: 138px;
+    text-shadow: 25px 0px 23px rgba(0, 0, 0, 0.25);
 }
 
-.rectangle-parent {
+.background {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 1512.5px;
-    height: 354px;
-    color: #fff9e7;
+    top: 63px;
+    left: 50%;
+    transform: translateX(-49.5%);        /* 가로 중앙 정렬만 수행 */
+    width: 1513px;
+    height: 100%;    /* 문서 전체 높이 비율 채움 */
     font-family: DaeguCatholicUniversity;
+    display: flex;
+    overflow-y: auto;
+    user-select: none;
+        /* 드래그 방지 */
 }
 
 .profile-pic {
@@ -64,17 +48,16 @@
     top: 0px;
     left: 125.51px;
     border-radius: 9px;
-    background-color: #feeda7;
+    background-color: #737373;
     width: 215.7px;
     height: 58.7px;
 }
 
-.div2 {
+.b {
     position: absolute;
     top: 17px;
     left: 140.25px;
     letter-spacing: 0.05em;
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,17 +70,16 @@
     top: 0px;
     left: 347.7px;
     border-radius: 9px;
-    background-color: #feeda7;
+    background-color: #737373;
     width: 215.7px;
     height: 58.7px;
 }
 
-.div3 {
+.b1 {
     position: absolute;
     top: 17.16px;
     left: 365.15px;
     letter-spacing: 0.05em;
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,17 +92,16 @@
     top: 66.91px;
     left: 125.24px;
     border-radius: 9px;
-    background-color: #feeda7;
+    background-color: #737373;
     width: 215.7px;
     height: 58.7px;
 }
 
-.div4 {
+.b2 {
     position: absolute;
     top: 84.07px;
     left: 140.82px;
     letter-spacing: 0.05em;
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,17 +114,16 @@
     top: 66.91px;
     left: 347.7px;
     border-radius: 9px;
-    background-color: #feeda7;
+    background-color: #737373;
     width: 215.7px;
     height: 58.7px;
 }
 
-.div5 {
+.b3 {
     position: absolute;
     top: 83.37px;
     left: 365.01px;
     letter-spacing: 0.05em;
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,9 +133,10 @@
 
 .div1 {
     width: 563.4px;
-    height: 125.6px;
-    border: 1px solid transparent;
     position: relative;
+    height: 125.6px;
+
+    border: 1px solid transparent;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -167,125 +148,92 @@
     user-select: none;
 }
 
-.div7 {
-    position: absolute;
-    top: 20.84px;
-    left: 147.63px;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 170.6px;
-    height: 24.5px;
-}
 
-.div8 {
-    position: absolute;
-    top: 20.84px;
-    left: 374.63px;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 170.6px;
-    height: 24.5px;
-}
-
-.div9 {
-    position: absolute;
-    top: 79.84px;
-    left: 147.63px;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 170.6px;
-    height: 24.5px;
-}
-
-.div10 {
-    position: absolute;
-    top: 86.84px;
-    left: 370.63px;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 170.6px;
-    height: 24.5px;
-}
 
 .parent {
     position: absolute;
-    top: 647px;
-    left: calc(50% - 575px);
-    width: 1150.7px;
+    top: 727px;
+    left: 50%;
+    transform: translateX(-49.5%);   /* 가로 중앙 정렬만 수행 */
+    width: 1500px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
-    gap: 23px 24px;
+    gap: 50px 70px;
     font-size: 14px;
+    color: #fff;
     z-index: 1;
-    /* z-index 추가 */
+    padding-bottom: 300px;    /* 원하는 여백(px) */
 }
 
-.frame-icon {
+
+
+
+
+
+.menu-icon {
     position: absolute;
     top: 41px;
-    left: 1349px;
+    right: 5vw;
     border-radius: 9px;
     width: 41px;
     height: 41px;
     overflow: hidden;
 }
 
-.frame {
-    position: absolute;
-    top: 443px;
-    left: 1238px;
-    width: 28px;
-    height: 28px;
-    overflow: hidden;
-}
-
 .test {
     width: 559px;
     position: relative;
-    letter-spacing: 0.09em;
-    font-weight: 500;
+    letter-spacing: 0.1em;
     display: flex;
     align-items: center;
-    height: 25px;
+    height: 100%;
     flex-shrink: 0;
-    text-shadow: 1px 0 0 #000, 0 1px 0 #000, -1px 0 0 #000, 0 -1px 0 #000;
+    border: none;    /* ✅ 테두리 제거 */
+    outline: none;    /* ✅ 클릭했을 때 나오는 파란 테두리도 제거 */
+    background-color: transparent;    /* 배경도 투명하게 (필요 시) */
+
+
+    /* 커서 스타일 */
+    caret-color: transparent;    /* 기본 커서 숨김 */
+    font-weight: bold;    /* 입력된 텍스트 및 커서 두께에 영향 */
+    user-select: text;    /* 텍스트 선택 허용 */
 }
 
 .vector-icon {
-    width: 17px;
-    position: relative;
-    max-height: 100%;
-}
-
-.frame-icon1 {
     width: 24px;
     position: relative;
     max-height: 100%;
     overflow: hidden;
     flex-shrink: 0;
+    cursor: pointer;    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;    /* 드래그 방지 */
+    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
+    
 }
 
-.test-parent {
+.frame-icon {
+    width: 17px;
+        position: relative;
+        max-height: 100%;
+        cursor: pointer;
+        /* 손가락 모양 커서 */
+        transition: transform 0.1s ease, filter 0.2s ease;
+        user-select: none;
+        /* 드래그 방지 */
+        pointer-events: auto;
+        /* ✅ 클릭 가능하도록 설정 */
+}
+
+.search-bar {
     position: absolute;
     top: 519px;
     left: calc(50% - 359px);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
     background-color: #fff;
     width: 717px;
@@ -299,6 +247,7 @@
     gap: 21px;
     text-align: left;
     font-size: 21px;
+    color: #000;
 }
 
 .logo-child {
@@ -322,24 +271,101 @@
 .logo {
     position: absolute;
     top: 41px;
-    left: 113px;
+    left: 5vw;
     width: 34px;
     height: 34px;
+}
+
+.child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 6px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px 9px 0px 0px;
+    background-color: #fff;
+    width: 118px;
+    height: 39px;
+}
+
+.div6 {
+    position: absolute;
+    top: 7px;
+    left: 24px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 27px;
+}
+
+.div5 {
+    width: 118px;
+    position: relative;
+    height: 39px;
+    display:flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    box-shadow: 6px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px 9px 0px 0px;
+    background-color: #fff;
+    cursor: pointer;
+    user-select: none;    /* 입력 커서 제거 */
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.div8 {
+    position: absolute;
+    top: 6px;
+    left: 24px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 27px;
+}
+
+.group {
+    position: absolute;
+    top: 600px;
+    left: 160px;
+    width: 377px;
+    height: 39px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    font-size: 17px;
+    color: #484141;
 }
 
 .div {
     width: 100%;
     position: relative;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-    background-color: #fff;
-    height: 982px;
-    overflow: hidden;
+    background-color: #f3f3f3;
+    min-height: 100vh;    /* 보이는 화면엔 항상 꽉 차게 */
+    overflow-y: auto;
+
     text-align: center;
     font-size: 157px;
-    color: #000;
+    color: #f2e8e8;
     font-family: KoPubWorldDotum;
-    overflow-y: scroll;
 }
+
+
+html,body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 
 .div1:hover {
     border-color: #0d47a1 !important;
@@ -353,4 +379,56 @@
 .div1 * {
     cursor: pointer;
     pointer-events: auto;
+}
+
+
+.div5:hover {
+    background-color: #e0e0e0;
+    /* 호버 시 약간 진해짐 */
+}
+
+.div5:active {
+    background-color: #bdbdbd;
+    /* 클릭 시 회색으로 */
+}
+
+.div5.selected {
+    background-color: #bdbdbd !important;
+    /* 클릭된 버튼은 회색 유지 */
+}
+
+
+.test:empty:before {
+    content: attr(data-placeholder);
+    color: #181717;
+}
+
+
+.test.editing {
+    caret-color: black;
+    /* 편집 중일 때만 커서 표시 */
+    font-weight: bold;
+}
+
+.test::before {
+    content: attr(data-placeholder);
+    color: #aaa;
+}
+
+.test.editing::before {
+    content: '';
+}
+
+
+.vector-icon:hover, .frame-icon:hover {
+    transform: scale(1.5);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+.vector-icon:active, .frame-icon:active {
+    transform: scale(1.95);
+    /* 클릭 시 눌리는 효과 */
+    filter: brightness(0.75);
 }
