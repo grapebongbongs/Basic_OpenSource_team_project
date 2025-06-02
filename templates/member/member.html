@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/member_style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500;700&display=swap" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static 'js/chart.js' %}"></script>
 
 
 
@@ -111,53 +110,67 @@
                     <b class="b8">본회의 출석률</b>
             
             
-            
-                    {% for data in chart_data %}
                     <div class="chart-container">
-                        <h4>{{ data.age }}대 국회</h4>
-                        <canvas id="chart-age-{{ data.age }}"></canvas>
+                        <canvas id="chart-1"></canvas>
                     </div>
-                    {% endfor %}
-            
+                    
+                    
                     <script>
-                        const chartDataList = {{ chart_data| safe }};
-
-                        chartDataList.forEach(data => {
-                            const ctx = document.getElementById(`chart-age-${data.age}`).getContext('2d');
-                            new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: ['출석', '결석'],
-                                    datasets: [{
-                                        data: [data.attendance_rate, data.absent_rate],
-                                        backgroundColor: [
-                                            'rgba(54, 162, 235, 0.7)',  // 출석
-                                            'rgba(255, 99, 132, 0.7)'   // 결석
-                                        ],
-                                        borderColor: [
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 99, 132, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'bottom'
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: `출석률`
-                                        }
-                                    }
+                        const data = {{ attendance| safe }};
+                        const ctx = document.getElementById('chart-1').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['출석률', '기타 결석률', '무단결석률'],
+                                datasets: [{
+                                    data: [data.출석률, data.기타결석률, data.무단결석률],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.7)',
+                                        'rgba(204, 153, 255, 0.7)',
+                                        'rgba(255, 99, 132, 0.7)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(204, 153, 255, 1)',
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { position: 'bottom' },
+                                    title: { display: true, text: '{{ selected_unit }}대 국회 출석률' }
                                 }
-                            });
+                            }
                         });
                     </script>
             
                 </div>
+
+
+
+                <div class="unit-buttons">
+                    {% if "100020" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=20">
+                        <button class="unit-btn {% if selected_unit == '20' %}active{% endif %}">20대</button>
+                    </a>
+                    {% endif %}
+                
+                    {% if "100021" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=21">
+                        <button class="unit-btn {% if selected_unit == '21' %}active{% endif %}">21대</button>
+                    </a>
+                    {% endif %}
+                
+                    {% if member.phone %}
+                    <a href="?unit=22">
+                        <button class="unit-btn {% if selected_unit == '22' %}active{% endif %}">22대</button>
+                    </a>
+                    {% endif %}            
+                </div>
+
             </div>
 
         </div>
@@ -172,7 +185,7 @@
         <div class="div4">
             <b class="b">본회의 표결정보</b>
 
-            
+
             <div class="div5">
                 <b class="b1">연번</b>
                 <b class="b1">대수</b>
@@ -186,7 +199,7 @@
             </div>
             {% for vote in votes %}
             <div class="div6">
-                <div class="div7">{{ forloop.counter }}</div>
+                <div class="div7">{{ forloop.counter0|add:offset|add:"1" }}</div>
                 <div class="div7">제 {{ vote.bill.age }}대</div>
                 <div class="div7">{{ vote.bill.rgs_proc_dt }}</div>
                 <div class="div7">{{ vote.bill.bill_name }}</div>
@@ -195,6 +208,29 @@
                 <div class="div11">{{ vote.bill.proc_result }}</div>
             </div>
             {% endfor %}
+
+
+
+
+
+            <div class="pagination">
+                {% if has_previous_group %}
+                <a href="?page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
+                {% endif %}
+            
+                {% for num in custom_page_range %}
+                {% if num == votes.number %}
+                <span class="page-button active">{{ num }}</span>
+                {% else %}
+                <a href="?page={{ num }}" class="page-button">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+            
+                {% if has_next_group %}
+                <a href="?page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
+                {% endif %}      
+            </div>
+
         </div>
 
         

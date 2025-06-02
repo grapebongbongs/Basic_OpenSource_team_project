@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import AssemblyMember
-from utils.members_handler import fetch_and_store_members
+from utils.members_handler import fetch_and_store_current_members
 
 def update_and_show_main(request):
-    fetch_and_store_members()
+    fetch_and_store_current_members()
     modified_members = []
     members = AssemblyMember.objects.order_by('name')
     for member in members:

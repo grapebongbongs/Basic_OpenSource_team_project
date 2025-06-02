@@ -1,6 +1,5 @@
-import requests
-import xml.etree.ElementTree as ET
-import time
+import requests, xml.etree.ElementTree as ET, time
+from collections import defaultdict
 
 from django.db import transaction
 from django.conf import settings
@@ -9,94 +8,116 @@ from agendas.models import Bill
 from members.models import AssemblyMember
 from vote.models import Vote
 
-def fetch_and_store_votes():
+
+API           = "https://open.assembly.go.kr/portal/openapi/nojepdqqaweusdfbi"
+MAX_RETRY     = 3
+P_SIZE        = 1000       # 페이지당 행 수
+BATCH_SIZE    = 500        # bulk_create 단위
+CONCURRENCY_PS= 0.15       # API 완충(seconds)
+
+# ────────────────────────────────────────────
+def tag(elem, *names):
+    """네임스페이스 무시 .findtext() 헬퍼"""
+    for n in names:
+        v = elem.findtext(n) or elem.findtext(f".//{{*}}{n}")
+        if v:
+            return v.strip()
+    return None
+# ────────────────────────────────────────────
+def flush_votes(buf, total_saved):
+    """버퍼를 DB에 저장하고 진행률 출력"""
+    if not buf:
+        return 0
+    with transaction.atomic():
+        Vote.objects.bulk_create(buf, batch_size=BATCH_SIZE, ignore_conflicts=True)
+    batch_n = len(buf)
+    total_saved += batch_n
+    print(f"  ↳ {batch_n:,}건 저장 (누적 {total_saved:,})")
+    return total_saved
+# ────────────────────────────────────────────
+def fetch_and_store_votes_progress():
     key = settings.ASSEMBLY_API_KEY
-    url = 'https://open.assembly.go.kr/portal/openapi/nojepdqqaweusdfbi'
-    saved_count = 0
-    MAX_RETRY = 3
-    batch_size = 300
-    vote_buffer = []
+
+    # 의원 캐싱
+    member_map   = {m.mona_cd: m for m in AssemblyMember.objects.all()}
+    # 표결 중복 집합 (의안별)
+    existing_all = defaultdict(set)
+    buf          = []
+    saved_total  = 0
     failed_bills = []
+    missing_mem  = defaultdict(int)
 
-    # ✅ AssemblyMember 캐싱 (속도 향상)
-    member_map = {m.mona_cd: m for m in AssemblyMember.objects.all()}
-
-    for age in range(20, 23):  # 20 ~ 22대 국회
-        bills = Bill.objects.filter(age=str(age))
-
+    for age in range(20, 23):                                  # 20~22대
+        bills = Bill.objects.filter(age=age)
         for bill in bills:
             bill_id = bill.bill_id
-            retry_count = 0
+            existing = existing_all[bill_id]                    # 셋
+            page     = 1
 
-            while retry_count < MAX_RETRY:
+            while True:                                         # 페이지 루프
+                full = (f"{API}?KEY={key}&AGE={age}&BILL_ID={bill_id}"
+                        f"&pIndex={page}&pSize={P_SIZE}&type=xml")
+
+                # ---- HTTP 재시도 ---------------------------------
+                for att in range(1, MAX_RETRY + 1):
+                    try:
+                        resp = requests.get(full, timeout=10)
+                        resp.raise_for_status()
+                        break
+                    except requests.RequestException as e:
+                        if att == MAX_RETRY:
+                            print(f"❌ HTTP 실패: {bill_id} p{page}")
+                            failed_bills.append(bill_id)
+                            return saved_total
+                        time.sleep(1)
+
+                # ---- XML 파싱 ------------------------------------
                 try:
-                    full_url = f"{url}?KEY={key}&AGE={age}&BILL_ID={bill_id}&type=xml"
-                    res = requests.get(full_url, timeout=10)
-                    res.raise_for_status()
-                    time.sleep(0.3)
+                    root = ET.fromstring(resp.text)
+                except ET.ParseError as e:
+                    print(f"❌ XML 파싱 실패: {bill_id} p{page} {e}")
+                    failed_bills.append(bill_id)
                     break
-                except requests.exceptions.RequestException as e:
-                    retry_count += 1
-                    print(f"⚠️ 요청 실패: BILL_ID={bill_id}, 재시도 {retry_count}/3 - 에러: {e}")
-                    time.sleep(1)
 
-            if retry_count == MAX_RETRY:
-                failed_bills.append(bill_id)
-                continue
+                rows = root.findall(".//row") or root.findall(".//{*}row")
+                if not rows:
+                    break
 
-            try:
-                root = ET.fromstring(res.text)
-            except ET.ParseError as e:
-                print(f"❌ XML 파싱 실패: BILL_ID={bill_id}, 에러: {e}")
-                failed_bills.append(bill_id)
-                continue
+                # ---- 표결 행 처리 --------------------------------
+                for row in rows:
+                    mona   = tag(row, "MONA_CD")
+                    result = tag(row, "RESULT_VOTE_MOD", "RESULT_VOTE", "RST_VOTE")
+                    if not (mona and result):
+                        continue
+                    if mona in existing:
+                        continue
 
-            rows = root.findall('row')
-            if not rows:
-                print(f"ℹ️ 표결 없음: BILL_ID={bill_id}")
-                continue
+                    member = member_map.get(mona)
+                    if not member:
+                        missing_mem[mona] += 1
+                        continue
 
-            # ✅ 중복 체크: (bill_id, mona_cd) 조합으로 구성
-            existing_votes = set(
-                Vote.objects.filter(bill=bill).values_list('bill_id', 'member__mona_cd')
-            )
+                    buf.append(Vote(bill=bill, member=member, vote_result=result))
+                    existing.add(mona)
 
-            for row in rows:
-                mona_cd = row.findtext('MONA_CD')
-                vote_result = row.findtext('RESULT_VOTE_MOD')
+                    if len(buf) >= BATCH_SIZE:
+                        saved_total = flush_votes(buf, saved_total)
+                        buf.clear()
 
-                if not mona_cd or not vote_result:
-                    continue
+                if len(rows) < P_SIZE:
+                    break
+                page += 1
+                time.sleep(CONCURRENCY_PS)
 
-                if (bill.bill_id, mona_cd) in existing_votes:
-                    continue
+    # ---- 잔여 버퍼 저장 ------------------------------------------
+    if buf:
+        saved_total = flush_votes(buf, saved_total)
 
-                member = member_map.get(mona_cd)
-                if not member:
-                    continue
-
-                vote_buffer.append(Vote(
-                    bill=bill,
-                    member=member,
-                    vote_result=vote_result
-                ))
-                saved_count += 1
-
-                if len(vote_buffer) >= batch_size:
-                    with transaction.atomic():
-                        Vote.objects.bulk_create(vote_buffer)
-                    print(f"✅ {len(vote_buffer)}건 저장 완료")
-                    vote_buffer.clear()
-
-    # 마지막 남은 버퍼 저장
-    if vote_buffer:
-        with transaction.atomic():
-            Vote.objects.bulk_create(vote_buffer)
-        print(f"✅ 최종 {len(vote_buffer)}건 추가 저장 완료")
-
-    print(f"\n🎉 최종 저장된 표결 수: {saved_count}")
+    # ---- 요약 출력 ------------------------------------------------
+    print(f"\n🎉 최종 저장된 표결 수: {saved_total:,}")
     if failed_bills:
-        print(f"❗ 실패한 BILL_ID 목록 ({len(failed_bills)}건): {failed_bills}")
-
-    return saved_count
-
+        print(f"⚠️ 실패 Bill {len(set(failed_bills))}건: {failed_bills[:10]} …")
+    if missing_mem:
+        miss_top = sorted(missing_mem.items(), key=lambda x: -x[1])[:10]
+        print(f"⚠️ DB에 없는 의원 {len(missing_mem)}명 중 상위 10: {miss_top}")
+    return saved_total

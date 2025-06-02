@@ -683,7 +683,7 @@
     left: 0px;
     box-shadow: 11px 11px 7px rgba(0, 0, 0, 0.25);
     background-color: #fff;
-    width: 612px;
+    width: 400px;
     height: 360px;
 }
 
@@ -704,8 +704,8 @@
 .div24 {
     position: absolute;
     top: -125px;
-    left: 1095px;
-    width: 612px;
+    left: 1200px;
+    width: 400px;
     height: 360px;
 }
 
@@ -794,13 +794,14 @@
 
 .chart-container {
     position: absolute;
-    width: 40% !important;
+    width: 50% !important;
     /* 부모 크기에 맞게 확대/축소 */
     height: auto !important;
     /* 비율 유지 */
     aspect-ratio: 1 / 1;
     /* 1:1 비율 유지 (Chart.js 3+에서 가능) */
-    top: 28px;
+    top: 40px;
+    left: 20px;
 }
 
 html, body {
@@ -815,3 +816,62 @@ html, body {
     /* border/padding 포함하여 크기 계산 */
     overflow: auto;
     /* 넘치는 콘텐츠가 보이지 않도록 (필요시 auto) */ }
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.page-button,
+.arrow-button {
+    padding: 8px 14px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid #ccc;
+}
+
+.page-button:hover, 
+.arrow-button:hover {
+    background-color: #ddd;
+}
+
+.page-button.active {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #4CAF50;
+}
+
+
+.unit-buttons {
+    display: flex;
+    gap: 15px;
+    /* 버튼 사이 간격 */
+    margin-top: 375px;
+    margin-left: 30px;
+}
+
+.unit-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.unit-btn.active {
+    background-color: #ccc;
+    border-color: #999;
+    color: #000;
+}
