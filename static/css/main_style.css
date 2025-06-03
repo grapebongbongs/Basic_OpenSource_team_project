@@ -2,16 +2,18 @@
     position: absolute;
     box-shadow: 45px 45px 75px rgba(0, 0, 0, 0.3);
     border-radius: 11px;
-    background-color: #35c8d0;
-    width: 100%;    /* 부모 폭 그대로(=1513px) */
-    height: 100%;    /* 문서 전체 높이 비율 채움 */
+    background-color: #3c326a;
+    width: 1513px;    /* 부모 폭 그대로(=1513px) */
+    height: 271px;
     display: flex;
     overflow-y: auto;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .asona {
     position: absolute;
-    top: 193px;
+    top: 20px;
     left: 50%;
     transform: translateX(-49.5%);
     letter-spacing: 0.05em;
@@ -20,14 +22,13 @@
 
 .background {
     position: absolute;
-    top: 63px;
-    left: 50%;
-    transform: translateX(-49.5%);        /* 가로 중앙 정렬만 수행 */
-    width: 1513px;
+    top: 202px;
+    width: 100%;
     height: 100%;    /* 문서 전체 높이 비율 채움 */
     font-family: DaeguCatholicUniversity;
     display: flex;
     overflow-y: auto;
+    overflow-x: hidden;
     user-select: none;
         /* 드래그 방지 */
 }
@@ -146,6 +147,8 @@
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
     user-select: none;
+    border-radius: 9px;
+    box-shadow: 10px 10px 13px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -155,13 +158,14 @@
     top: 727px;
     left: 50%;
     transform: translateX(-49.5%);   /* 가로 중앙 정렬만 수행 */
-    width: 1500px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
+    max-width: 1200px;
     gap: 50px 70px;
     font-size: 14px;
     color: #fff;
@@ -179,8 +183,8 @@
     top: 41px;
     right: 5vw;
     border-radius: 9px;
-    width: 41px;
-    height: 41px;
+    width: 60px;
+    height: 60px;
     overflow: hidden;
 }
 
@@ -218,20 +222,17 @@
 
 .frame-icon {
     width: 17px;
-        position: relative;
-        max-height: 100%;
-        cursor: pointer;
-        /* 손가락 모양 커서 */
-        transition: transform 0.1s ease, filter 0.2s ease;
-        user-select: none;
-        /* 드래그 방지 */
-        pointer-events: auto;
-        /* ✅ 클릭 가능하도록 설정 */
+    position: relative;
+    max-height: 100%;
+    cursor: pointer;    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;    /* 드래그 방지 */
+    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
 }
 
 .search-bar {
     position: absolute;
-    top: 519px;
+    top: 551px;
     left: calc(50% - 359px);
     box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
@@ -255,16 +256,16 @@
     top: 0px;
     left: 0px;
     background-color: #c98e53;
-    width: 34px;
-    height: 34px;
+    width: 45px;
+    height: 45px;
 }
 
 .logoo-icon {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 34px;
-    height: 34px;
+    width: 45px;
+    height: 45px;
     object-fit: cover;
 }
 
@@ -272,8 +273,8 @@
     position: absolute;
     top: 41px;
     left: 5vw;
-    width: 34px;
-    height: 34px;
+    width: 45px;
+    height: 45px;
 }
 
 .child {
@@ -333,8 +334,9 @@
 
 .group {
     position: absolute;
-    top: 600px;
-    left: 160px;
+    top: 675px;
+    left: 50%;
+    transform: translateX(-580px);    /* ← 중앙에서 오른쪽으로 200px 이동 */
     width: 377px;
     height: 39px;
     display: flex;
@@ -352,6 +354,7 @@
     background-color: #f3f3f3;
     min-height: 100vh;    /* 보이는 화면엔 항상 꽉 차게 */
     overflow-y: auto;
+    overflow-x: hidden;
 
     text-align: center;
     font-size: 157px;
@@ -370,8 +373,10 @@ html,body {
 .div1:hover {
     border-color: #0d47a1 !important;
     /* 테두리 색상 */
-    background-color: #bbdefb;
-    /* 배경색 */
+    transform: scale(1.05);
+        /* 약간 확대 */
+    filter: brightness(0.9);
+        /* 어두워지면서 클릭 느낌 */
     cursor: pointer;
 }
 
@@ -385,6 +390,10 @@ html,body {
 .div5:hover {
     background-color: #e0e0e0;
     /* 호버 시 약간 진해짐 */
+    transform: scale(1.05);
+        /* 약간 확대 */
+    filter: brightness(0.9);
+        /* 어두워지면서 클릭 느낌 */
 }
 
 .div5:active {
@@ -431,4 +440,41 @@ html,body {
     transform: scale(1.95);
     /* 클릭 시 눌리는 효과 */
     filter: brightness(0.75);
+}
+
+.test:hover {
+    cursor: text;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.page-button,
+.arrow-button {
+    padding: 8px 14px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid #ccc;
+}
+
+.page-button:hover,
+.arrow-button:hover {
+    background-color: #ddd;
+}
+
+.page-button.active {
+    background-color: #787878;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #787878;
 }

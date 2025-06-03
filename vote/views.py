@@ -65,6 +65,7 @@ def member_detail(request, mona_cd):
     elif selected_unit == '22':
         attendance = get_member_attendance_from_424(excel_path_22, member.name, member.party)
         pass
+
     
 
 

@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
 
+    {% load url_utils %}
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
     <link rel="stylesheet"
@@ -23,16 +25,18 @@
     <div class="div">
         <div class="background">
             <div class="background-child">
-            </div>
-            <div class="asona">ASONA</div>
-            <div class="group">
-
-                <div class="div5" data-unit="100020">20대</div>
-                <div class="div5" data-unit="100021">21대</div>
-                <div class="div5" data-unit="100022">22대</div>
-
+                <div class="asona">ASONA</div>
             </div>
         </div>
+
+        <div class="group">
+        
+            <div class="div5" data-unit="100020">20대</div>
+            <div class="div5" data-unit="100021">21대</div>
+            <div class="div5" data-unit="100022">22대</div>
+        
+        </div>
+
         <div class="parent">
             {% for m in members %}
             <div class="div1" data-mona-cd="{{ m.mona_cd }}">
@@ -56,12 +60,35 @@
             {% empty %}
             <div class="no-data">데이터가 없습니다.</div>
             {% endfor %}
+
+
+            <div class="pagination">
+                {% querystring_without_page as qs %}
+            
+                {% if has_previous_group %}
+                    <a href="?{{ qs }}&page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
+                {% endif %}
+            
+                {% for num in custom_page_range %}
+                    {% if num == members.number %}
+                        <span class="page-button active">{{ num }}</span>
+                    {% else %}
+                        <a href="?{{ qs }}&page={{ num }}" class="page-button">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            
+                {% if has_next_group %}
+                    <a href="?{{ qs }}&page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
+                {% endif %}      
+            </div>
+
             
         </div>
+
         <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
 
         <div class="search-bar">
-            <div class="test" contenteditable="true" spellcheck="false" data-placeholder="test"></div>
+            <div class="test" contenteditable="true" spellcheck="false" data-placeholder="search"></div>
             <img class="frame-icon" alt="" src="{% static 'images/Vector.svg' %}">
 
             <img class="vector-icon" alt="검색" src="{% static 'images/Frame.svg' %}">

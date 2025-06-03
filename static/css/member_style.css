@@ -2,7 +2,7 @@
     align-self: stretch;
     position: relative;
     width: 100vw;
-    background-color: #737373;
+    background-color: transparent;
     height: 128.8px;
 }
 
@@ -166,16 +166,17 @@
     left: 209px;
     max-height: 100%;
     width: 185px;
+    z-index: 0;
 }
 
 .picture {
     position: relative;
     /* ← 뷰포트 기준 위치 지정 */
-    top: 300px;
+    top: 21vw;
     /* 브라우저 위쪽에서 467px 아래 */
-    right: 32vw;
+    right: 34vw;
     /* 브라우저 오른쪽에서 35% 떨어진 곳 */
-    width: 455px;
+    width: 400px;
     height: 436px;
     text-align: center;
     font-size: 16px;
@@ -193,24 +194,41 @@
     align-items: center;
     height: 25px;
     flex-shrink: 0;
+
+    border: none;    /* ✅ 테두리 제거 */
+    outline: none;    /* ✅ 클릭했을 때 나오는 파란 테두리도 제거 */
+    background-color: transparent;    /* 배경도 투명하게 (필요 시) */
+    
+    
+    /* 커서 스타일 */
+    caret-color: transparent;    /* 기본 커서 숨김 */
+    font-weight: bold;    /* 입력된 텍스트 및 커서 두께에 영향 */
+    user-select: text;    /* 텍스트 선택 허용 */
 }
 
 .vector-icon {
-    width: min(4vw, 17px);
-    /* 최대 17px, 뷰포트 너비 기준 유동 크기 */
-    position: relative;
-    max-height: 100%;
-    display: flex;
-}
-
-.frame-icon {
     width: min(5vw, 24px);
-    /* 최대 24px, 뷰포트 너비 기준 유동 크기 */
+        /* 최대 24px, 뷰포트 너비 기준 유동 크기 */
     position: relative;
     max-height: 100%;
     overflow: hidden;
     flex-shrink: 0;
+    display: flex; 
+    cursor: pointer;    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;    /* 드래그 방지 */
+    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
+}
+
+.frame-icon {
+    width: min(4vw, 17px);    /* 최대 17px, 뷰포트 너비 기준 유동 크기 */
+    position: relative;
+    max-height: 100%;
     display: flex;
+    cursor: pointer;    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;    /* 드래그 방지 */
+    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
 }
 
 .search-bar {
@@ -669,8 +687,8 @@
 
 .rectangle-parent {
     position: absolute;
-    top: -125px;
-    left: 390px;
+    top: 18vw;
+    right: 36vw;
     width: 690px;
     height: 698px;
     font-size: clamp(14px, 2vw, 18px);
@@ -703,8 +721,8 @@
 
 .div24 {
     position: absolute;
-    top: -125px;
-    left: 1200px;
+    top: 18vw;
+    right: 13vw;
     width: 400px;
     height: 360px;
 }
@@ -771,6 +789,7 @@
     /* 너비를 뷰포트에 맞춤 */
     min-height: 100vh;
     /* 최소 높이를 화면에 맞게 */
+    height: auto;
 
     background-color: #f3f3f3;
     padding: 0;
@@ -816,6 +835,25 @@ html, body {
     /* border/padding 포함하여 크기 계산 */
     overflow: auto;
     /* 넘치는 콘텐츠가 보이지 않도록 (필요시 auto) */ }
+
+
+.rect_blue {
+    position: absolute;
+    top: 251px;
+    right: 2vw;
+    box-shadow: 0px 28px 28px rgba(0, 0, 0, 0.25);
+    background-color: #3c326a;
+    width: 1412px;
+    height: 854px;  }
+
+.t {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #1f1355;
+    width: 25px;
+    height: 100%;       
+}
 
 
 .pagination {
@@ -874,4 +912,55 @@ html, body {
     background-color: #ccc;
     border-color: #999;
     color: #000;
+}
+
+.unit-btn:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+
+
+.div3:empty:before {
+    content: attr(data-placeholder);
+    letter-spacing: 0.09em;
+    font-weight: 500;
+}
+
+
+.div3.editing {
+    caret-color: black;
+    /* 편집 중일 때만 커서 표시 */
+    font-weight: bold;
+}
+
+.div3::before {
+    content: attr(data-placeholder);
+    color: #aaa;
+}
+
+.div3.editing::before {
+    content: '';
+}
+
+.div3:hover {
+    cursor: text;
+}
+
+
+.vector-icon:hover,
+.frame-icon:hover {
+    transform: scale(1.5);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+.vector-icon:active,
+.frame-icon:active {
+    transform: scale(1.95);
+    /* 클릭 시 눌리는 효과 */
+    filter: brightness(0.75);
 }
