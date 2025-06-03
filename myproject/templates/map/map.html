@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="{% static 'css/map_globals.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/map_style.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/map.css' %}">
+        <script defer src="{% static 'js/map.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    </head>
+    <body>
+        <div class="div-wrapper">
+            <div class="div">
+                <div class="overlap-group">
+                    <div class="background"><div class="background-2"></div></div>
+                    <img class="MENU" src="{% static 'svg/MENU.svg' %}" />
+                    <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="daesu-slider" min="10" max="21" value="21">
+                    <span id="selected-daesu">21대</span>
+                  </div>
+                </div>
+                <div class="title">
+                    <div class="text-wrapper">연도별 지역 정당 비율</div>
+                    <img class="vector" src="{%  static 'svg/Group 19.svg'%}" />
+                </div>
+                <div class="overlap-2">
+                    <div id="map" class="map-container">
+                        {% include 'map/korea_map.svg' %}
+                    </div>
+                    <img class="line" src="{% static 'svg/line-24.svg' %}" />
+                    <div class="rectangle">
+                        <canvas id="party-chart" width="450" height="450"></canvas>
+                      </div>
+                    <div class="view-2"></div>
+                    <div class="title-2">
+                        <div class="text-wrapper-2">지역</div>
+                        <div class="text-wrapper-3">정당별 의원 비율</div>
+                    </div>
+                </div>
+                <div class="view-wrapper">
+                    <div id="region-info" class="info-box hidden">
+                        <h3 id="region-name">지역명</h3>
+                        <ul id="party-list">
+                          <li><strong>정당 분포</strong></li>
+                          <!-- 동적으로 추가될 정당 분포 항목들 -->
+                        </ul>
+                        <ul id="rep-list">
+                          <li><strong>국회의원</strong></li>
+                          <!-- 동적으로 추가될 국회의원 목록 -->
+                        </ul>
+                      </div>
+                    <div class="view-3"></div></div>
+            </div>
+        </div>
+    </body>
+</html>

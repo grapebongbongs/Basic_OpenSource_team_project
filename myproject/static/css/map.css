@@ -1,0 +1,260 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.div {
+  width: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+}
+
+.header svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 1;
+}
+
+.div5 {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;
+  font-family: "KoPubWorldDotum-Medium", sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.menu-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+}
+
+.menu-icon {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+
+.map-container {
+  width: 600px;                /* 너비 조절 */
+  margin: 0 0 20px 0;    /* 중앙 정렬 + 아래 여백 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: -700px; 
+}
+
+.map-container svg {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.slider-wrapper {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 700px;
+  height: 50px;
+  top: 1400px;
+  left: -800px;
+}
+
+#selected-daesu {
+  min-width: 50px;
+  text-align: right;
+  font-weight: 500;
+}
+
+#daesu-slider {
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  background: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+#daesu-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 40px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0,0,0,0.5) 10px,
+    rgba(0,0,0,0.5) 20px
+  );
+}
+
+#daesu-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 60px;
+  height: 60px;
+  background-color: #FFE957;
+  border: 2px solid #000;
+  border-radius: 6px;
+  margin-top: -10px;
+}
+
+#daesu-slider::-moz-range-track {
+  width: 100%;
+  height: 40px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0,0,0,0.5) 10px,
+    rgba(0,0,0,0.5) 20px
+  );
+}
+
+#daesu-slider::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background-color: #FFE957;
+  border: 2px solid #000;
+  border-radius: 6px;
+}
+
+#daesu-slider:focus {
+  outline: none;
+}
+
+.info-box.hidden {
+  max-width: 400px;
+  margin: 0 auto 40px;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  display: none; /* 숨기기 */
+}
+
+.info-box {
+  max-width: 400px;
+  margin: 0 auto 40px;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  display: block;
+}
+
+.info-box h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.info-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-box li {
+  padding: 4px 0;
+}
+/* 기본 g[region] 요소 스타일 */
+#map svg g[region] {
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, stroke 0.2s ease, fill-opacity 0.2s ease, filter 0.2s ease;
+  z-index: 1;
+  pointer-events: all;
+}
+
+/* hover 시 살짝 확대 */
+#map svg g[region]:hover {
+  transform: scale(1.03);
+  z-index: 10;
+}
+
+/* hover 시 내부 강조 */
+#map svg g[region]:hover path,
+#map svg g[region]:hover polygon {
+  stroke: #000;
+  stroke-width: 2;
+  fill-opacity: 0.85;
+}
+
+/* 클릭 시 (선택 상태) 강조 효과 */
+#map svg g[region].active-region {
+  transform: scale(1.07);
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  z-index: 20;
+}
+
+/* 선택된 지역의 내부 path/polygon 스타일 */
+#map svg g[region].active-region path,
+#map svg g[region].active-region polygon {
+  fill: #FFD54F; /* 강조 배경색 */
+  stroke: #FF6F00; /* 강조 테두리색 */
+  stroke-width: 3;
+  fill-opacity: 0.95;
+}
+/* path 기본 스타일 */
+#map svg path {
+  fill: transparent ;
+  stroke: #333 !important;
+  stroke-width: 1.5 !important;
+  transition: stroke 0.2s, fill-opacity 0.2s;
+  pointer-events: all;
+}
+
+/* polygon 기본 스타일 */
+#map svg polygon {
+  fill: transparent;
+  stroke: #333 !important;
+  stroke-width: 1.5 !important;
+  transition: stroke 0.2s, fill-opacity 0.2s;
+  pointer-events: all;
+}
+
+
+/* 드롭다운 메뉴 활성화 효과 */
+.menu-wrapper:hover .menu-icon {
+  opacity: 0.8;
+}
+
+.menu-icon:active {
+  transform: scale(0.95);
+  transition: transform 0.2s;
+}
+
+/* 슬라이더 클릭/드래그 시 효과 */
+#daesu-slider:active::-webkit-slider-thumb {
+  background-color: #ffcc00;
+  border-color: #000;
+}
+
+#daesu-slider:active::-moz-range-thumb {
+  background-color: #ffcc00;
+  border-color: #000;
+}
+
