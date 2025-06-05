@@ -13,7 +13,7 @@
   }
 html,
 body {
-    margin: 0px;
+    margin: 0px !important;
     height: 100%;
     font-family: 'allFont', sans-serif;
 }
