@@ -31,22 +31,11 @@ class PartyDistribution(models.Model):
     
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 67ada50ee672eb98107cd90b9a41e6a0a5bc157d
 class Representative(models.Model):
     name = models.CharField(max_length=100)
     party = models.CharField(max_length=100)
     region = models.CharField(max_length=100)
-<<<<<<< HEAD
     daesu = models.IntegerField()  # year 대신 daesu로 변경
 
     def __str__(self):
         return f"{self.daesu}대 {self.name} ({self.party}) - {self.region}"
-=======
-    year = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.year}년 {self.name} ({self.party}) - {self.region}"
->>>>>>> 67ada50ee672eb98107cd90b9a41e6a0a5bc157d
