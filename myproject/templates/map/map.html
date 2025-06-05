@@ -13,11 +13,11 @@
 
     </head>
     <body>
+      <img  id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
+        <div class="background-2"></div>
         <div class="div-wrapper">
             <div class="div">
                 <div class="overlap-group">
-                    <div class="background"><div class="background-2"></div></div>
-                    <img class="MENU" src="{% static 'svg/MENU.svg' %}" />
                     <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
                 </div>
                 <div class="slider-wrapper">
@@ -35,9 +35,8 @@
                     </div>
                     <img class="line" src="{% static 'svg/line-24.svg' %}" />
                     <div class="rectangle">
-                        <canvas id="party-chart" width="450" height="450"></canvas>
+                        <canvas id="party-chart" width="550" height="550"></canvas>
                       </div>
-                    <div class="view-2"></div>
                     <div class="title-2">
                         <div class="text-wrapper-2">지역</div>
                         <div class="text-wrapper-3">정당별 의원 비율</div>
@@ -45,18 +44,34 @@
                 </div>
                 <div class="view-wrapper">
                     <div id="region-info" class="info-box hidden">
-                        <h3 id="region-name">지역명</h3>
-                        <ul id="party-list">
-                          <li><strong>정당 분포</strong></li>
-                          <!-- 동적으로 추가될 정당 분포 항목들 -->
-                        </ul>
-                        <ul id="rep-list">
-                          <li><strong>국회의원</strong></li>
-                          <!-- 동적으로 추가될 국회의원 목록 -->
-                        </ul>
-                      </div>
-                    <div class="view-3"></div></div>
+                      <h3 id="region-name">지역명</h3>
+                      <ul id="party-list">
+                        <li><strong>정당 분포</strong></li>
+                        <!-- 동적 항목 -->
+                      </ul>
+                      <ul id="rep-list">
+                        <li><strong>국회의원</strong></li>
+                        <!-- 동적 의원 목록 -->
+                      </ul>
+                    </div>
+                    <div class="view-3">
+                      <div id="scroll-thumb"></div>
+                    </div>
+                  </div>
+     
             </div>
+                            <!-- 메뉴바: 처음엔 화면 위에 숨겨짐 -->
+                <div class="menubar" id="slide-menu">
+                      <div class="menu">
+                          <div class="menuframe">
+                              <div class="asona">ASONA</div>
+                              <a href="/api//home/" class="text-wrapper">홈 화면</a>
+                              <a href="/api/map/" class="text-wrapper">지도</a>
+                              <a href="/api/calendar/" class="text-wrapper">캘린더</a>
+                          </div>
+                    </div>         
+              </div>
+                          
         </div>
     </body>
 </html>

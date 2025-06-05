@@ -102,7 +102,7 @@ def party_map_view(request):
     daesu = int(request.GET.get('daesu', 21))  # 기본값: 21대
 
     # 초기 요청 시점에 해당 대수의 데이터만 로드
-    if not Representative.objects.filter(year=daesu).exists():
+    if not Representative.objects.filter(daesu=daesu).exists():
         load_representatives_to_db(daesu)
     if not PartyDistribution.objects.filter(daesu=daesu).exists():
         load_distribution_to_db(daesu)
@@ -144,27 +144,31 @@ def party_data_api(request):
 @api_view(['GET'])
 def representative_data_api(request):
     daesu = request.GET.get('daesu')
-    region = request.GET.get('region')  # 지역도 함께 받음
+    region = request.GET.get('region')  # 시도명 또는 "비례대표" 가능
+
     if not daesu:
         return Response({"error": "daesu parameter is required"}, status=400)
 
-    daesu = int(daesu)  # daesu 값을 정수로 변환
+    try:
+        daesu = int(daesu)
+    except ValueError:
+        return Response({"error": "daesu must be an integer"}, status=400)
 
     # DB에 데이터가 없으면 외부 API에서 로드
-    if not Representative.objects.filter(year=daesu).exists():
+    if not Representative.objects.filter(daesu=daesu).exists():
         print(f"[DEBUG] Loading representatives for {daesu}대")
         load_representatives_to_db(daesu)
 
-    # Representative 모델에서 데이터를 가져오기
-    qs = Representative.objects.filter(year=daesu)
+    # 쿼리셋 생성
+    qs = Representative.objects.filter(daesu=daesu)
 
-    # region이 요청되었을 경우 해당 지역만 필터링
     if region:
         print(f"[DEBUG] Filtering by region: {region}")
         qs = qs.filter(region=region)
 
     print(f"[DEBUG] Representatives count: {qs.count()}")
 
+    # 지역별 데이터 구성
     data = {}
     for rep in qs:
         data.setdefault(rep.region, []).append({

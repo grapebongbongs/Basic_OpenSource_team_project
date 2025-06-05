@@ -11,21 +11,18 @@
       <title>국회 일정 캘린더</title>
     </head>
     <body>
+        <img id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
+        <div class="background-2"></div>
         <div class="screen">
             <div class="div">
                 <div class="overlap">
-                    <div class="background"><div class="background-2"></div></div>
-                    <img id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
                     <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
                 </div>
-                <div class="view">
                     <div class="group">
                         <div class="overlap-group">
-                            <div class="rectangle"></div>
                             <div class="text-wrapper">일정 캘린더</div>
                         </div>
                     </div>
-                </div>
                 <div class="view-2">
                     <div class="frame">
                         <div class="group-2" ></div>
@@ -66,15 +63,17 @@
               </div>
 
                         <!-- 메뉴바: 처음엔 화면 위에 숨겨짐 -->
-            <div class="menubar" id="slide-menu">
-                <div class="menu">
-                    <div class="menuframe">
-                        <a href="/api//home/" class="text-wrapper">홈 화면</a>
-                        <a href="/api/map/" class="text-wrapper">지도</a>
-                        <a href="/api/calendar/" class="text-wrapper">캘린더</a>
+                    <div class="menubar" id="slide-menu">
+                        <div class="menu">
+                            <div class="menuframe">
+                                   <div class="asona">ASONA</div>
+                                   <a href="/api//home/" class="text-menubar">홈 화면</a>
+                                   <a href="/api/map/" class="text-menubar">지도</a>
+                                   <a href="/api/calendar/" class="text-menubar">캘린더</a>
+                            </div>
+                        </div>         
                     </div>
-                </div>
-            </div>
+                        
   
         </div>
 

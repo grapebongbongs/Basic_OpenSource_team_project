@@ -171,7 +171,6 @@ def load_distribution_to_db(daesu: int):
                 count=cnt,
                 percentage=(cnt / tot * 100) if tot else 0,
             )
-
 def load_representatives_to_db(daesu: int):
     API_URL = "https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet"
     params = {
@@ -185,7 +184,8 @@ def load_representatives_to_db(daesu: int):
     resp.raise_for_status()
 
     soup = BeautifulSoup(resp.content, 'lxml-xml')
-    Representative.objects.filter(year=daesu).delete()
+    # year → daesu 로 수정
+    Representative.objects.filter(daesu=daesu).delete()
 
     rep_pattern = re.compile(
         rf"제{daesu}대국회의원\((?P<region>[^)]+)\)\s*(?P<party>[^제]+)"
@@ -203,9 +203,10 @@ def load_representatives_to_db(daesu: int):
 
         region_key = "비례대표" if "비례대표" in full_region else extract_sido(full_region)
 
+        # year → daesu 로 수정
         Representative.objects.create(
             name=name,
             party=party,
             region=region_key,
-            year=daesu,
+            daesu=daesu,
         )

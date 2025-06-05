@@ -1,3 +1,23 @@
+function scaleUI() {
+  const baseWidth = 2560;  // 기준 너비
+  const currentWidth = window.innerWidth;
+  const scale = currentWidth / baseWidth;
+
+  const wrapper = document.querySelector('.div-wrapper');
+  if (wrapper) {
+    wrapper.style.transform = `scale(${scale})`;
+  }
+}
+
+// 페이지 로드 시, 리사이즈 시 실행
+window.addEventListener('load', scaleUI);
+window.addEventListener('resize', scaleUI);
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
   const renderedKindsOnDates = new Set();

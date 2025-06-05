@@ -3,10 +3,19 @@
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
 }
+
+
+@font-face {
+    font-family: 'allfont';  /* 폰트 이름 지정, 임의로 정함 */
+    src: url('/static/fonts/allfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
 html,
 body {
     margin: 0px;
     height: 100%;
+    font-family: 'allFont', sans-serif;
 }
 /* a blue color as a generic focus style */
 button:focus-visible {

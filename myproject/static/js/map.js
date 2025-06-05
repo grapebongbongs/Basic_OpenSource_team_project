@@ -1,13 +1,37 @@
+function scaleUI() {
+  const baseWidth = 2560;  // 기준 너비
+  const currentWidth = window.innerWidth;
+  const scale = currentWidth / baseWidth;
+
+  const wrapper = document.querySelector('.div-wrapper');
+  if (wrapper) {
+    wrapper.style.transform = `scale(${scale})`;
+  }
+}
+
+// 페이지 로드 시, 리사이즈 시 실행
+window.addEventListener('load', scaleUI);
+window.addEventListener('resize', scaleUI);
+
+
+
+
 let activeRegion = null;
 
 function loadRepresentativeData(daesu, region) {
   return fetch(`/api/representative-data/?daesu=${daesu}&region=${region}`)
     .then(res => res.json())
+    .then(data => {
+      console.log('후처리된 대표자 데이터:', data);
+      // 해당 지역의 대표자 배열만 반환
+      return data[region] || [];
+    })
     .catch(err => {
       console.error('의원 API 오류:', err);
-      return {};
+      return [];
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const slider = document.getElementById('daesu-slider');
@@ -17,13 +41,127 @@ document.addEventListener('DOMContentLoaded', () => {
   const regionInfo = document.getElementById('region-info');
   const regionName = document.getElementById('region-name');
   const rectangle = document.querySelector('.rectangle');
-  const regionNameTextWrapper = document.querySelector('.text-wrapper-2'); // 추가: 동적 지역명 변경용
-
-  const menuButton = document.getElementById('menu-button');
-  const dropdownMenu = document.getElementById('dropdown-menu');
+  const regionNameTextWrapper = document.querySelector('.text-wrapper-2');
+  const scrollBar = document.querySelector('.view-3');
+  const scrollThumb = document.getElementById('scroll-thumb');
+  
+  let isDragging = false;
+  let startY = 0;
+  let startTop = 0;
+  
+  function updateThumbHeight() {
+    const scrollBarHeight = scrollBar.clientHeight;
+    const contentRatio = regionInfo.clientHeight / regionInfo.scrollHeight;
+  
+    if (contentRatio >= 1) {
+      scrollThumb.style.display = 'none';
+      return 0;
+    } else {
+      scrollThumb.style.display = 'block';
+    }
+  
+    const thumbHeight = Math.max(scrollBarHeight * contentRatio, 30);
+    scrollThumb.style.height = thumbHeight + 'px';
+    return thumbHeight;
+  }
+  
+  function getMaxScroll() {
+    return regionInfo.scrollHeight - regionInfo.clientHeight;
+  }
+  
+  function getMaxThumbTop(thumbHeight) {
+    return scrollBar.clientHeight - thumbHeight;
+  }
+  
+  function updateThumbPosition() {
+    const thumbHeight = updateThumbHeight();
+    if (thumbHeight === 0) return;
+  
+    const maxThumbTop = getMaxThumbTop(thumbHeight);
+    const maxScroll = getMaxScroll();
+  
+    if (maxScroll <= 0) {
+      scrollThumb.style.top = '0px';
+      return;
+    }
+  
+    const scrollRatio = regionInfo.scrollTop / maxScroll;
+    scrollThumb.style.top = (scrollRatio * maxThumbTop) + 'px';
+  }
+  
+  function checkScrollVisibility() {
+    if (regionInfo.scrollHeight <= regionInfo.clientHeight) {
+      scrollBar.style.display = 'none';
+    } else {
+      scrollBar.style.display = 'block';
+    }
+  }
+  
+  regionInfo.addEventListener('scroll', updateThumbPosition);
+  
+  window.addEventListener('resize', () => {
+    updateThumbPosition();
+    checkScrollVisibility();
+  });
+  
+  scrollThumb.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    startTop = parseFloat(scrollThumb.style.top) || 0;
+    e.preventDefault();
+    e.stopPropagation();
+  });
+  
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const thumbHeight = updateThumbHeight();
+    const maxThumbTop = getMaxThumbTop(thumbHeight);
+  
+    let deltaY = e.clientY - startY;
+    let newTop = startTop + deltaY;
+  
+    if (newTop < 0) newTop = 0;
+    if (newTop > maxThumbTop) newTop = maxThumbTop;
+  
+    scrollThumb.style.top = newTop + 'px';
+  
+    const scrollRatio = newTop / maxThumbTop;
+    regionInfo.scrollTop = scrollRatio * getMaxScroll();
+  });
+  
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+  
+  scrollBar.addEventListener('click', (e) => {
+    if (isDragging) return;
+    if (e.target === scrollThumb) return;
+  
+    const rect = scrollBar.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+  
+    const thumbHeight = updateThumbHeight();
+    if (thumbHeight === 0) return;
+  
+    const maxThumbTop = getMaxThumbTop(thumbHeight);
+  
+    let newTop = clickY - (thumbHeight / 2);
+  
+    if (newTop < 0) newTop = 0;
+    if (newTop > maxThumbTop) newTop = maxThumbTop;
+  
+    scrollThumb.style.top = newTop + 'px';
+  
+    const scrollRatio = newTop / maxThumbTop;
+    regionInfo.scrollTop = scrollRatio * getMaxScroll();
+  });
+  
+  // 초기화
+  checkScrollVisibility();
+  updateThumbPosition();
 
   let partyData = {};
-  let repData = {};
+  let repDataCache = {};  // region 단위 캐시
   let currentDaesu = slider.value;
 
   const partyColors = {
@@ -64,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
     '통합민주당' : '#419639',
   };
 
-  // Chart.js 파이 차트 그리기 함수
   function drawPartyPieChart(partyData) {
     let canvas = rectangle.querySelector('canvas#party-chart');
     if (!canvas) {
@@ -132,30 +269,25 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       plugins: [ChartDataLabels],
     });
-    
-    }
-
-  
+  }
 
   function loadAllData(daesu) {
     currentDaesu = daesu;
+    repDataCache = {};  // 대수 변경 시 캐시 초기화
     console.log(`데이터 로딩 중, 대수: ${daesu}`);
-    Promise.all([
-      fetch(`/api/party-data/?daesu=${daesu}`).then(res => res.json()),
-      loadRepresentativeData(daesu),
-    ])
-    .then(([party, reps]) => {
-      partyData = party;
-      repData = reps;
-      updateMapColors();
-      setupClickEvents();
-      if (activeRegion) {
-        activeRegion.click();
-      }
-    })
-    .catch(err => {
-      console.error('데이터 로딩 오류:', err);
-    });
+    fetch(`/api/party-data/?daesu=${daesu}`)
+      .then(res => res.json())
+      .then(party => {
+        partyData = party;
+        updateMapColors();
+        setupClickEvents();
+        if (activeRegion) {
+          activeRegion.click();
+        }
+      })
+      .catch(err => {
+        console.error('정당 데이터 로딩 오류:', err);
+      });
   }
 
   function updateMapColors() {
@@ -193,87 +325,109 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-  
+
   function setupClickEvents() {
     const regions = document.querySelectorAll('g[region]');
-    const svg = document.querySelector('svg');  // SVG 전체 영역 선택 (필요 시 변경)
+    const svg = document.querySelector('svg');
     regions.forEach(elem => {
-      elem.onclick = (e) => {
-        e.stopPropagation();  // 이벤트 버블링 막기: 빈 공간 클릭과 구분
-        
+      elem.onclick = async (e) => {
+        e.stopPropagation();
         if (activeRegion) {
           activeRegion.classList.remove('active-region');
           activeRegion.style.transform = '';
           activeRegion.style.transition = '';
         }
+
         
         elem.classList.add('active-region');
         activeRegion = elem;
-        
-        // 맨 앞으로 이동
-        const parent = elem.parentNode;
-        parent.appendChild(elem);
-        
+
+        elem.parentNode.appendChild(elem);
         elem.style.transition = 'transform 0.3s ease';
         elem.style.transform = 'translate(5px, -5px)';
-        
-        // 다른 지역 불투명도 조정
+
         regions.forEach(r => {
           r.style.opacity = (r === activeRegion) ? '1' : '0.4';
         });
-        
+
         const region = elem.getAttribute('region');
         if(regionNameTextWrapper) {
           regionNameTextWrapper.textContent = region;
         }
         regionName.textContent = region;
-        
         partyList.innerHTML = '';
         repList.innerHTML = '';
-        
+
         const parties = partyData[region];
-        const reps = repData[region];
-        
+
         if (parties?.length > 0) {
           drawPartyPieChart(parties);
         } else {
           rectangle.innerHTML = '<p>정당 정보 없음</p>';
         }
-        
+
+        // 의원 데이터 비동기 로딩
+        if (!repDataCache[region]) {
+          repDataCache[region] = await loadRepresentativeData(currentDaesu, region);
+        }
+        const reps = repDataCache[region];
+
         if (reps?.length > 0) {
-          const repHeader = document.createElement('li');
-          repHeader.innerHTML = '<strong>국회의원</strong>';
-          repList.appendChild(repHeader);
-          
-          reps.forEach(r => {
-            const li = document.createElement('li');
-            li.textContent = `${r.name} (${r.party})`;
-            repList.appendChild(li);
-          });
+                // 정당별로 그룹화
+                const grouped = {};
+                reps.forEach(r => {
+                  if (!grouped[r.party]) grouped[r.party] = [];
+                  grouped[r.party].push(r.name);
+                });
+
+                // 리스트 초기화
+                repList.innerHTML = '';
+                // 정당별 반복
+                Object.entries(grouped).forEach(([party, names]) => {
+                  const divider = document.createElement('hr');
+                  divider.style.border = 'none';
+                  divider.style.borderTop = '1px solid #ccc';
+                  divider.style.margin = '8px 0';
+                  repList.appendChild(divider);
+                
+                  const partyColor = partyColors[party] || '#2c3e50'; // 여기서 색상 설정
+                
+                  const partyItem = document.createElement('li');
+                  partyItem.innerHTML = `<span style="font-weight: bold; font-size: 1em; color: ${partyColor};">${party}</span>`;
+                  partyItem.style.margin = '4px 0';
+                  repList.appendChild(partyItem);
+                
+                  names.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = `- ${name}`;
+                    li.style.marginLeft = '12px';
+                    li.style.color = '#333';
+                    li.style.fontSize = '0.95em';
+                    repList.appendChild(li);
+                  });
+                });
+
         } else {
           const li = document.createElement('li');
           li.textContent = '국회의원 정보 없음';
           repList.appendChild(li);
         }
-        
+
         regionInfo.classList.remove('hidden');
       };
-      
+
       elem.addEventListener('mouseenter', () => {
         if (elem !== activeRegion) {
-          const parent = elem.parentNode;
-          parent.appendChild(elem);
-          
+          elem.parentNode.appendChild(elem);
           elem.style.transition = 'transform 0.3s ease';
           elem.style.transform = 'translate(5px, -5px)';
           elem.style.stroke = '#000';
           elem.style.strokeWidth = '2';
-          
-          // 선택된 지역이 있으면 나머지 지역 불투명도 조정
+
           if (activeRegion) {
             regions.forEach(r => {
               if (r !== activeRegion && r !== elem) {
-                r.style.opacity = '0.3'; // 더 연하게
+                r.style.opacity = '0.3';
               } else {
                 r.style.opacity = '1';
               }
@@ -281,15 +435,14 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-      
+
       elem.addEventListener('mouseleave', () => {
         if (elem !== activeRegion) {
           elem.style.transition = 'transform 0.3s ease';
           elem.style.transform = '';
           elem.style.stroke = '';
           elem.style.strokeWidth = '';
-          
-          // 선택된 지역이 있으면 나머지는 불투명도 0.4, 없으면 모두 1
+
           if (activeRegion) {
             regions.forEach(r => {
               r.style.opacity = (r === activeRegion) ? '1' : '0.4';
@@ -301,6 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
+
       if (svg) {
         svg.onclick = () => {
           if (activeRegion) {
@@ -308,31 +462,22 @@ document.addEventListener('DOMContentLoaded', () => {
             activeRegion.style.transform = '';
             activeRegion.style.transition = '';
             activeRegion = null;
-    
-            // 모든 지역 불투명도 원래대로
+
             regions.forEach(r => {
               r.style.opacity = '1';
             });
-    
-            // 지역명 텍스트 초기화 (필요 시)
+
             if(regionNameTextWrapper) {
               regionNameTextWrapper.textContent = '지역명';
             }
             regionName.textContent = '';
-    
-            // 정보 박스 숨기기
             regionInfo.classList.add('hidden');
-    
-            // 기타 필요한 초기화 작업 추가 가능
           }
         };
       }
-    }
-    );
-    
+    });
   }
 
-  
   slider.addEventListener('input', () => {
     const daesu = slider.value;
     selectedDaesu.textContent = `${daesu}대`;
@@ -342,16 +487,11 @@ document.addEventListener('DOMContentLoaded', () => {
   selectedDaesu.textContent = `${slider.value}대`;
   loadAllData(slider.value);
 
-  if (menuButton && dropdownMenu) {
-    menuButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
+  const menuBtn = document.getElementById('menu-button');
+  const slideMenu = document.getElementById('slide-menu');
 
-    document.addEventListener('click', (e) => {
-      if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.classList.remove('show');
-      }
-    });
-  }
+  menuBtn.addEventListener('click', function () {
+    slideMenu.classList.toggle('active');
+  });
+
 });
