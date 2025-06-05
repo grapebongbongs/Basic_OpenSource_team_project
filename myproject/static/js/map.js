@@ -435,14 +435,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-
       elem.addEventListener('mouseleave', () => {
         if (elem !== activeRegion) {
           elem.style.transition = 'transform 0.3s ease';
           elem.style.transform = '';
           elem.style.stroke = '';
           elem.style.strokeWidth = '';
-
           if (activeRegion) {
             regions.forEach(r => {
               r.style.opacity = (r === activeRegion) ? '1' : '0.4';
@@ -454,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-
       if (svg) {
         svg.onclick = () => {
           if (activeRegion) {

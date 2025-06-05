@@ -1,9 +1,14 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 67ada50ee672eb98107cd90b9a41e6a0a5bc157d
 * {
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 
 @font-face {
     font-family: 'allfont';  /* 폰트 이름 지정, 임의로 정함 */
@@ -18,10 +23,28 @@ body {
     font-family: 'allFont', sans-serif;
 }
 /* a blue color as a generic focus style */
+=======
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-x: hidden !important;
+    background-color: #f3f3f3 !important;
+    
+    padding-bottom: 50px !important;
+  }
+
+/* 포커스 스타일, 링크 등 기타 */
+>>>>>>> 67ada50ee672eb98107cd90b9a41e6a0a5bc157d
 button:focus-visible {
     outline: 2px solid #4a90e2 !important;
     outline: -webkit-focus-ring-color auto 5px !important;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 67ada50ee672eb98107cd90b9a41e6a0a5bc157d
 a {
     text-decoration: none;
 }

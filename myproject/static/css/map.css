@@ -101,7 +101,6 @@
 .info-box li {
   padding: 4px 0;
 }
-
 /* 기본 g[region] 요소 스타일 */
 #map svg g[region] {
   cursor: pointer;
