@@ -1,9 +1,7 @@
 __pycache__/
 *.pyc
-*.sqlite3
 *.log
 *.env
 .env
-db.sqlite3
 media/
 myenv/
