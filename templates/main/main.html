@@ -22,11 +22,32 @@
     {% load static %}
     <script src="{% static 'js/scripts.js' %}"></script>
 
+
     <div class="div">
         <div class="background">
+            <div class="menu-bar">
+                <div class="menu_asona">ASONA</div>
+        
+                <div class="menu-right">
+                    <a href="/" class="menu_b">홈 화면</a>
+                    <a class="menu_b">지도</a>
+                    <a class="menu_b">캘린더</a>
+                </div>
+            </div>
+
+            <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
+
+            <div class="logo">
+                <div class="logo-child">
+                </div>
+                <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
+            
+            </div>
+
             <div class="background-child">
                 <div class="asona">ASONA</div>
             </div>
+
         </div>
 
         <div class="group">
@@ -85,7 +106,6 @@
             
         </div>
 
-        <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
 
         <div class="search-bar">
             <div class="test" contenteditable="true" spellcheck="false" data-placeholder="search"></div>
@@ -95,12 +115,7 @@
 
         </div>
 
-        <div class="logo">
-            <div class="logo-child">
-            </div>
-            <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
-
-        </div>
+        
     </div>
 
 
@@ -198,6 +213,21 @@
                 }
             });
         });
+
+
+            // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
+            document.addEventListener('DOMContentLoaded', function () {
+                const menuIcon = document.querySelector('.menu-icon');
+                const menuBox = document.querySelector('.menu-bar');
+                const logoIcon = document.querySelector('.logo');
+
+                if (menuIcon && menuBox) {
+                    menuIcon.addEventListener('click', () => {
+                        menuBox.classList.toggle('show');
+                        logoIcon.classList.toggle('hidden');
+                    });
+                }
+            });
     </script>
 
 </body>

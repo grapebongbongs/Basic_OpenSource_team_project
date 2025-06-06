@@ -1,16 +1,25 @@
-.background1 {
-    align-self: stretch;
-    position: relative;
-    width: 100vw;
-    background-color: transparent;
-    height: 128.8px;
+html, body {
+    margin: 0;
+    /* 브라우저 기본 여백 제거 */
+    padding: 0;
+    width: calc(100 * var(--vw-base));;
+    /* viewport width */
+    height: auto;
+    /* viewport height */
+    box-sizing: border-box;
+    /* border/padding 포함하여 크기 계산 */
+    overflow: auto;
+    /* 넘치는 콘텐츠가 보이지 않도록 (필요시 auto) */
+    font-size: calc(calc(0.1 * var(--vh-base)) + calc(0.1 * var(--vw-base)));
 }
+
 
 .background {
     position: relative;
     top: 0;
     left: 0;
     width: 100%;
+    min-height: calc(18 * var(--vh-base));;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -29,9 +38,9 @@
 }
 
 .b {
-    position: absolute;
-    top: -120px;
-    left: -143px;
+    position: relative;
+    top: calc(10 * var(--vh-base));;
+    right: calc(35 * var(--vw-base));;
     font-size: 23px;
     letter-spacing: 0.03em;
     display: flex;
@@ -44,10 +53,13 @@
 
 .menu-icon {
     position: absolute;
-    top: 41px;
-    right: 5vw;
-    width: 60px;
-    height: 60px;
+    top: calc(3 * var(--vh-base));
+    right: calc(2 * var(--vw-base));
+    width: auto;
+    height: calc(5.5 * var(--vh-base));
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
 }
 
 .logo-child {
@@ -55,30 +67,31 @@
     top: 0px;
     left: 0px;
     background-color: #c98e53;
-    width: 45px;
-    height: 45px;
+    width: calc(4.5 * var(--vh-base));
+    height: calc(4.5 * var(--vh-base));
 }
 
 .logoo-icon {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 45px;
-    height: 45px;
+    width: auto;
+    height: calc(4.5 * var(--vh-base));
     object-fit: cover;
 }
 
 .logo {
     position: absolute;
-        /* 요구한대로 absolute 아님 */
-    left: 5vw;
-        /* 오른쪽에서 5vw 만큼 떨어지게 */
-    
-    top: 41px;
-        /* 위에서 41px */
-    width: 45px;
-    height: 45px;
+    /* 요구한대로 absolute 아님 */
+    left: calc(3 * var(--vw-base));;
+    /* 오른쪽에서 5vw 만큼 떨어지게 */
+
+    top: calc(3 * var(--vh-base));;
+    /* 위에서 41px */
+    width: calc(4.5 * var(--vh-base));
+    height: calc(4.5 * var(--vh-base));
     overflow: hidden;
+    user-select: none;
 }
 
 .profile-picture {
@@ -87,8 +100,8 @@
     left: 0px;
     box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.25) inset;
     background-color: #d9d9d9;
-    width: 209.5px;
-    height: 255px;
+    width: calc(10 * var(--vw-base));
+    height: calc(22.3 * var(--vh-base));
 }
 
 .name {
@@ -97,16 +110,21 @@
     left: 0px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     background-color: #fff;
-    width: 209px;
-    height: 43px;
+    width: calc(10 * var(--vw-base));
+    height: calc(4.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    user-select: none;
 }
 
 .name-wrapper {
     position: absolute;
-    top: 294.58px;
+    top: calc(26 * var(--vh-base));
     left: 0px;
-    width: 209px;
-    height: 43px;
+    width: calc(10 * var(--vw-base));
+    height: calc(4.2 * var(--vh-base));
+    user-select: none;
 }
 
 .name1 {
@@ -114,42 +132,47 @@
     top: 0px;
     left: 0px;
     background-color: #fff;
-    width: 209px;
-    height: 48px;
+    width: calc(10 * var(--vw-base));
+    height: calc(4.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    user-select: none;
 }
 
 .div1 {
     position: absolute;
-    top: 13.5px;
-    left: calc(50% - 65.5px);
     letter-spacing: 0.03em;
+    font-size: 6rem;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 121.1px;
     height: 21.8px;
+    user-select: none;
 }
 
 .name-parent {
     position: absolute;
-    top: 247.29px;
+    top: calc(22.3 * var(--vh-base));
     left: 0px;
-    width: 209px;
-    height: 48px;
+    width: calc(10 * var(--vw-base));
+    height: calc(4.2 * var(--vh-base));
+    user-select: none;
 }
 
 .div2 {
     position: absolute;
-    top: 304.79px;
-    left: calc(50% - 65.75px);
     letter-spacing: 0.03em;
+    font-size: 6rem;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 121.1px;
     height: 21.8px;
+    user-select: none;
 }
 
 .profile-picture-parent {
@@ -162,19 +185,19 @@
 
 .picture-child {
     position: absolute;
-    top: 202px;
-    left: 209px;
+    top: calc(46 * var(--vh-base));
+    right: calc(72.5 * var(--vw-base));
     max-height: 100%;
-    width: 185px;
+    width: calc(7 * var(--vw-base));
     z-index: 0;
 }
 
 .picture {
-    position: relative;
+    position: absolute;
     /* ← 뷰포트 기준 위치 지정 */
-    top: 21vw;
+    top: calc(25 * var(--vh-base));;
     /* 브라우저 위쪽에서 467px 아래 */
-    right: 34vw;
+    left: calc(-18 * var(--vw-base));;
     /* 브라우저 오른쪽에서 35% 떨어진 곳 */
     width: 400px;
     height: 436px;
@@ -184,66 +207,82 @@
 }
 
 .div3 {
-    width: min(50vw, 209px);
+    width: calc(10 * var(--vw-base));
     /* 최대 209px, 작을 땐 화면의 절반 너비 */
-    position: relative;
+    position: absolute;
     letter-spacing: 0.09em;
-    font-weight: 500;
+    font-size: 7rem;
+    left: calc(2 * var(--vw-base));
 
     display: flex;
     align-items: center;
     height: 25px;
     flex-shrink: 0;
 
-    border: none;    /* ✅ 테두리 제거 */
-    outline: none;    /* ✅ 클릭했을 때 나오는 파란 테두리도 제거 */
-    background-color: transparent;    /* 배경도 투명하게 (필요 시) */
-    
-    
+    border: none;
+    /* ✅ 테두리 제거 */
+    outline: none;
+    /* ✅ 클릭했을 때 나오는 파란 테두리도 제거 */
+    background-color: transparent;
+    /* 배경도 투명하게 (필요 시) */
+
+
     /* 커서 스타일 */
-    caret-color: transparent;    /* 기본 커서 숨김 */
-    font-weight: bold;    /* 입력된 텍스트 및 커서 두께에 영향 */
-    user-select: text;    /* 텍스트 선택 허용 */
+    caret-color: transparent;
+    /* 기본 커서 숨김 */
+    font-weight: bold;
+    /* 입력된 텍스트 및 커서 두께에 영향 */
+    user-select: text;
+    /* 텍스트 선택 허용 */
 }
 
 .vector-icon {
-    width: min(5vw, 24px);
-        /* 최대 24px, 뷰포트 너비 기준 유동 크기 */
-    position: relative;
-    max-height: 100%;
+    width: calc(1.4 * var(--vw-base));
+    /* 최대 24px, 뷰포트 너비 기준 유동 크기 */
+    left: calc(16.4 * var(--vw-base));
+    position: absolute;
+    height: auto;
     overflow: hidden;
     flex-shrink: 0;
-    display: flex; 
-    cursor: pointer;    /* 손가락 모양 커서 */
+    cursor: pointer;
+    /* 손가락 모양 커서 */
     transition: transform 0.1s ease, filter 0.2s ease;
-    user-select: none;    /* 드래그 방지 */
-    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
+    user-select: none;
+    /* 드래그 방지 */
+    pointer-events: auto;
+    /* ✅ 클릭 가능하도록 설정 */
+    flex-shrink: 0;
 }
 
 .frame-icon {
-    width: min(4vw, 17px);    /* 최대 17px, 뷰포트 너비 기준 유동 크기 */
-    position: relative;
+    width: calc(1.2 * var(--vw-base));
+    /* 최대 17px, 뷰포트 너비 기준 유동 크기 */
+    position: absolute;
+    left: calc(14.3 * var(--vw-base));
     max-height: 100%;
     display: flex;
-    cursor: pointer;    /* 손가락 모양 커서 */
+    cursor: pointer;
+    /* 손가락 모양 커서 */
     transition: transform 0.1s ease, filter 0.2s ease;
-    user-select: none;    /* 드래그 방지 */
-    pointer-events: auto;    /* ✅ 클릭 가능하도록 설정 */
+    user-select: none;
+    /* 드래그 방지 */
+    pointer-events: auto;
+    /* ✅ 클릭 가능하도록 설정 */
 }
 
 .search-bar {
-    position: relative;
-    top: -375px;
+    position: absolute;
+    top: calc(23.5 * var(--vh-base));
     /* 화면 상단 여백 및 가로 중앙 정렬 */
 
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
     background-color: #fff;
 
-    width: min(90vw, 345px);
+    width: calc(18.6 * var(--vw-base));
     /* 최대 너비 345px, 화면이 좁으면 90%로 */
-    height: 43px;
-    left: 32vw;
+    height: calc(4.4 * var(--vh-base));
+    left: calc(72 * var(--vw-base));
 
     display: flex;
     flex-direction: row;
@@ -253,30 +292,39 @@
     padding: 2px min(5vw, 38px);
     /* 좌우 패딩을 화면 크기에 따라 조정 */
     box-sizing: border-box;
-    gap: min(5vw, 21px);
+    gap: min(calc(5 * var(--vw-base)), 21px);
     /* 아이템 간 간격도 반응형으로 조절 */
 
     color: #938e8e;
 }
 
 .b1 {
-    width: 138.9px;
-    position: relative;
+    width: 9.5vw;
+    /* 뷰포트 너비에 따라 조정됨 */
+    height: 4vh;
+    /* 뷰포트 높이에 따라 조정됨 */
+    font-size: 1.1vw;
+    /* 글자 크기도 반응형 */
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 37.7px;
     flex-shrink: 0;
+    position: relative;
 }
 
+
 .b5 {
-    width: 160.2px;
-    position: relative;
+    width: 11vw;
+    /* 화면 너비의 11%만큼 차지 */
+    height: 2vh;
+    /* 화면 높이의 4%만큼 차지 */
+    font-size: 1.1vw;
+    /* 글자 크기도 뷰포트 기준으로 조정 */
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 37.7px;
     flex-shrink: 0;
+    position: relative;
 }
 
 .item {
@@ -287,64 +335,79 @@
 }
 
 .div5 {
+    position: relative;
     align-self: stretch;
-    height: 36px;
+    height: calc(5 * var(--vh-base));
+    top: calc(10 * var(--vh-base));
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
-    gap: 13px 51px;
+    gap: calc(1.4 * var(--vh-base)) calc(2 * var(--vw-base));
     font-size: 19px;
 }
 
 .div7 {
-    width: 138.9px;
+    width: 9.5vw;
+    /* 뷰포트 너비에 따라 조정됨 */
+    height: 4vh;
+    /* 뷰포트 높이에 따라 조정됨 */
+    font-size: 0.9vw;
+    /* 글자 크기도 반응형 */
     position: relative;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 37.7px;
     flex-shrink: 0;
 }
 
 .div11 {
-    width: 160.2px;
+    width: 11vw;
+    /* 화면 너비의 11%만큼 차지 */
+    height: 4vh;
+    /* 화면 높이의 4%만큼 차지 */
+    font-size: 0.9vw;
+    /* 글자 크기도 뷰포트 기준으로 조정 */
     position: relative;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 37.7px;
     flex-shrink: 0;
 }
 
 .div6 {
-    width: 1371.9px;
+    position: relative;
+    width: 100%;
     height: 59px;
+    top: calc(10 * var(--vh-base));
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
-    gap: 13px 51px;
+    gap: calc(1.4 * var(--vh-base)) calc(2 * var(--vw-base));
 }
 
 .div4 {
     position: relative;
-    top: 730px;
+    top: calc(24 * var(--vh-base));
     /* 위쪽 여백과 가운데 정렬 */
-    left: 0vw; /* 왼쪽 여백으로 정렬 */
-    width: min(90vw, 1380px);
+    left: 0vw;
+    /* 왼쪽 여백으로 정렬 */
+    width: 100%;
     /* 최대 1380px, 아니면 90% 화면 */
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 10vh;
+    gap: calc(10 * var(--vh-base));
     /* 간격을 화면 높이에 비례 */
     text-align: center;
     font-size: clamp(12px, 1.5vw, 14px);
@@ -357,13 +420,16 @@
     left: 0px;
     box-shadow: 11px 11px 7px rgba(0, 0, 0, 0.25);
     background-color: #fff;
-    width: 690px;
-    height: 698px;
+    width: calc(37 * var(--vw-base));
+    height: calc(70 * var(--vh-base));
+    user-select: none;
 }
 
 .b8 {
-    position: relative;
-    letter-spacing: 0.03em;
+    position: absolute;
+    letter-spacing: 0.01em;
+    font-size: 6.5rem;
+    user-select: none;
 }
 
 .title {
@@ -378,321 +444,388 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     align-content: flex-start;
+    user-select: none;
 }
 
 .b9 {
     position: absolute;
-    top: -75px;
+    top: calc(-10 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 187.6px;
     height: 57px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer {
     position: absolute;
-    top: -75.5px;
-    left: 341px;
+    top: calc(-10 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .inner {
     position: absolute;
-    top: -18px;
-    left: -0.5px;
+    top: calc(-3 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));;
     height: 1px;
+    user-select: none;
 }
 
 .b10 {
     position: absolute;
-    top: -17.5px;
+    top: calc(-4 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 181px;
     height: 55px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer1 {
     position: absolute;
-    top: -17.5px;
-    left: 341px;
+    top: calc(-4 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 181px;
     height: 55px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .line-div {
     position: absolute;
-    top: 37px;
-    left: -0.5px;
+    top: calc(4 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));;
     height: 1px;
+    user-select: none;
 }
 
 .b11 {
     position: absolute;
-    top: 38.5px;
+    top: calc(3 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 184.3px;
     height: 56px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer2 {
     position: absolute;
-    top: 37.5px;
-    left: 341px;
+    top: calc(3 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child1 {
     position: absolute;
-    top: 95px;
-    left: -0.5px;
+    top: calc(9.5 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b12 {
     position: absolute;
-    top: 97px;
+    top: calc(8.5 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 181px;
     height: 55px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer3 {
     position: absolute;
-    top: 95.5px;
-    left: 341px;
+    top: calc(8.5 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child2 {
     position: absolute;
-    top: 153px;
-    left: -0.5px;
+    top: calc(15 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b13 {
     position: absolute;
-    top: 153.5px;
+    top: calc(14 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 184.3px;
     height: 56px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer4 {
     position: absolute;
-    top: 153.5px;
-    left: 341px;
+    top: calc(14 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 184.3px;
     height: 56px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child3 {
     position: absolute;
-    top: 209px;
-    left: -0.5px;
+    top: calc(20.5 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b14 {
     position: absolute;
-    top: 209.5px;
+    top: calc(19.5 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer5 {
     position: absolute;
-    top: 210.5px;
-    left: 341px;
+    top: calc(19.5 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 184.3px;
     height: 56px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child4 {
     position: absolute;
-    top: 267px;
-    left: -0.5px;
+    top: calc(26 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b15 {
     position: absolute;
-    top: 267.5px;
+    top: calc(25 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer6 {
     position: absolute;
-    top: 269px;
-    left: 341px;
+    top: calc(25 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 181px;
     height: 55px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child5 {
     position: absolute;
-    top: 325px;
-    left: -0.5px;
+    top: calc(31.5 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b16 {
     position: absolute;
-    top: 326px;
+    top: calc(30.5 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 184.3px;
     height: 56px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer7 {
     position: absolute;
-    top: 325.5px;
-    left: 341px;
+    top: calc(30.5 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 187.6px;
     height: 57px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child6 {
     position: absolute;
-    top: 382px;
-    left: -0.5px;
+    top: calc(37 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .b17 {
     position: absolute;
-    top: 384px;
+    top: calc(36 * var(--vh-base));
     left: 0px;
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 181px;
     height: 55px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .answer8 {
     position: absolute;
-    top: 382.5px;
-    left: 341px;
+    top: calc(36 * var(--vh-base));
+    left: calc(18 * var(--vw-base));
     letter-spacing: 0.09em;
     display: flex;
     align-items: center;
     width: 190.9px;
     height: 58px;
+    font-size: 5rem;
+    font-weight: 500;
+    user-select: none;
 }
 
 .child7 {
     position: absolute;
-    top: 440px;
-    left: -0.5px;
+    top: calc(42.5 * var(--vh-base));
+    left: calc(-0.1 * var(--vw-base));
     border-top: 1px solid #625858;
     box-sizing: border-box;
-    width: 643px;
+    width: calc(30 * var(--vw-base));
     height: 1px;
+    user-select: none;
 }
 
 .div23 {
     position: absolute;
-    top: 179.77px;
+    top: calc(21 * var(--vh-base));
     left: 10.66px;
     width: 573.6px;
     height: 480.2px;
     font-size: 14px;
+    user-select: none;
 }
 
 .div22 {
     position: absolute;
-    top: 25px;
-    left: 20px;
+    top: calc(2 * var(--vh-base));
+    left: calc(2 * var(--vh-base));
     width: 661px;
     height: 660px;
+    user-select: none;
 }
 
 .rectangle-parent {
     position: absolute;
-    top: 18vw;
-    right: 36vw;
-    width: 690px;
-    height: 698px;
+    top: calc(11 * var(--vh-base));
+    right: calc(40 * var(--vw-base));
+    width: calc(30 * var(--vw-base));
+    height: calc(50 * var(--vh-base));
     font-size: clamp(14px, 2vw, 18px);
-        /* 반응형 글자 크기 */
+    /* 반응형 글자 크기 */
+    user-select: none;
 }
 
 .rectangle-div {
@@ -701,14 +834,14 @@
     left: 0px;
     box-shadow: 11px 11px 7px rgba(0, 0, 0, 0.25);
     background-color: #fff;
-    width: 400px;
-    height: 360px;
+    width: calc(30 * var(--vw-base));
+    height: calc(40 * var(--vh-base));
 }
 
 .title1 {
     position: absolute;
-    top: 25px;
-    left: 31px;
+    top: calc(2.2 * var(--vh-base));
+    left: calc(2 * var(--vw-base));
     width: 550px;
     height: 27.3px;
     display: flex;
@@ -721,66 +854,24 @@
 
 .div24 {
     position: absolute;
-    top: 18vw;
-    right: 13vw;
-    width: 400px;
-    height: 360px;
-}
-
-.child8 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: 9px;
-    background-color: rgba(128, 178, 228, 0.69);
-    width: 462px;
-    height: 175px;
-}
-
-.div26 {
-    position: absolute;
-    top: 33px;
-    left: 63px;
-    letter-spacing: 0.03em;
-    font-weight: 500;
-    display: flex;
+    top: calc(11 * var(--vh-base));
+    left: calc(40.5 * var(--vw-base));
+    width: calc(30 * var(--vw-base));
+    height: calc(40 * var(--vh-base));
+    justify-content: center;
     align-items: center;
-    width: 85px;
-    height: 25px;
 }
 
-.div27 {
-    position: absolute;
-    top: 33px;
-    left: 262px;
-    letter-spacing: 0.03em;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    width: 85px;
-    height: 25px;
-}
-
-.div25 {
-    position: absolute;
-    top: 443px;
-    left: 728px;
-    width: 462px;
-    height: 175px;
-    display: none;
-    font-size: 16px;
-    color: #000;
-}
 
 .div {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     /* 상하 정렬을 위해 column으로 지정 */
     justify-content: top;
-        /* 수직 가운데 */
+    /* 수직 가운데 */
     align-items: center;
-        /* 수평 가운데 */
+    /* 수평 가운데 */
     top: 0;
 
 
@@ -798,10 +889,7 @@
 
     box-sizing: border-box;
     /* padding 포함해서 크기 계산 */
-    overflow-x: auto;
-    /* 가로 스크롤 방지 */
-    overflow-y: auto;
-    /* 세로 스크롤 허용 */
+
 
     font-size: clamp(16px, 1.3vw, 21px);
     /* 화면 크기에 따라 글자 크기 조정 */
@@ -812,71 +900,61 @@
 
 
 .chart-container {
-    position: absolute;
-    width: 50% !important;
+    position: relative;
+    width: auto !important;
     /* 부모 크기에 맞게 확대/축소 */
-    height: auto !important;
+    height: calc(33 * var(--vh-base));
     /* 비율 유지 */
     aspect-ratio: 1 / 1;
     /* 1:1 비율 유지 (Chart.js 3+에서 가능) */
-    top: 40px;
-    left: 20px;
+    top: calc(6 * var(--vh-base));
+    left: calc(4 * var(--vw-base));
 }
-
-html, body {
-    margin: 0;
-    /* 브라우저 기본 여백 제거 */
-    padding: 0;
-    width: 100vw;
-    /* viewport width */
-    height: 100vh;
-    /* viewport height */
-    box-sizing: border-box;
-    /* border/padding 포함하여 크기 계산 */
-    overflow: auto;
-    /* 넘치는 콘텐츠가 보이지 않도록 (필요시 auto) */ }
 
 
 .rect_blue {
-    position: absolute;
-    top: 251px;
-    right: 2vw;
+    position: relative;
+    top: calc(4 * var(--vh-base));
+    left: calc(10 * var(--vw-base));
     box-shadow: 0px 28px 28px rgba(0, 0, 0, 0.25);
     background-color: #3c326a;
-    width: 1412px;
-    height: 854px;  }
+    width: calc(72 * var(--vw-base));;
+    height: calc(86 * var(--vh-base));
+}
 
 .t {
     position: absolute;
     top: 0px;
     left: 0px;
     background-color: #1f1355;
-    width: 25px;
-    height: 100%;       
+    width: calc(2 * var(--vw-base));
+    height: 100%;
 }
 
 
 .pagination {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin: 30px 0;
+    gap: calc(1 * var(--vw-base));
+    margin: calc(12 * var(--vh-base)) 0;
     flex-wrap: wrap;
 }
 
 .page-button,
 .arrow-button {
-    padding: 8px 14px;
+    padding: calc(1 * var(--vh-base)) calc(1 * var(--vw-base));;
     border-radius: 5px;
     background-color: #f0f0f0;
     color: #333;
     text-decoration: none;
     font-weight: 500;
     border: 1px solid #ccc;
+    user-select: none;
 }
 
-.page-button:hover, 
+.page-button:hover,
 .arrow-button:hover {
     background-color: #ddd;
 }
@@ -891,21 +969,22 @@ html, body {
 
 .unit-buttons {
     display: flex;
-    gap: 15px;
+    gap: calc(0.7 * var(--vw-base));
     /* 버튼 사이 간격 */
-    margin-top: 375px;
-    margin-left: 30px;
+    margin-top: calc(42 * var(--vh-base));;
+    margin-left: calc(1.7 * var(--vw-base));
 }
 
 .unit-btn {
-    padding: 8px 14px;
-    font-size: 14px;
+    padding: calc(1 * var(--vh-base)) calc(1 * var(--vh-base));
+    font-size: 6rem;
     background-color: #fff;
     border: 1px solid #bbb;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 5px;
     transition: background-color 0.3s, color 0.3s;
+    user-select: none;
 }
 
 .unit-btn.active {
@@ -963,4 +1042,76 @@ html, body {
     transform: scale(1.95);
     /* 클릭 시 눌리는 효과 */
     filter: brightness(0.75);
+}
+
+
+
+.menu-bar {
+    width: 100%;
+    height: 98px;
+    display: none;
+    align-items: center;
+    padding: 0 40px;
+    background: linear-gradient(90deg, #251c57, #a67ba8);
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.45);
+    gap: 15vw;
+}
+
+.menu_asona {
+    margin-left: calc(7 * var(--vw-base));;
+    font-size: 37px;
+    font-family: DaeguCatholicUniversity;
+    color: #f2e8e8;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.menu-right {
+    display: flex;
+    gap: calc(15 * var(--vw-base));;
+    /* 버튼 사이의 간격 */
+    align-items: center;
+}
+
+.menu_b {
+    font-size: 20px;
+    font-family: KoPubWorldDotum;
+    color: #fff3f3;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.menu-bar.show {
+    display: flex !important;
+}
+
+.logo.hidden {
+    display: none !important;
+}
+
+
+.menu-icon:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+
+.menu_b:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
 }

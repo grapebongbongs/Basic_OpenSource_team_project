@@ -4,22 +4,47 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    {% load url_utils %}
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/member_style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500;700&display=swap" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+    
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+                const baseWidth = window.innerWidth;
+                const baseHeight = window.innerHeight;
+                document.documentElement.style.setProperty('--vw-base', `${baseWidth * 0.01}px`);
+                document.documentElement.style.setProperty('--vh-base', `${baseHeight * 0.01}px`);
+            });
+    </script>
 
 </head>
 
 <body>
 
+    {% load static %}
+    <script src="{% static 'js/adjustHeight.js' %}"></script>
+
+    
+
     <div class="div">
         <div class="background">
-            <div class="background1">
+            <div class="menu-bar">
+                <div class="menu_asona">ASONA</div>
+            
+                <div class="menu-right">
+                    <a href="/" class="menu_b">홈 화면</a>
+                    <a class="menu_b">지도</a>
+                    <a class="menu_b">캘린더</a>
+                </div>
             </div>
+
             <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
+
+            
             
             
             <div class="logo">
@@ -32,153 +57,152 @@
         <div class="child">
         </div>
 
-        <div class="rect_blue"> </div>
-        <div class="t"></div>
-
-
-        <div class="rectangle-parent">
-            <div class="group-child">
-            </div>
-            <div class="div22">
-                <div class="title">
-                    <b class="b8">국회의원 상세 정보</b>
+        <div class="rect_blue">
+            <div class="rectangle-parent">
+                <div class="group-child">
                 </div>
-                <div class="div23">
-                    <b class="b9">선거구</b>
-                    <b class="answer">{{ member.origin }}</b>
-                    <div class="inner">
+                <div class="div22">
+                    <div class="title">
+                        <b class="b8">국회의원 상세 정보</b>
                     </div>
-                    <b class="b10">소속위원회</b>
-                    <b class="answer1">{{ member.committee }}</b>
-                    <div class="line-div">
-                    </div>
-                    <b class="b11">당선 대수</b>
-                    <b class="answer2">{{ member.unit }}</b>
-                    <div class="child1">
-                    </div>
-                    <b class="b12">사무실 전화</b>
-                    <b class="answer3">{{ member.phone }}</b>
-                    <div class="child2">
-                    </div>
-                    <b class="b13">사무실 호실</b>
-                    <b class="answer4">{{ member.assem_addr }}</b>
-                    <div class="child3">
-                    </div>
-                    <b class="b14">개별 홈페이지</b>
-                    <b class="answer5">{{ member.homepage }}</b>
-                    <div class="child4">
-                    </div>
-                    <b class="b15">이메일</b>
-                    <b class="answer6">{{ member.email }}</b>
-                    <div class="child5">
-                    </div>
-                    <b class="b16">보좌관</b>
-                    <b class="answer7">{{ member.staff }}</b>
-                    <div class="child6">
-                    </div>
-                    <b class="b17">선임비서관</b>
-                    <b class="answer8">{{ member.secretary }}</b>
-                    <div class="child7">
+                    <div class="div23">
+                        <b class="b9">선거구</b>
+                        <b class="answer">{{ member.origin }}</b>
+                        <div class="inner"></div>
+            
+                        <b class="b10">소속위원회</b>
+                        <b class="answer1">{{ member.committee }}</b>
+                        <div class="line-div"></div>
+            
+                        <b class="b11">당선 대수</b>
+                        <b class="answer2">{{ member.unit }}</b>
+                        <div class="child1"></div>
+            
+                        <b class="b12">사무실 전화</b>
+                        <b class="answer3">{{ member.phone }}</b>
+                        <div class="child2"></div>
+            
+                        <b class="b13">사무실 호실</b>
+                        <b class="answer4">{{ member.assem_addr }}</b>
+                        <div class="child3"></div>
+            
+                        <b class="b14">개별 홈페이지</b>
+                        <b class="answer5">{{ member.homepage }}</b>
+                        <div class="child4"></div>
+            
+                        <b class="b15">이메일</b>
+                        <b class="answer6">{{ member.email }}</b>
+                        <div class="child5"></div>
+            
+                        <b class="b16">보좌관</b>
+                        <b class="answer7">{{ member.staff }}</b>
+                        <div class="child6"></div>
+            
+                        <b class="b17">선임비서관</b>
+                        <b class="answer8">{{ member.secretary }}</b>
+                        <div class="child7"></div>
+            
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="picture">
-            <div class="profile-picture-parent">
-                <div class="profile-picture">
-                    <img src="{{ member.image_url }}" alt="{{ member.name }}" class="profile-picture">
+
+            <div class="div24">
+                <div class="rectangle-div">
                 </div>
-                <div class="name-wrapper">
-                    <div class="name">
+                <div class="title1">
+                    <b class="b8">본회의 출석률</b>
+            
+            
+                    <div class="chart-container">
+                        <canvas id="chart-1"></canvas>
+                    </div>
+            
+            
+                    <script>
+                        const data = {{ attendance| safe }};
+                        const ctx = document.getElementById('chart-1').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['출석률', '기타 결석률', '무단결석률'],
+                                datasets: [{
+                                    data: [data.출석률, data.기타결석률, data.무단결석률],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.7)',
+                                        'rgba(204, 153, 255, 0.7)',
+                                        'rgba(255, 99, 132, 0.7)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(204, 153, 255, 1)',
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { position: 'right'},
+                                    title: { display: true, text: '{{ selected_unit }}대 국회 출석률'}
+                                }
+                            }
+                        });
+                    </script>
+            
+                </div>
+            
+            
+            
+                <div class="unit-buttons">
+                    {% if "100020" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=20">
+                        <button class="unit-btn {% if selected_unit == '20' %}active{% endif %}">20대</button>
+                    </a>
+                    {% endif %}
+            
+                    {% if "100021" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=21">
+                        <button class="unit-btn {% if selected_unit == '21' %}active{% endif %}">21대</button>
+                    </a>
+                    {% endif %}
+            
+                    {% if member.phone or "100022" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=22">
+                        <button class="unit-btn {% if selected_unit == '22' %}active{% endif %}">22대</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="picture">
+                <div class="profile-picture-parent">
+                    <div class="profile-picture">
+                        <img src="{{ member.image_url }}" alt="{{ member.name }}" class="profile-picture">
+                    </div>
+                    <div class="name-wrapper">
+                        <div class="name">
+                            <div class="div2">{{ member.party }}</div>
+                        </div>
+                    </div>
+                    <div class="name-parent">
+                        <div class="name1">
+                            <div class="div1">{{ member.name }} ({{ member.hj_nm }})</div>
+                        </div>
                     </div>
                 </div>
-                <div class="name-parent">
-                    <div class="name1">
-                    </div>
-                    <div class="div1">{{ member.name }} ({{ member.hj_nm }})</div>
-                </div>
-                <div class="div2">{{ member.party }}</div>
+            
             </div>
 
             <img class="picture-child" alt="" src="{% static 'images/Line_23.svg' %}">
 
         </div>
+        <div class="t"></div>
 
 
-        <div class="div24">
-            <div class="rectangle-div">
-            </div>
-            <div class="title1">
-                <b class="b8">본회의 출석률</b>
         
         
-                <div class="chart-container">
-                    <canvas id="chart-1"></canvas>
-                </div>
-        
-        
-                <script>
-                    const data = {{ attendance| safe }};
-                    const ctx = document.getElementById('chart-1').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['출석률', '기타 결석률', '무단결석률'],
-                            datasets: [{
-                                data: [data.출석률, data.기타결석률, data.무단결석률],
-                                backgroundColor: [
-                                    'rgba(54, 162, 235, 0.7)',
-                                    'rgba(204, 153, 255, 0.7)',
-                                    'rgba(255, 99, 132, 0.7)'
-                                ],
-                                borderColor: [
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(204, 153, 255, 1)',
-                                    'rgba(255, 99, 132, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: { position: 'bottom' },
-                                title: { display: true, text: '{{ selected_unit }}대 국회 출석률' }
-                            }
-                        }
-                    });
-                </script>
-        
-            </div>
-        
-        
-        
-            <div class="unit-buttons">
-                {% if "100020" in member.unit_cd|stringformat:"s" %}
-                <a href="?unit=20">
-                    <button class="unit-btn {% if selected_unit == '20' %}active{% endif %}">20대</button>
-                </a>
-                {% endif %}
-        
-                {% if "100021" in member.unit_cd|stringformat:"s" %}
-                <a href="?unit=21">
-                    <button class="unit-btn {% if selected_unit == '21' %}active{% endif %}">21대</button>
-                </a>
-                {% endif %}
-        
-                {% if member.phone or "100022" in member.unit_cd|stringformat:"s" %}
-                <a href="?unit=22">
-                    <button class="unit-btn {% if selected_unit == '22' %}active{% endif %}">22대</button>
-                </a>
-                {% endif %}
-            </div>
-        
-        </div>
-
-
-
-
         <div class="search-bar">
             <div class="div3" contenteditable="true" spellcheck="false" data-placeholder="다른 의원 정보 검색"></div>
             <img class="frame-icon" alt="" src="{% static 'images/Vector.svg' %}">
@@ -200,8 +224,9 @@
                 <b class="b5">표결정보</b>
                 <b class="b5">표결결과</b>
                 <img class="item" alt="" src="Line 15.svg">
-
             </div>
+
+            
             {% for vote in votes %}
             <div class="div6">
                 <div class="div7">{{ forloop.counter0|add:offset|add:"1" }}</div>
@@ -218,33 +243,30 @@
 
 
 
+            
+
             <div class="pagination">
+                {% querystring_without_page as qs %}
+            
                 {% if has_previous_group %}
-                <a href="?page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
+                <a href="?{{ qs }}&page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
                 {% endif %}
             
                 {% for num in custom_page_range %}
                 {% if num == votes.number %}
                 <span class="page-button active">{{ num }}</span>
                 {% else %}
-                <a href="?page={{ num }}" class="page-button">{{ num }}</a>
+                <a href="?{{ qs }}&page={{ num }}" class="page-button">{{ num }}</a>
                 {% endif %}
                 {% endfor %}
             
                 {% if has_next_group %}
-                <a href="?page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
-                {% endif %}      
+                <a href="?{{ qs }}&page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
+                {% endif %}
             </div>
 
         </div>
 
-        
-        <div class="div25">
-            <div class="child8">
-            </div>
-            <div class="div26">정당</div>
-            <div class="div27">정당</div>
-        </div>
     </div>
 
 
@@ -323,7 +345,26 @@
                 }
             });
         });
+
+
+        // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
+        document.addEventListener('DOMContentLoaded', function () {
+                const menuIcon = document.querySelector('.menu-icon');
+                const menuBox = document.querySelector('.menu-bar');
+                const logoIcon = document.querySelector('.logo');
+
+                if (menuIcon && menuBox) {
+                    menuIcon.addEventListener('click', () => {
+                        menuBox.classList.toggle('show');
+                        logoIcon.classList.toggle('hidden');
+                    });
+                }
+            });
+
+            
     </script>
+
+    
 
 
 </body>

@@ -13,8 +13,43 @@ from django.conf import settings
 def member_detail(request, mona_cd):
     member = get_object_or_404(AssemblyMember, mona_cd=mona_cd)
 
+    committee_str = member.committee
+    if committee_str and "," in committee_str:
+        committee_str = committee_str.split(",")[0] + " 등"
+        member.committee = committee_str
+
     # 표결 결과를 최신 순으로 정렬
     vote_list = member.votes.select_related('bill').order_by('-bill__rgs_proc_dt')
+
+
+    # 출석률
+    excel_path_20 = os.path.join(settings.BASE_DIR, 'static', 'excels', '(열려라국회) 20대 국회 본회의 출석부.xlsx')
+    excel_path_21 = os.path.join(settings.BASE_DIR, 'static', 'excels', '(열려라국회) 21대 국회 본회의 출석부.xlsx')
+    excel_path_22 = os.path.join(settings.BASE_DIR, 'static', 'excels', '제424회국회(임시회) 본회의 출결현황.xlsx')
+    
+
+    attendance = None
+
+    selected_unit = request.GET.get('unit')
+
+    # unit 값에 따라 다른 출결정보 와 표결정보 출력
+    if selected_unit == '20':
+        attendance = get_member_attendance_20(excel_path_20, member.name, member.party, member.origin)
+        vote_list = member.votes.filter(bill__age=20).select_related('bill').order_by('-bill__rgs_proc_dt')
+        pass
+    elif selected_unit == '21':
+        attendance = get_member_attendance_21(excel_path_21, member.name, member.party)
+        vote_list = member.votes.filter(bill__age=21).select_related('bill').order_by('-bill__rgs_proc_dt')
+        pass
+    elif selected_unit == '22':
+        attendance = get_member_attendance_from_424(excel_path_22, member.name, member.party)
+        vote_list = member.votes.filter(bill__age=22).select_related('bill').order_by('-bill__rgs_proc_dt')
+        pass
+
+    # 표결 결과를 최신 순으로 정렬
+    vote_list = vote_list.order_by('-bill__rgs_proc_dt')
+
+
 
     # 페이지네이션 설정
     paginator = Paginator(vote_list, 10)
@@ -41,30 +76,6 @@ def member_detail(request, mona_cd):
     proposed_bills = Bill.objects.filter(proposer__icontains=member.name)
 
 
-
-
-    # 출석률
-    excel_path_20 = os.path.join(settings.BASE_DIR, 'static', 'excels', '(열려라국회) 20대 국회 본회의 출석부.xlsx')
-    excel_path_21 = os.path.join(settings.BASE_DIR, 'static', 'excels', '(열려라국회) 21대 국회 본회의 출석부.xlsx')
-    excel_path_22 = os.path.join(settings.BASE_DIR, 'static', 'excels', '제424회국회(임시회) 본회의 출결현황.xlsx')
-    
-
-
-
-    attendance = None
-
-    selected_unit = request.GET.get('unit')
-
-    # unit 값에 따라 다른 출결정보 등 처리 가능
-    if selected_unit == '20':
-        attendance = get_member_attendance_20(excel_path_20, member.name, member.party, member.origin)
-        pass
-    elif selected_unit == '21':
-        attendance = get_member_attendance_21(excel_path_21, member.name, member.party)
-        pass
-    elif selected_unit == '22':
-        attendance = get_member_attendance_from_424(excel_path_22, member.name, member.party)
-        pass
 
     
 

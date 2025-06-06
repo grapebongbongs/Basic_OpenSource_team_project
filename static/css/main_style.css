@@ -1,4 +1,5 @@
 .background-child {
+    top: 202px;
     position: absolute;
     box-shadow: 45px 45px 75px rgba(0, 0, 0, 0.3);
     border-radius: 11px;
@@ -22,9 +23,10 @@
 
 .background {
     position: absolute;
-    top: 202px;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;    /* 문서 전체 높이 비율 채움 */
+    min-height: 700px;
     font-family: DaeguCatholicUniversity;
     display: flex;
     overflow-y: auto;
@@ -174,18 +176,46 @@
 }
 
 
-
-
-
-
 .menu-icon {
     position: absolute;
     top: 41px;
     right: 5vw;
-    border-radius: 9px;
     width: 60px;
     height: 60px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.logo-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #c98e53;
+    width: 45px;
+    height: 45px;
+}
+
+.logoo-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+}
+
+.logo {
+    position: absolute;
+    /* 요구한대로 absolute 아님 */
+    left: 5vw;
+    /* 오른쪽에서 5vw 만큼 떨어지게 */
+
+    top: 41px;
+    /* 위에서 41px */
+    width: 45px;
+    height: 45px;
     overflow: hidden;
+    user-select: none;
 }
 
 .test {
@@ -251,31 +281,7 @@
     color: #000;
 }
 
-.logo-child {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: #c98e53;
-    width: 45px;
-    height: 45px;
-}
 
-.logoo-icon {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 45px;
-    height: 45px;
-    object-fit: cover;
-}
-
-.logo {
-    position: absolute;
-    top: 41px;
-    left: 5vw;
-    width: 45px;
-    height: 45px;
-}
 
 .child {
     position: absolute;
@@ -465,6 +471,7 @@ html,body {
     text-decoration: none;
     font-weight: 500;
     border: 1px solid #ccc;
+    user-select: none;
 }
 
 .page-button:hover,
@@ -477,4 +484,75 @@ html,body {
     color: white;
     font-weight: bold;
     border: 1px solid #787878;
+}
+
+
+.menu-bar {
+    width: 100%;
+    height: 98px;
+    display: none;
+    align-items: center;
+    padding: 0 40px;
+    background: linear-gradient(90deg, #251c57, #a67ba8);
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.45);
+    gap: 15vw;
+}
+
+.menu_asona {
+    margin-left: 7vw;
+    font-size: 37px;
+    font-family: DaeguCatholicUniversity;
+    color: #f2e8e8;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.menu-right {
+    display: flex;
+    gap: 15vw;
+    /* 버튼 사이의 간격 */
+    align-items: center;
+}
+
+.menu_b {
+    font-size: 20px;
+    font-family: KoPubWorldDotum;
+    color: #fff3f3;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.menu-bar.show {
+    display: flex !important;
+}
+
+.logo.hidden {
+    display: none !important;
+}
+
+
+.menu-icon:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+
+.menu_b:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
 }
