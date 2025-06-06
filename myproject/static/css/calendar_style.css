@@ -1,0 +1,386 @@
+.screen {
+    max-width: 2560px;
+    width: 100%;
+    margin: 0 auto;
+    transform-origin: top left;
+    min-height: 100vh;
+    padding-bottom: 1500px !important;
+    padding-left: 100px !important; 
+}
+
+.screen .div {
+
+    position: relative;
+}
+
+.screen .overlap {
+    position: absolute;
+    width: 100%;
+    height: 122px;
+    top: 0;
+    left: 0;
+}
+
+.background-2 {
+    position: fixed;
+    width: 100px;
+    height: 100%; 
+    left: 0px; 
+    top: 0px; 
+    background-color: #3C326A;
+}
+
+
+.MENU {
+    all: unset; 
+    position: fixed;
+    width: 61px;
+    height: 61px;
+    top: 20px;
+    right: 46px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.screen .logo {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    top: 41px;
+    left: 113px;
+    background-color: #c98e53;
+}
+
+.screen .logoo {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    top: -2px;
+    left: -2px;
+    object-fit: cover;
+}
+
+
+
+
+.screen .group {
+    position: relative;
+    width: 175px;
+    height: 46px;
+}
+
+.screen .overlap-group {
+    position: relative;
+    width: 173px;
+    height: 46px;
+}
+
+
+
+.screen .text-wrapper {
+    left: 200px;
+    top : 300px;
+    width: 257px;
+    position: relative;
+    font-size: 42px;
+    letter-spacing: 0.05em;
+    display: flex;
+    font-family: GyeonggiTitleB;
+    color: #1e0c62;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 51px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 700; 
+}
+
+.screen .view-2 {
+    display: flex;
+    width: 592px;
+    height: 46px;
+    align-items: center;
+    gap: 18px;
+    padding: 2px 33px;
+    position: absolute;
+    top: 481px;
+    left: 232px;
+}
+
+.screen .frame {
+    display: flex;
+    flex-direction: column;
+    width: 592px;
+    height: 46px;
+    gap: 1px;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.screen .group-2 {
+    width: 251px;
+    height: 45px;
+    background-color: #72727280;
+}
+
+
+.date-bg {
+    position: absolute;
+    top: 0;
+    left: -40px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 또는 contain */
+    z-index: 0;
+}
+
+.screen .line {
+    margin-top: 40px;
+    width: 100%;
+    height: 1px;
+    object-fit: cover;
+}
+
+
+.screen .overlap-group-wrapper {
+    width: 196.62px;
+    height: 38.12px;
+}
+
+.screen .overlap-group-2 {
+    position: relative;
+    width: 193px;
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen .text-wrapper-2,
+.screen .text-wrapper-3 {
+    position: absolute;
+    height: 38px;
+    font-family: "KoPubWorldDotum-Bold", Helvetica;
+    font-weight: 700;
+    color: #615757;
+    font-size: 19px;
+    letter-spacing: 0.57px;
+    line-height: normal;
+    z-index: 1;
+}
+
+.screen .text-wrapper-2 {
+    width: 125px;
+    left: 0;
+}
+
+.screen .text-wrapper-3 {
+    width: 125px;
+    left: 68px;
+}
+
+.screen .left {
+    position: absolute;
+    width: 24px;
+    height: 27px;
+    top: 13px;
+    left: 0px;
+    z-index: 1;
+}
+
+.screen .right {
+    position: absolute;
+    width: 24px;
+    height: 27px;
+    top: 13px;
+    left: 150px;
+    z-index: 1;
+}
+
+.screen .img {
+    position: absolute;
+    width: 127px;
+    height: 5px;
+    top: 798px;
+    left: 1224px;
+    margin-top: 100px;
+    object-fit: cover;
+}
+
+.screen .overlap-2 {
+    position: absolute;
+    width: 474px;
+    height: 314px;
+    top: 638px;
+    left: 868px;
+}
+
+.screen .frame-2 {
+    position: absolute;
+    left: 544px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 900px;
+    height: 700px;
+    gap: 0px 7px;
+    margin-top: -50px;
+    align-items: flex-start;
+    overflow: visible !important;
+}
+
+/* 모달 및 필터 버튼 영역 */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    background-color: #dbdbdb;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: "KoPubWorldDotum-Medium", Helvetica;
+    font-size: 14px;
+}
+
+.filter-btn.active {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.modal-body {
+    font-family: "KoPubWorldDotum-Light", Helvetica;
+    font-size: 14px;
+    padding: 10px;
+}
+
+/* 스크롤 영역 */
+.view-4 {
+    position: relative;
+    width: 890px;
+    height: 550px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.view-4::-webkit-scrollbar {
+    display: none;
+}
+
+.view-5 {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+
+.view-5 > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 50px;
+    background-color: #c1c1c1;
+    border-radius: 30px;
+    transition: top 0.1s ease;
+}
+
+/* 메뉴 전체 - 기본은 화면 위 밖에 숨김 (위치 조정) */
+.menubar {
+    width: 100%;
+    position: fixed;       /* 화면에 고정, 스크롤해도 따라오게 */
+    top: -98px;            /* 화면 위로 숨기기 (높이만큼 음수 이동) */
+    left: 0;
+    height: 98px;
+    text-align: center;
+    font-size: 28px;
+    color: #fff3f3;
+    font-family: KoPubWorldDotum;
+    transition: top 0.3s ease;  /* 부드러운 애니메이션 효과 */
+    z-index: 1000;         /* 다른 요소 위로 표시 */
+}
+
+/* 활성화 시 아래로 내려오게 */
+.menubar.active {
+    top: 0 !important;      /* 화면 상단에 위치 */
+}
+
+/* 메뉴 내부 정렬 스타일 */
+.menubar .menu {
+    position: relative;      /* 부모 내부에서 자연스럽게 위치 */
+    top: 0;
+    left: 0;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(90deg, #251c57, #a67ba8);
+    width: 100%;
+    height: 98px;
+}
+
+/* 타이틀 스타일 */
+.asona {
+    padding-top: 40px;
+    width: 202px;
+    font-size: 37px;
+    letter-spacing: 0.03em;
+    font-family: DaeguCatholicUniversity;
+    color: #f2e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    flex-shrink: 0;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    margin: 0 auto; /* 가운데 정렬을 원하면 추가 */
+}
+
+/* 텍스트를 세로로 정렬 */
+.menubar .menuframe {
+    position: relative; /* 부모 안에서 정렬 */
+    width: 1480px;
+    height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 245px;
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 메뉴 항목 스타일 */
+.menubar .text-menubar {
+    margin-top: 40px;
+    width: 202px;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    color: #f2e8e8;
+    flex-shrink: 0;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+}
+
+    
+    
+
+    .menubar a.text-menubar:hover {
+        color: #ffd966;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
