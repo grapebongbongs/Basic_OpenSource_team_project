@@ -126,9 +126,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-if not DEBUG:                                                                     #배포용 코드
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')            #배포용 코드
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'      #배포용 코드
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   #배포용 코드
 

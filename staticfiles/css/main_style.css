@@ -1,0 +1,708 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: calc(calc(0.1 * var(--vh-base)) + calc(0.1 * var(--vw-base)));
+}
+
+.background-child {
+    position: absolute;
+    box-shadow: calc(1.6 * var(--vw-base)) calc(2.7 * var(--vh-base)) 2.5rem rgba(0, 0, 0, 0.3);
+    border-radius: 11px;
+    background-color: #3c326a;
+    width: calc(80 * var(--vw-base));
+    /* 부모 폭 그대로(=1513px) */
+    height: calc(28.6 * var(--vh-base));
+    display: flex;
+    overflow-y: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.asona {
+    position: absolute;
+    top: calc(1.9 * var(--vh-base));
+    left: 50%;
+    transform: translateX(-49.5%);
+    font-family: DaeguCatholicUniversity;
+    letter-spacing: 0.05em;
+    text-shadow: calc(1 * var(--vw-base)) calc(1.8 * var(--vh-base)) 1.7rem rgba(0, 0, 0, 0.32);
+    font-size: 50rem;
+    user-select: none;
+    display: inline-block;
+}
+
+.background {
+    position: absolute;
+    top: calc(21.3 * var(--vh-base));
+    width: 100%;
+    height: 100%;
+    /* 문서 전체 높이 비율 채움 */
+    font-family: DaeguCatholicUniversity;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    user-select: none;
+    /* 드래그 방지 */
+}
+
+.profile-pic {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: calc(0.4 * var(--vw-base)) calc(1.5 * var(--vh-base)) 6px rgba(0, 0, 0, 0.3);
+    border-radius: 9px;
+    background-color: transparent;
+    width: calc(6.25 * var(--vw-base));
+    height: calc(13.3 * var(--vh-base));
+    user-select: none;
+}
+
+.ex1 {
+    position: absolute;
+    top: 0px;
+    left: calc(6.6 * var(--vw-base));
+    border-radius: 9px;
+    background-color: #737373;
+    width: calc(11.3 * var(--vw-base));
+    height: calc(6.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: calc(0.55 * var(--vw-base)) calc(1.5 * var(--vh-base)) 2.3rem rgba(0, 0, 0, 0.3);
+}
+
+.b {
+    position: absolute;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    user-select: none;
+}
+
+.ex11 {
+    position: absolute;
+    top: 0px;
+    left: calc(18.2 * var(--vw-base));
+    border-radius: 9px;
+    background-color: #737373;
+    width: calc(11.3 * var(--vw-base));
+    height: calc(6.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: calc(0.55 * var(--vw-base)) calc(1.5 * var(--vh-base)) 2.3rem rgba(0, 0, 0, 0.3);
+}
+
+.b1 {
+    position: absolute;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    user-select: none;
+}
+
+.ex12 {
+    position: absolute;
+    top: calc(7 * var(--vh-base));
+    left: calc(6.6 * var(--vw-base));
+    border-radius: 9px;
+    background-color: #737373;
+    width: calc(11.3 * var(--vw-base));
+    height: calc(6.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: calc(0.55 * var(--vw-base)) calc(1.5 * var(--vh-base)) 2.3rem rgba(0, 0, 0, 0.3);
+}
+
+.b2 {
+    position: absolute;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4.9rem;
+    user-select: none;
+}
+
+.ex13 {
+    position: absolute;
+    top: calc(7 * var(--vh-base));
+    left: calc(18.2 * var(--vw-base));
+    border-radius: 9px;
+    background-color: #737373;
+    width: calc(11.3 * var(--vw-base));
+    height: calc(6.2 * var(--vh-base));
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow: calc(0.55 * var(--vw-base)) calc(1.5 * var(--vh-base)) 2.3rem rgba(0, 0, 0, 0.3);
+}
+
+.b3 {
+    position: absolute;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(9 * var(--vw-base));
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4.9rem;
+    user-select: none;
+}
+
+.div1 {
+    width: calc(29.5 * var(--vw-base));
+    position: relative;
+    height: calc(13.3 * var(--vh-base));
+
+    border: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, background-color 0.3s;
+    user-select: none;
+    border-radius: 9px;
+    user-select: none;
+    background-color: transparent;
+}
+
+
+
+.parent {
+    position: absolute;
+    top: calc(78.1 * var(--vh-base));
+    left: 50%;
+    transform: translateX(-49.5%);
+    /* 가로 중앙 정렬만 수행 */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    max-width: calc(76.3 * var(--vw-base));
+    gap: calc(5.1 * var(--vh-base)) calc(4 * var(--vw-base));
+    font-size: 14px;
+    color: #fff;
+    z-index: 1;
+    user-select: none;
+}
+
+
+
+
+
+
+.menu-icon {
+    position: fixed;
+    top: calc(1.9 * var(--vh-base));
+    right: calc(5 * var(--vw-base));
+    border-radius: 9px;
+    width: calc(2.7 * var(--vw-base));
+    height: calc(2.7 * var(--vw-base));
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 50;
+    user-select: none;
+}
+
+.test {
+    width: calc(29.4 * var(--vw-base));
+    position: relative;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-shrink: 0;
+    border: none;
+    /* ✅ 테두리 제거 */
+    outline: none;
+    /* ✅ 클릭했을 때 나오는 파란 테두리도 제거 */
+    background-color: transparent;
+    /* 배경도 투명하게 (필요 시) */
+
+
+    /* 커서 스타일 */
+    caret-color: transparent;
+    /* 기본 커서 숨김 */
+    font-weight: 500;
+    /* 입력된 텍스트 및 커서 두께에 영향 */
+    user-select: text;
+    /* 텍스트 선택 허용 */
+    font-size: 7rem;
+}
+
+.vector-icon {
+    width: calc(1.3 * var(--vw-base));
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;
+    /* 드래그 방지 */
+    pointer-events: auto;
+    /* ✅ 클릭 가능하도록 설정 */
+
+}
+
+.frame-icon {
+    width: calc(1 * var(--vw-base));
+    position: relative;
+    max-height: 100%;
+    cursor: pointer;
+    /* 손가락 모양 커서 */
+    transition: transform 0.1s ease, filter 0.2s ease;
+    user-select: none;
+    /* 드래그 방지 */
+    pointer-events: auto;
+    /* ✅ 클릭 가능하도록 설정 */
+}
+
+.search-bar {
+    position: absolute;
+    top: calc(58.3 * var(--vh-base));
+    left: calc(30.5 * var(--vw-base));
+    box-shadow: calc(0.2 * var(--vw-base)) calc(0.3 * var(--vh-base)) 8rem rgba(0, 0, 0, 0.25);
+    border-radius: 60px;
+    background-color: #fff;
+    width: calc(37.5 * var(--vw-base));
+    ;
+    height: calc(4.7 * var(--vh-base));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 38px;
+    box-sizing: border-box;
+    gap: calc(1.1 * var(--vw-base));
+    text-align: left;
+    font-size: 21px;
+    color: #000;
+    user-select: none;
+}
+
+.logo-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #c98e53;
+    width: calc(1.7 * var(--vw-base));
+    height: calc(1.7 * var(--vw-base));
+    user-select: none;
+}
+
+.logoo-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: calc(1.7 * var(--vw-base));
+    height: calc(1.7 * var(--vw-base));
+    object-fit: cover;
+    user-select: none;
+}
+
+.logo {
+    position: absolute;
+    top: calc(2.3 * var(--vh-base));
+    left: calc(5 * var(--vw-base));
+    width: calc(1.7 * var(--vw-base));
+    height: calc(1.7 * var(--vw-base));
+    user-select: none;
+}
+
+.child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 6px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px 9px 0px 0px;
+    background-color: #fff;
+    width: 118px;
+    height: 39px;
+    user-select: none;
+}
+
+.div6 {
+    position: absolute;
+    top: 7px;
+    left: 24px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 27px;
+    user-select: none;
+}
+
+.div5 {
+    width: calc(7.3 * var(--vw-base));
+    position: relative;
+    height: calc(4.2 * var(--vh-base));
+    ;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    box-shadow: calc(0.4 * var(--vw-base)) 0px 1.5rem rgba(0, 0, 0, 0.25);
+    border-radius: 9px 9px 0px 0px;
+    background-color: #fff;
+    cursor: pointer;
+    user-select: none;
+    /* 입력 커서 제거 */
+    transition: background-color 0.2s, transform 0.1s;
+    border: transparent;
+}
+
+.div8 {
+    position: absolute;
+    top: 6px;
+    left: 24px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 27px;
+    user-select: none;
+}
+
+.group {
+    position: absolute;
+    top: calc(70.9 * var(--vh-base));
+    left: calc(18.3 * var(--vw-base));
+    width: calc(23.8 * var(--vw-base));
+    ;
+    height: calc(4.2 * var(--vh-base));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: calc(0.5 * var(--vw-base));
+    ;
+    font-size: 6.5rem;
+    color: #484141;
+    user-select: none;
+}
+
+.div {
+    width: 100%;
+    position: relative;
+    background-color: #f3f3f3;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    text-align: center;
+    font-size: 157px;
+    color: #f2e8e8;
+    font-family: KoPubWorldDotum;
+    user-select: none;
+}
+
+
+
+
+.div1:hover {
+    transform: scale(1.05);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+    cursor: pointer;
+}
+
+.div1,
+.div1 * {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+
+.div5:hover {
+    background-color: #e0e0e0;
+    /* 호버 시 약간 진해짐 */
+    transform: scale(1.05);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+    border: transparent;
+}
+
+.div5:active {
+    background-color: #bdbdbd;
+    /* 클릭 시 회색으로 */
+}
+
+.div5.selected {
+    background-color: #bdbdbd !important;
+    /* 클릭된 버튼은 회색 유지 */
+    border: 0.1px solid #000;
+}
+
+
+.test:empty:before {
+    content: attr(data-placeholder);
+    color: #181717;
+}
+
+
+.test.editing {
+    caret-color: black;
+    /* 편집 중일 때만 커서 표시 */
+    font-weight: 500;
+}
+
+.test::before {
+    content: attr(data-placeholder);
+    color: #aaa;
+}
+
+.test.editing::before {
+    content: '';
+}
+
+
+.vector-icon:hover,
+.frame-icon:hover {
+    transform: scale(1.2);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+.vector-icon:active,
+.frame-icon:active {
+    transform: scale(1.4);
+    /* 클릭 시 눌리는 효과 */
+    filter: brightness(0.75);
+}
+
+.test:hover {
+    cursor: text;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(0.5 * var(--vw-base));
+    margin: calc(7.7 * var(--vh-base)) 0;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.page-button,
+.arrow-button {
+    padding: calc(0.78 * var(--vh-base)) calc(0.88 * var(--vw-base));
+    ;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    font-size: 5rem;
+}
+
+.page-button:hover,
+.arrow-button:hover {
+    background-color: #ddd;
+}
+
+.page-button.active {
+    background-color: #787878;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #787878;
+}
+
+.menu-bar {
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: calc(3.9 * var(--vw-base));
+    padding: 0 calc(2 * var(--vw-base));
+    background: linear-gradient(90deg, #251c57, #a67ba8);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.45);
+    gap: calc(18 * var(--vw-base));
+
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    /* 클릭 막기 */
+    user-select: none;
+    z-index: 5;
+}
+
+.menu_asona {
+    position: absolute;
+    width: auto;
+    right: calc(77.7 * var(--vw-base));
+    margin-top: calc(-0.2 * var(--vw-base));
+    font-size: calc(1.4 * var(--vw-base));
+    font-family: DaeguCatholicUniversity;
+    color: #f2e8e8;
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    user-select: none;
+    letter-spacing: 0.4rem;
+}
+
+.menu-right {
+    position: absolute;
+    display: flex;
+    gap: calc(14.77 * var(--vw-base));
+    right: calc(26.3 * var(--vw-base));
+    top: calc(-0.01 * var(--vw-base));
+    /* 버튼 사이의 간격 */
+    align-items: center;
+}
+
+.menu_b {
+    font-size: calc(1.1 * var(--vw-base));
+    font-weight: 326;
+    width: auto;
+    font-family: KoPubWorldDotum;
+    color: #fff3f3;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(3.5 * var(--vw-base));
+    text-shadow: 5px 3px 1px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.menu-bar.show {
+    display: flex;
+    z-index: 10;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.logo.hidden {
+    display: none !important;
+}
+
+
+.menu-icon:hover {
+    transform: scale(1.1);
+    /* 약간 확대 */
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+
+.menu_b:hover {
+    color: #ffd966;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+.slide-button-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: calc(-6 * var(--vh-base));
+    /* frame-icon 위치 아래로 조정 */
+    right: calc(-15 * var(--vw-base));
+    /* 필요시 위치 조정 */
+    gap: calc(0.5 * var(--vw-base));
+    z-index: 999;
+    user-select: none;
+}
+
+.slide-btn {
+    opacity: 0;
+    transform: translateY(calc(2.2 * var(--vh-base)));
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    padding: calc(0.7 * var(--vh-base)) calc(0.7 * var(--vw-base));
+    font-size: 6rem;
+    font-weight: 500;
+    background-color: #a688a8;
+    border: 1px solid #ccc;
+    color: rgb(248, 246, 246);
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+    writing-mode: horizontal-tb;
+    /* 가로 텍스트 */
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.slide-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+.slide-btn:hover {
+    transform: translateY(calc(-0.5 * var(--vh-base)));
+    filter: brightness(0.9);
+    /* 어두워지면서 클릭 느낌 */
+}
+
+
+/* placeholder 숨김용 */
+.test.no-placeholder::before {
+    content: '';
+}

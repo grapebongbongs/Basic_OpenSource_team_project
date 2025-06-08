@@ -1,0 +1,252 @@
+/* 기본 폰트 및 레이아웃 */
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+}
+
+#calendar-wrapper {
+  position: absolute;
+  flex: none;
+
+  width: 40vw;
+  /* 화면 너비의 80% */
+  height: 60vh;
+  /* 화면 높이의 70% */
+
+  /* 위치도 화면 크기에 따라 조절 (vw, vh 활용) */
+  top: 43vh;
+  /* 화면 위쪽에서 10% 떨어진 위치 */
+  left: 10vw;
+  /* 화면 왼쪽에서 10% 떨어진 위치 */
+
+  margin: 0;
+  /* margin 대신 위치 지정으로 조절 */
+
+  border: 3px solid #727272;
+  border-radius: 12px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f9fbff;
+
+  transform: scale(1);
+
+
+  z-index: 1000;
+}
+
+/* 캘린더는 부모 크기에 맞게 */
+#calendar {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* 이벤트 요소 스타일 */
+.fc-event {
+  font-size: 1.5vw !important;
+  /* 0.9em → 14px 고정 */
+  padding: 2px 6px !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  overflow: visible;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+
+  border-radius: 8px !important;
+  /* 이벤트도 둥글게 */
+  border: 1.5px solid #1976d2 !important;
+  /* 이벤트 테두리 색과 두께 */
+  background-color: #2196f3 !important;
+  /* 이벤트 배경색 */
+  color: rgb(0, 0, 0) !important;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(33, 150, 243, 0.4);
+}
+
+.fc-event:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* 이벤트 타이틀 줄맞춤 */
+.fc-event-title {
+  font-size: 14px !important;
+  /* 1em → 14px 고정 */
+  white-space: nowrap;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* 시간 제거 */
+.fc-event-time {
+  display: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 전체 dot 스타일 없애기 */
+#calendar .fc-event {
+  --fc-event-border-color: transparent !important;
+  --fc-event-bg-color: transparent !important;
+  border: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 도트 렌더링 가상요소 제거 */
+#calendar .fc-event::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* 이벤트 감싸는 div */
+.fc-daygrid-event-harness {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* 이벤트 전체 컨테이너 정렬 */
+.fc .fc-daygrid-event {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  margin-top: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* 점과 텍스트 사이 여백 조절 */
+.fc-event-title::before {
+  margin-right: 4px;
+  content: none !important;
+}
+
+/* 날짜 숫자 폰트 크기 고정 */
+.fc-daygrid-day-number {
+  font-size: 14px !important;
+}
+
+/* 날짜 셀 전체에 마우스 오버 효과 */
+.fc-daygrid-day {
+  cursor: pointer;
+  border: 1px solid #cdd7e0;
+  /* 날짜 셀 테두리 얇게 구분 */
+  border-radius: 8px;
+  /* 날짜 셀도 모서리 둥글게 */
+  transition: background-color 0.3s ease;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #e4f0ff;
+  cursor: pointer;
+}
+
+/* 클릭된 날짜 셀 강조 */
+.fc-daygrid-day.selected,
+.fc-daygrid-day:focus {
+  background-color: #cce5ff !important;
+  outline: 2px solid #727272;
+}
+
+/* "더보기" 버튼 */
+.fc-daygrid-more-link {
+  color: #727272 !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 오늘 날짜 강조 */
+.fc-day-today {
+  background-color: #d0e8ff !important;
+  border-radius: 12px;
+  font-size: 14px !important;
+}
+
+/* 모달 전체 컨테이너 - 높이 제한 및 스크롤 */
+.frame-2 {
+  max-height: 80vh;
+  /* 화면 높이 기준 최대 높이 */
+  overflow-y: auto;
+  /* 모달 전체에 스크롤 */
+  padding: 1rem;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 모달 헤더 */
+.modal-header {
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 700;
+  color: #2196F3;
+}
+
+/* 모달 바디 - 내부 스크롤 제거, 내용 크기만큼 자동 확장 */
+.modal-body {
+  margin-top: 1rem;
+  font-size: 0.95em;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+
+  max-height: none !important;
+  /* 내부 제한 제거 */
+  overflow-y: visible !important;
+  /* 내부 스크롤 제거 */
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* 제목 스타일 */
+.modal-body h3 {
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* 리스트 스타일 */
+.modal-body ul {
+  padding-left: 1.2rem;
+  margin: 0 0 0.75rem 0;
+  list-style-type: disc;
+  color: #444;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.modal-body li {
+  margin-bottom: 0.75rem;
+}
+
+/* 리스트 중요 텍스트 강조 */
+.modal-body li strong {
+  color: #2196F3;
+  font-weight: 600;
+}
+
+/* 스크롤바 꾸미기 (크롬, 엣지, 사파리 등 지원) */
+.frame-2::-webkit-scrollbar {
+  width: 8px;
+}
+
+.frame-2::-webkit-scrollbar-thumb {
+  background-color: rgba(33, 150, 243, 0.5);
+  border-radius: 4px;
+}
+
+.frame-2::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
