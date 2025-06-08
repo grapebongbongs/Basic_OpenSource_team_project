@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'members',
     'agendas',
     'vote',
+    'datab',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DB 업로드</title>
+</head>
+
+<body>
+    <h1>db.sqlite3 업로드</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="dbfile">
+        <button type="submit">업로드</button>
+    </form>
+</body>
+
+</html>
+
+
+
+    
