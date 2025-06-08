@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True   >>> 배포용 코드를 위해 주석 처리
 
-ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com' ,  '127.0.0.1',   'localhost' ]
+ALLOWED_HOSTS = ['basic-opensource-team-project.onrender.com', 'www.yourdomain.com' ,  '127.0.0.1',   'localhost' ]
 
 
 # Application definition
