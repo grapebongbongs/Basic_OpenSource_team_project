@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <title>메인 홈페이지</title>
+
+    {% load url_utils %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DaeguCatholicUniversity:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500;700&display=swap" />
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const baseWidth = window.innerWidth;
+            const baseHeight = window.innerHeight;
+            document.documentElement.style.setProperty('--vw-base', `${baseWidth * 0.01}px`);
+            document.documentElement.style.setProperty('--vh-base', `${baseHeight * 0.01}px`);
+        });
+    </script>
+
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+    {% load static %}
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+    <div class="div">
+        <div class="background">
+            <div class="menu-bar">
+                <div class="menu_asona">ASONA</div>
+
+                <div class="menu-right">
+                    <a href="/" class="menu_b">홈 화면</a>
+                    <a href="/api/map" class="menu_b">지도</a>
+                    <a href="/api/calendar" class="menu_b">캘린더</a>
+                </div>
+            </div>
+
+            <div class="background-child">
+                <div class="asona">ASONA</div>
+            </div>
+
+        </div>
+
+        <div class="group">
+
+            <div class="div5" data-unit="100020">20대</div>
+            <div class="div5" data-unit="100021">21대</div>
+            <div class="div5" data-unit="100022">22대</div>
+
+        </div>
+
+        <div class="parent">
+            {% for m in members %}
+            <div class="div1" data-mona-cd="{{ m.mona_cd }}">
+                <div class="profile-pic">
+                    <img src="{{ m.image_url }}" alt="{{ m.name }}" class="profile-pic">
+                </div>
+                <div class="ex1">
+                    <b class="b">{{ m.name }}</b>
+                </div>
+
+                <div class="ex11">
+                    <b class="b1">{{ m.origin }}</b>
+                </div>
+
+                <div class="ex12">
+                    <b class="b2">{{ m.party }}</b>
+                </div>
+
+                <div class="ex13">
+                    <b class="b3">{{ m.committee }}</b>
+                </div>
+
+            </div>
+
+            {% empty %}
+            <div class="no-data">데이터가 없습니다.</div>
+            {% endfor %}
+
+
+            <div class="pagination">
+                {% querystring_without_page as qs %}
+
+                {% if has_previous_group %}
+                <a href="?{{ qs }}&page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
+                {% endif %}
+
+                {% for num in custom_page_range %}
+                {% if num == members.number %}
+                <span class="page-button active">{{ num }}</span>
+                {% else %}
+                <a href="?{{ qs }}&page={{ num }}" class="page-button">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if has_next_group %}
+                <a href="?{{ qs }}&page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+        <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
+
+        <div class="search-bar">
+            <div class="test" contenteditable="true" spellcheck="false" data-placeholder="검색어를 입력하세요"></div>
+            <img class="frame-icon" alt="" src="{% static 'images/Vector.svg' %}">
+
+            <img class="vector-icon" alt="검색" src="{% static 'images/Frame.svg' %}">
+
+            <div id="slide-buttons" class="slide-button-container">
+                <button class="slide-btn">서울</button>
+                <button class="slide-btn">인천</button>
+                <button class="slide-btn">세종</button>
+                <button class="slide-btn">대전</button>
+                <button class="slide-btn">대구</button>
+                <button class="slide-btn">부산</button>
+                <button class="slide-btn">울산</button>
+                <button class="slide-btn">광주</button>
+                <button class="slide-btn">경기</button>
+                <button class="slide-btn">강원</button>
+                <button class="slide-btn">충북</button>
+                <button class="slide-btn">충남</button>
+                <button class="slide-btn">전북</button>
+                <button class="slide-btn">전남</button>
+                <button class="slide-btn">경북</button>
+                <button class="slide-btn">경남</button>
+                <button class="slide-btn">제주</button>
+                <button class="slide-btn">모두</button>
+            </div>
+
+        </div>
+
+        <div class="logo">
+            <div class="logo-child">
+            </div>
+            <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
+
+        </div>
+    </div>
+
+
+    <script>
+
+        /* 👉 URL 파라미터를 우선순위(unit_cd→dist→q→page)로 재조립 ---- */
+        // ⭐  새로 추가된 공통 유틸 함수
+        function buildUrl(params) {
+            const order = ['unit_cd', 'dist', 'q', 'page'];   // 우선순위
+            const parts = [];
+            order.forEach(key => {
+                if (params.has(key) && params.get(key) !== '') {
+                    parts.push(`${key}=${encodeURIComponent(params.get(key))}`);
+                }
+            });
+            return '/?' + parts.join('&');
+        }
+
+
+        /* ------------------------------------------------------------------
+           검색창, 단일 unit_cd 버튼, 메뉴 토글 등 기존 기능
+        ------------------------------------------------------------------ */
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBox = document.querySelector('.test');
+            const vectorIcon = document.querySelector('.vector-icon');
+            const unitButtons = document.querySelectorAll('.div5');
+            const params = new URLSearchParams(window.location.search);   // ⭐ 추가
+            const initialQ = params.get('q')?.trim() || '';                // ⭐ 추가
+
+            /* ── (1) 페이지 첫 로드 시 q 파라미터가 있으면 그대로 표시 ───────── */
+            if (initialQ) {
+                searchBox.textContent = initialQ;        // 검색어 유지
+                searchBox.classList.add('no-placeholder');  // placeholder 숨김
+            } else {
+                searchBox.textContent = '';              // placeholder 보이도록 비움
+                searchBox.classList.remove('no-placeholder');
+                searchBox.classList.remove('editing');
+            }
+
+
+
+            /* 👉 현재 선택된 unit_cd 반환 ---------------------------------- */
+            function getCurrentUnitCd() {
+                const selectedBtn = document.querySelector('.div5.selected');
+                return selectedBtn ? selectedBtn.getAttribute('data-unit') : null;
+            }
+
+
+
+
+            /* 👉 검색 제출 ----------------------------------------------- */
+            function submitSearch() {
+                if (!searchBox) return;
+
+                const query = searchBox.textContent.trim();
+                if (!query) return;
+
+                /* 기존·현재 URL 파라미터 수집 */
+                const params = new URLSearchParams(window.location.search);
+
+                /* unit_cd는 그대로, dist도 그대로 두고 page 초기화 */
+                params.delete('q');     // 기존 q 제거
+                params.delete('page');  // 페이지 초기화
+                params.set('q', query); // 새 검색어 삽입
+
+                /* 최종 URL 생성 */
+                window.location.href = buildUrl(params);  // ⭐ 수정
+            }
+
+            /* vector-icon 클릭 */
+            if (vectorIcon) {
+                vectorIcon.addEventListener('click', submitSearch);
+            }
+
+            /* Enter 입력 */
+            if (searchBox) {
+                searchBox.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitSearch();
+                    }
+                });
+            }
+
+            /* unit_cd 버튼(20·21·22대) 처리 ------------------------------ */
+            const selectedUnit = new URLSearchParams(window.location.search).get('unit_cd');
+            unitButtons.forEach(btn => {
+                const unitCd = btn.getAttribute('data-unit');
+                if (unitCd === selectedUnit) btn.classList.add('selected');
+
+                btn.addEventListener('click', () => {
+                    /* unit_cd 클릭 시 selected 토글 */
+                    unitButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('unit_cd', unitCd);  // 갱신
+                    params.delete('page');          // 페이지 초기화
+                    /* dist, q 유지 */
+
+                    window.location.href = buildUrl(params); // ⭐ 수정
+                });
+            });
+
+            /* 검색창 placeholder 처리 (기존 로직) ------------------------- */
+            function placeCaretAtEnd(el) {
+                el.focus();
+                const range = document.createRange();
+                range.selectNodeContents(el);
+                range.collapse(false);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            function activateEditing() {
+                if (searchBox.textContent.trim() === '') searchBox.textContent = '';
+                searchBox.classList.add('editing');
+                placeCaretAtEnd(searchBox);
+            }
+            searchBox.addEventListener('click', activateEditing);
+            searchBox.addEventListener('focus', activateEditing);
+            searchBox.addEventListener('input', () => {
+                if (searchBox.textContent.trim() === '') {
+                    searchBox.innerHTML = '';
+                    placeCaretAtEnd(searchBox);
+                }
+            });
+            searchBox.addEventListener('blur', () => {
+                if (searchBox.textContent.trim() === '') {
+                    searchBox.classList.remove('editing');
+                    searchBox.textContent = '';
+                }
+            });
+        });
+
+        /* ------------------------------------------------------------------
+           메뉴 아이콘(햄버거) 토글
+        ------------------------------------------------------------------ */
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuIcon = document.querySelector('.menu-icon');
+            const menuBox = document.querySelector('.menu-bar');
+            // const logoIcon = document.querySelector('.logo');
+
+            if (menuIcon && menuBox) {
+                menuIcon.addEventListener('click', () => {
+                    menuBox.classList.toggle('show');
+                    // logoIcon.classList.toggle('hidden');
+                });
+            }
+
+            /* ------------------------------------------------------------------
+           slide-btn 클릭 → dist(지역) 파라미터 추가
+           우선순위 : unit_cd > dist > q > page
+        ------------------------------------------------------------------ */
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const distVal = button.textContent.trim();
+
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('dist', distVal);  // ⭐ dist 갱신
+
+                    /* ✨ 변경 ① : ‘모두’(All) 버튼이면 dist 제거, 아니면 세팅 */
+                    if (distVal === '모두') {      // 버튼 글자를 실제 값으로 맞춰 주세요
+                        params.delete('dist');     // dist 파라미터 완전히 제거
+                    }
+                    else {
+                        params.set('dist', distVal);
+                    }
+
+                    params.delete('page');        // 페이지 초기화
+
+                    /* 최종 URL 조립하여 이동 */
+                    window.location.href = buildUrl(params);  // ⭐ buildUrl 사용
+                });
+            });
+
+        });
+
+        /* ------------------------------------------------------------------
+           페이지 새로고침 시 맨 위로 스크롤
+        ------------------------------------------------------------------ */
+        window.addEventListener('beforeunload', () => { window.scrollTo(0, 0); });
+        window.addEventListener('load', () => { setTimeout(() => window.scrollTo(0, 0), 0); });
+
+        /* ------------------------------------------------------------------
+           frame-icon 클릭 시 slide-btn 순차 등장
+        ------------------------------------------------------------------ */
+        const frameIcon = document.querySelector('.frame-icon');
+        const buttons = document.querySelectorAll('.slide-btn');
+        let buttonsVisible = false;
+        let timeouts = [];
+
+        frameIcon?.addEventListener('click', () => {
+            /* 중간 클릭 시 기존 타이머 제거 */
+            timeouts.forEach(t => clearTimeout(t));
+            timeouts = [];
+
+            if (!buttonsVisible) {
+                /* 등장 애니메이션 */
+                buttons.forEach((btn, idx) => {
+                    const t = setTimeout(() => btn.classList.add('show'), idx * 50);
+                    timeouts.push(t);
+                });
+            } else {
+                /* 즉시 사라짐 */
+                buttons.forEach(btn => btn.classList.remove('show'));
+            }
+            buttonsVisible = !buttonsVisible;
+        });
+
+    </script>
+
+
+
+    <script>
+        window.addEventListener('load', function () {
+            document.body.style.visibility = 'visible';
+        });
+    </script>
+
+</body>
+
+</html>

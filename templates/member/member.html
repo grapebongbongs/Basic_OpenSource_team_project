@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <title>인물 상세페이지</title>
+
+    {% load url_utils %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/member_style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=KoPubWorldDotum:wght@500;700&display=swap" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script>
+        window.addEventListener('load', () => {
+
+            /* ① 뷰포트 최초 크기(px) */
+            const vw = window.innerWidth * 0.01;   // 1 vw 에 해당하는 px
+            const vh = window.innerHeight * 0.01;   // 1 vh 에 해당하는 px
+
+            /* ② 전역 CSS 변수 고정 */
+            document.documentElement.style.setProperty('--vw-base', `${vw}px`);
+            document.documentElement.style.setProperty('--vh-base', `${vh}px`);
+
+        }, { once: true });   /* once:true → load 이벤트 핸들러가 한 번만 실행되고 자동 제거 */
+    </script>
+
+
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+
+<body id="page-root" data-mona="{{ member.mona_cd }}">
+
+    {% load static %}
+    <script src="{% static 'js/adjustHeight.js' %}"></script>
+
+
+
+    <div class="div">
+        <div class="background">
+            <div class="menu-bar">
+                <div class="menu_asona">ASONA</div>
+
+                <div class="menu-right">
+                    <a href="/" class="menu_b">홈 화면</a>
+                    <a href="/api/map" class="menu_b">지도</a>
+                    <a href="/api/calendar" class="menu_b">캘린더</a>
+                </div>
+            </div>
+
+            <img class="menu-icon" alt="" src="{% static 'images/Menu.svg' %}">
+
+
+
+
+            <div class="logo">
+                <div class="logo-child">
+                </div>
+                <img class="logoo-icon" alt="" src="{% static 'images/Logoo.png' %}">
+
+            </div>
+        </div>
+        <div class="child">
+        </div>
+
+        <div class="rect_blue">
+            <div class="rectangle-parent">
+                <div class="group-child">
+                </div>
+                <div class="div22">
+                    <div class="title">
+                        <b class="b8">국회의원 상세 정보</b>
+                    </div>
+                    <div class="div23">
+                        <b class="b9">선거구</b>
+                        <b class="answer">{{ member.origin }}</b>
+                        <img class="inner" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b10">소속위원회</b>
+                        <b class="answer1">{{ committee }}</b>
+                        <img class="line-div" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b11">당선 대수</b>
+                        <b class="answer2">{{ member.unit }}</b>
+                        <img class="child1" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b12">사무실 전화</b>
+                        <b class="answer3">{{ member.phone }}</b>
+                        <img class="child2" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b13">사무실 호실</b>
+                        <b class="answer4">{{ member.assem_addr }}</b>
+                        <img class="child3" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b14">개별 홈페이지</b>
+                        <b class="answer5">{{ member.homepage }}</b>
+                        <img class="child4" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b15">이메일</b>
+                        <b class="answer6">{{ member.email }}</b>
+                        <img class="child5" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b16">보좌관</b>
+                        <b class="answer7">{{ member.staff }}</b>
+                        <img class="child6" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                        <b class="b17">선임비서관</b>
+                        <b class="answer8">{{ member.secretary }}</b>
+                        <img class="child7" alt="" src="{% static 'images/Line_12.svg' %}">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="div24">
+                <div class="rectangle-div">
+                    <div class="chart-container">
+                        <canvas id="chart-1"></canvas>
+                    </div>
+
+
+                    <script>
+                        const data = {{ attendance| safe }};
+                        const ctx = document.getElementById('chart-1').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['출석률', '기타', '무단결석률'],
+                                datasets: [{
+                                    data: [data.출석률, data.기타결석률, data.무단결석률],
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.7)',
+                                        'rgba(204, 153, 255, 0.7)',
+                                        'rgba(255, 99, 132, 0.7)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(204, 153, 255, 1)',
+                                        'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { position: 'right' },
+                                    title: { display: true, text: '{{ selected_unit }}대 국회 출석률' }
+
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+                <div class="title1">
+                    <b class="b8">본회의 출석률</b>
+                </div>
+
+
+
+                <div class="unit-buttons">
+                    {% if "100020" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=20">
+                        <button class="unit-btn {% if selected_unit == '20' %}active{% endif %}">20대</button>
+                    </a>
+                    {% endif %}
+
+                    {% if "100021" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=21">
+                        <button class="unit-btn {% if selected_unit == '21' %}active{% endif %}">21대</button>
+                    </a>
+                    {% endif %}
+
+                    {% if member.phone or "100022" in member.unit_cd|stringformat:"s" %}
+                    <a href="?unit=22">
+                        <button class="unit-btn {% if selected_unit == '22' %}active{% endif %}">22대</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="picture">
+                <div class="profile-picture-parent">
+                    <div class="profile-picture">
+                        <img src="{{ member.image_url }}" alt="{{ member.name }}" class="profile-picture">
+                    </div>
+                    <div class="name-wrapper">
+                        <div class="name">
+                            <div class="div2">{{ member.party }}</div>
+                        </div>
+                    </div>
+                    <div class="name-parent">
+                        <div class="name1">
+                            <div class="div1">{{ member.name }} ({{ member.hj_nm }})</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <img class="picture-child" alt="" src="{% static 'images/Line_23.svg' %}">
+
+        </div>
+        <div class="t"></div>
+
+
+
+
+        <div class="search-bar">
+            <div class="div3" contenteditable="true" spellcheck="false" data-placeholder="다른 의원 정보 검색"></div>
+            <img class="frame-icon" alt="" src="{% static 'images/Vector.svg' %}">
+
+            <img class="vector-icon" alt="검색" src="{% static 'images/Frame.svg' %}">
+
+            <div id="slide-buttons" class="slide-button-container">
+                <button class="slide-btn">서울</button>
+                <button class="slide-btn">인천</button>
+                <button class="slide-btn">세종</button>
+                <button class="slide-btn">대전</button>
+                <button class="slide-btn">대구</button>
+                <button class="slide-btn">부산</button>
+                <button class="slide-btn">울산</button>
+                <button class="slide-btn">광주</button>
+                <button class="slide-btn">경기</button>
+                <button class="slide-btn">강원</button>
+                <button class="slide-btn">충북</button>
+                <button class="slide-btn">충남</button>
+                <button class="slide-btn">전북</button>
+                <button class="slide-btn">전남</button>
+                <button class="slide-btn">경북</button>
+                <button class="slide-btn">경남</button>
+                <button class="slide-btn">제주</button>
+            </div>
+
+        </div>
+
+        <div class="div4">
+            <b class="b">본회의 표결정보</b>
+            <img class="line_bon" alt="" src="{% static 'images/Line_3.svg' %}">
+
+
+            <div class="search-bar_bill">
+                <div class="div3_bill" contenteditable="true" spellcheck="false" data-placeholder="의안명 검색"></div>
+
+                <img class="vector-icon_bill" alt="검색" src="{% static 'images/Frame.svg' %}">
+
+            </div>
+
+
+            <div class="div6">
+                <b class="b_yeon">연번</b>
+                <b class="b_dae">대수</b>
+                <b class="b_date">의결일자</b>
+                <b class="b_billname">의안명</b>
+                <b class="b_so">소관위원회</b>
+                <b class="b_info">표결정보</b>
+                <b class="b_result">표결결과</b>
+                <img class="item" alt="" src="{% static 'images/Line_15.svg' %}">
+            </div>
+
+
+            {% for vote in votes %}
+            <div class="div6">
+                <div class="div_yeon">{{ forloop.counter0|add:offset|add:"1" }}</div>
+                <div class="div_dae">제 {{ vote.bill.age }}대</div>
+                <div class="div_date">{{ vote.bill.rgs_proc_dt }}</div>
+                <div class="div_billname">{{ vote.bill.bill_name }}</div>
+                <div class="div_so">{{ vote.bill.committee }}</div>
+                <div class="div_info">{{ vote.vote_result }}</div>
+                <div class="div_result">{{ vote.bill.proc_result }}</div>
+                <div class="item_vote"></div>
+            </div>
+            {% endfor %}
+
+
+
+
+
+
+
+            <div class="pagination">
+                {% querystring_without_page as qs %}
+
+                {% if has_previous_group %}
+                <a href="?{{ qs }}&page={{ previous_group_page }}" class="arrow-button">&laquo; 이전</a>
+                {% endif %}
+
+                {% for num in custom_page_range %}
+                {% if num == votes.number %}
+                <span class="page-button active">{{ num }}</span>
+                {% else %}
+                <a href="?{{ qs }}&page={{ num }}" class="page-button">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if has_next_group %}
+                <a href="?{{ qs }}&page={{ next_group_page }}" class="arrow-button">다음 &raquo;</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* ───────────────────── 기존 변수 ───────────────────── */
+            const searchBox = document.querySelector('.div3');          // 메인 의원 검색
+            const vectorIcon = document.querySelector('.vector-icon');
+            const searchBox_bill = document.querySelector('.div3_bill');     // 법안 검색
+            const vectorIcon_bill = document.querySelector('.vector-icon_bill');
+
+
+            // ✅ 여기에 추가
+            const billq = "{{ billq|escapejs }}";
+            if (billq && searchBox_bill && searchBox_bill.textContent.trim() === '') {
+                searchBox_bill.textContent = billq;
+                searchBox_bill.classList.add('editing');
+            }
+
+            /* ── body(data-mona) 에서 현재 의원 mona_cd 읽기 ── */
+            const monaCd = (document.getElementById('page-root') || {}).dataset.mona || '';
+
+            /* ---------- 이미 있던 메인 submitSearch() 그대로 ---------- */
+            function submitSearch() {
+                if (!searchBox) return;
+                const q = searchBox.textContent.trim();
+                if (!q) return;
+                const params = new URLSearchParams({ q });
+                window.location.href = '/?' + params.toString();
+            }
+            vectorIcon?.addEventListener('click', submitSearch);
+            searchBox?.addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); submitSearch(); }
+            });
+
+            /* ───────────────────── 법안 검색 (billq) ───────────────────── */
+            function submitBillSearch() {
+                if (!searchBox_bill) return;
+
+                const query = searchBox_bill.textContent.trim();
+                if (!query) return;
+
+                // ✅ searchBox 우선순위 조건 제거됨
+
+                // 현재 mona_cd를 body 태그에서 읽어옴
+                const monaCd = (document.getElementById('page-root') || {}).dataset.mona;
+                if (!monaCd) return;
+
+                // 기존 URL 파라미터 유지
+                const params = new URLSearchParams(window.location.search);
+                params.set('billq', query);  // billq 갱신
+                params.delete('page');       // 페이지 초기화
+
+                // 최종 URL 조립: /vote/<mona_cd>/?unit_cd=...&billq=...
+                const url = `/vote/${monaCd}/?${params.toString()}`;
+                window.location.href = url;
+            }
+
+            /* -------- placeholder·커서 로직(setEditable) … 기존대로 -------- */
+            function setEditable(box) {
+                if (!box) return;
+                function caretEnd(el) {
+                    el.focus();
+                    const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);
+                    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+                }
+                function activate() {
+                    if (box.textContent.trim() === '') box.textContent = '';
+                    box.classList.add('editing'); caretEnd(box);
+                }
+                box.addEventListener('click', activate);
+                box.addEventListener('focus', activate);
+                box.addEventListener('input', () => {
+                    if (box.textContent.trim() === '') { box.innerHTML = ''; caretEnd(box); }
+                });
+                box.addEventListener('blur', () => {
+                    if (box.textContent.trim() === '') { box.classList.remove('editing'); box.textContent = ''; }
+                });
+            }
+            setEditable(searchBox);
+            setEditable(searchBox_bill);
+
+            if (vectorIcon_bill) {
+                vectorIcon_bill.addEventListener('click', () => {
+                    submitBillSearch();
+                });
+            }
+
+            if (searchBox_bill) {
+                searchBox_bill.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        submitBillSearch();
+                    }
+                });
+            }
+
+        });
+
+
+        // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuIcon = document.querySelector('.menu-icon');
+            const menuBox = document.querySelector('.menu-bar');
+            const logoIcon = document.querySelector('.logo');
+
+            if (menuIcon && menuBox) {
+                menuIcon.addEventListener('click', () => {
+                    menuBox.classList.toggle('show');
+                    logoIcon.classList.toggle('hidden');
+                });
+            }
+        });
+
+
+        window.addEventListener('beforeunload', () => {
+            window.scrollTo(0, 0);
+        });
+
+        // 또는 페이지 로드 시 강제로 맨 위로 이동
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 0);
+        });
+
+
+        /* ------------------------------------------------------------------
+           frame-icon 클릭 시 slide-btn 순차 등장
+        ------------------------------------------------------------------ */
+        const frameIcon = document.querySelector('.frame-icon');
+        const buttons = document.querySelectorAll('.slide-btn');
+        let buttonsVisible = false;
+        let timeouts = [];
+
+        frameIcon?.addEventListener('click', () => {
+            /* 중간 클릭 시 기존 타이머 제거 */
+            timeouts.forEach(t => clearTimeout(t));
+            timeouts = [];
+
+            if (!buttonsVisible) {
+                /* 등장 애니메이션 */
+                buttons.forEach((btn, idx) => {
+                    const t = setTimeout(() => btn.classList.add('show'), idx * 50);
+                    timeouts.push(t);
+                });
+            } else {
+                /* 즉시 사라짐 */
+                buttons.forEach(btn => btn.classList.remove('show'));
+            }
+            buttonsVisible = !buttonsVisible;
+        });
+
+
+    </script>
+
+    <script>
+        /* 모든 slide-btn 수집 */
+        const distButtons = document.querySelectorAll('.slide-btn');
+
+        /* dist 값을 받아 쿼리스트링 만들고 이동 */
+        function submitDist(distValue) {
+            const params = new URLSearchParams({ dist: distValue });
+            /* 필요하면 다른 파라미터를 추가해서 이어붙일 수 있음 */
+            window.location.href = `/?${params.toString()}`;
+        }
+
+        /* 각 버튼에 클릭 이벤트 연결 */
+        distButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const distText = btn.textContent.trim();      // 버튼 안 글자
+                if (distText) submitDist(distText);            // → /?dist=버튼글자
+            });
+        });
+    </script>
+
+
+    <script>
+        window.addEventListener('load', function () {
+            document.body.style.visibility = 'visible';
+        });
+    </script>
+
+</body>
+
+</html>

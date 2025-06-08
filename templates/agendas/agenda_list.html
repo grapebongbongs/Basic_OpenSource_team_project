@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>국회 의안 정보</title>
+</head>
+<body>
+    <h1>국회 의안 목록</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>의안명</th>
+                <th>제안자</th>
+                <th>의결일</th>
+                <th>위원회</th>
+                <th>처리결과</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.bill_name }}</td>
+                <td>{{ bill.proposer }}</td>
+                <td>{{ bill.rgs_proc_dt }}</td>
+                <td>{{ bill.committee }}</td>
+                <td>{{ bill.proc_result }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
