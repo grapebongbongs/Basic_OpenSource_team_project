@@ -129,37 +129,54 @@
 
 
                     <script>
-                        const data = {{ attendance| safe }};
+                        /* 1. 데이터 준비 -------------------------------------------------------- */
+                        const data = {{ attendance | safe }};
+
+                        const labels = [
+                            `출석률`,
+                            `기타`,
+                            `무단결석률`
+                        ];
+
+                        /* 2. 차트 생성 ---------------------------------------------------------- */
                         const ctx = document.getElementById('chart-1').getContext('2d');
                         new Chart(ctx, {
                             type: 'doughnut',
                             data: {
-                                labels: ['출석률', '기타', '무단결석률'],
+                                labels,
                                 datasets: [{
                                     data: [data.출석률, data.기타결석률, data.무단결석률],
-                                    backgroundColor: [
-                                        'rgba(54, 162, 235, 0.7)',
-                                        'rgba(204, 153, 255, 0.7)',
-                                        'rgba(255, 99, 132, 0.7)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(204, 153, 255, 1)',
-                                        'rgba(255, 99, 132, 1)'
-                                    ],
+                                    backgroundColor: ['#0000A8', '#a835aa', '#C9252B'],
+                                    borderColor: ['#0000A8', '#a835aa', '#C9252B'],
                                     borderWidth: 1
                                 }]
                             },
                             options: {
                                 responsive: true,
-                                plugins: {
-                                    legend: { position: 'right' },
-                                    title: { display: true, text: '{{ selected_unit }}대 국회 출석률' }
 
+                                /* 필요 최소한의 우측 여백만 남김 (범례용) */
+                                layout: {
+                                    padding: { right: 25 }   /*← 더 붙이고 싶으면 15~20 정도로 줄이세요 */
+                                },
+
+                                plugins: {
+                                    legend: {
+                                        position: 'right',
+                                        labels: { padding: 15 }
+                                    },
+
+                                    /* 타이틀 위·아래 패딩을 모두 0~5px 수준으로 최소화 */
+                                    title: {
+                                        display: true,
+                                        text: '{{ selected_unit }}대 국회 출석률',
+                                        padding: { top: 5, bottom: 0 },
+                                        font: { size: 12, weight: 'bold' }
+                                    }
                                 }
                             }
                         });
                     </script>
+                    
                 </div>
                 <div class="title1">
                     <b class="b8">본회의 출석률</b>

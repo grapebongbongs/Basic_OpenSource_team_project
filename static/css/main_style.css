@@ -632,11 +632,6 @@ body {
     pointer-events: auto;
 }
 
-.logo.hidden {
-    display: none !important;
-}
-
-
 .menu-icon:hover {
     transform: scale(1.1);
     /* 약간 확대 */
