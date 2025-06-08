@@ -28,6 +28,19 @@
 
 <body>
     <img id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
+
+    <!-- 메뉴바: 처음엔 화면 위에 숨겨짐 -->
+    <div class="menu-bar">
+        <div class="menu_asona">ASONA</div>
+    
+        <div class="menu-right">
+            <a href="/" class="menu_b">홈 화면</a>
+            <a href="/api/map" class="menu_b">지도</a>
+            <a href="/api/calendar" class="menu_b">캘린더</a>
+        </div>
+    </div>
+
+    
     <div class="background-2"></div>
     <div class="screen">
         <div class="div">
@@ -76,17 +89,7 @@
             </div>
         </div>
 
-        <!-- 메뉴바: 처음엔 화면 위에 숨겨짐 -->
-        <div class="menubar" id="slide-menu">
-            <div class="menu">
-                <div class="menuframe">
-                    <div class="asona">ASONA</div>
-                    <a href="/" class="text-menubar">홈 화면</a>
-                    <a href="/api/map/" class="text-menubar">지도</a>
-                    <a href="/api/calendar/" class="text-menubar">캘린더</a>
-                </div>
-            </div>
-        </div>
+        
 
 
     </div>
@@ -101,6 +104,22 @@
 
     <!-- 외부 JS 파일 -->
     <script src="{% static 'js/calendar.js' %}"></script>
+
+    <script>
+        // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuIcon = document.querySelector('.MENU');
+            const menuBox = document.querySelector('.menu-bar');
+            const logoIcon = document.querySelector('.logo');
+
+            if (menuIcon && menuBox) {
+                menuIcon.addEventListener('click', () => {
+                    menuBox.classList.toggle('show');
+                    logoIcon.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
