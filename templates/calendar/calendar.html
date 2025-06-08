@@ -10,6 +10,20 @@
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
     <title>국회 일정 캘린더</title>
+
+    <script>
+        window.addEventListener('load', () => {
+
+            /* ① 뷰포트 최초 크기(px) */
+            const vw = window.innerWidth * 0.01;   // 1 vw 에 해당하는 px
+            const vh = window.innerHeight * 0.01;   // 1 vh 에 해당하는 px
+
+            /* ② 전역 CSS 변수 고정 */
+            document.documentElement.style.setProperty('--vw-base', `${vw}px`);
+            document.documentElement.style.setProperty('--vh-base', `${vh}px`);
+
+        }, { once: true });   /* once:true → load 이벤트 핸들러가 한 번만 실행되고 자동 제거 */
+    </script>
 </head>
 
 <body>

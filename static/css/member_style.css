@@ -60,8 +60,7 @@ body {
     top: calc(1.8 * var(--vh-base));
     right: calc(1.5 * var(--vw-base));
     width: calc(2.7 * var(--vw-base));
-    ;
-    height: calc(2.7 * var(--vw-base));
+    height: calc(5.7 * var(--vh-base));
     cursor: pointer;
     user-select: none;
     flex-shrink: 0;

@@ -11,6 +11,20 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
         <title>역대 지역 정당 비율</title>
+        
+        <script>
+          window.addEventListener('load', () => {
+
+            /* ① 뷰포트 최초 크기(px) */
+            const vw = window.innerWidth * 0.01;   // 1 vw 에 해당하는 px
+            const vh = window.innerHeight * 0.01;   // 1 vh 에 해당하는 px
+
+            /* ② 전역 CSS 변수 고정 */
+            document.documentElement.style.setProperty('--vw-base', `${vw}px`);
+            document.documentElement.style.setProperty('--vh-base', `${vh}px`);
+
+          }, { once: true });   /* once:true → load 이벤트 핸들러가 한 번만 실행되고 자동 제거 */
+        </script>
     </head>
     <body>
       <img  id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
