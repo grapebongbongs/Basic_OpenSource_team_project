@@ -8,5 +8,5 @@ urlpatterns = [
     path('api/', include('api.urls')),  # api 앱의 URLs로 위임
     path('agendas/', include('agendas.urls')),  # agendas 앱의 URLs로 위임
     path('vote/', include('vote.urls')),  # vote 앱의 URLs로 위임
-    path('datab/', include('datab.urls')),
+    path('upload_db/', include('datab.urls')),
 ]
