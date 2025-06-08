@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+# DEBUG = True   >>> 배포용 코드를 위해 주석 처리
 
 ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com' ,  '127.0.0.1',   'localhost' ]
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 꼭 두 번째 - 배포용 코드
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +130,8 @@ if not DEBUG:                                                                   
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')            #배포용 코드
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'      #배포용 코드
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   #배포용 코드
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -145,3 +148,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 SECRET_KEY = config('SECRET_KEY')
+
+DEBUG = config('DEBUG', cast=bool, default=False)
