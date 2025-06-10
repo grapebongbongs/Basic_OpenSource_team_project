@@ -3,6 +3,9 @@
 import os
 import sys
 
+# 🔽 DB 자동 다운로드
+from download_and_unzip_db import download_and_unzip
+download_and_unzip()
 
 def main():
     """Run administrative tasks."""
