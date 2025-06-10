@@ -364,13 +364,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-    const menuBtn = document.getElementById('menu-button');
-    const slideMenu = document.getElementById('slide-menu');
-
-    menuBtn.addEventListener('click', function () {
-      slideMenu.classList.toggle('active');
-    });
-
-
-
 });

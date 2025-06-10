@@ -1,106 +1,97 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="{% static 'css/map_globals.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/map_style.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/map.css' %}">
-        <script defer src="{% static 'js/map.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-        <title>역대 지역 정당 비율</title>
-        
-        <script>
-          window.addEventListener('load', () => {
 
-            /* ① 뷰포트 최초 크기(px) */
-            const vw = window.innerWidth * 0.01;   // 1 vw 에 해당하는 px
-            const vh = window.innerHeight * 0.01;   // 1 vh 에 해당하는 px
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="{% static 'css/map_globals.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/map_style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/map.css' %}">
+  <script defer src="{% static 'js/map.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <title>역대 지역 정당 비율</title>
 
-            /* ② 전역 CSS 변수 고정 */
-            document.documentElement.style.setProperty('--vw-base', `${vw}px`);
-            document.documentElement.style.setProperty('--vh-base', `${vh}px`);
+</head>
 
-          }, { once: true });   /* once:true → load 이벤트 핸들러가 한 번만 실행되고 자동 제거 */
-        </script>
-    </head>
-    <body>
-      <img  id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
-        <div class="background-2"></div>
-        <div class="div-wrapper">
-            <div class="div">
-                <div class="overlap-group">
-                    <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
-                </div>
-                <div class="slider-wrapper">
-                    <input type="range" id="daesu-slider" min="10" max="21" value="21">
-                    <span id="selected-daesu">21대</span>
-                  </div>
-                </div>
-                <div class="title">
-                    <div class="text-wrapper">역대 지역 정당 비율</div>
-                    <img class="vector" src="{%  static 'svg/Group 19.svg'%}" />
-                </div>
-                <div class="overlap-2">
-                    <div id="map" class="map-container">
-                        {% include 'map/korea_map.svg' %}
-                    </div>
-                    <img class="line" src="{% static 'svg/line-24.svg' %}" />
-                    <div class="rectangle">
-                        <canvas id="party-chart" width="550" height="550"></canvas>
-                      </div>
-                    <div class="title-2">
-                        <div class="text-wrapper-2">지역</div>
-                        <div class="text-wrapper-3">정당별 의원 비율</div>
-                    </div>
-                </div>
-                <div class="view-wrapper">
-                    <div id="region-info" class="info-box hidden">
-                      <h3 id="region-name">지역명</h3>
-                      <ul id="party-list">
-                        <li><strong>정당 분포</strong></li>
-                        <!-- 동적 항목 -->
-                      </ul>
-                      <ul id="rep-list">
-                        <li><strong>국회의원</strong></li>
-                        <!-- 동적 의원 목록 -->
-                      </ul>
-                    </div>
-                    <div class="view-3">
-                      <div id="scroll-thumb"></div>
-                    </div>
-                  </div>
-     
-            </div>
-              <div class="menu-bar">
-                <div class="menu_asona">ASONA</div>
+<body>
+  <img id="menu-button" class="MENU" src="{% static 'svg/MENU.svg' %}" />
+  <div class="background-2"></div>
+  <div class="div-wrapper">
+    <div class="div">
+      <div class="overlap-group">
+        <div class="logo"><img class="logoo" src="{% static 'img/Logoo.png'%}" /></div>
+      </div>
+      <div class="slider-wrapper">
+        <input type="range" id="daesu-slider" min="10" max="21" value="21">
+        <span id="selected-daesu">21대</span>
+      </div>
+    </div>
+    <div class="title">
+      <div class="text-wrapper">역대 지역 정당 비율</div>
+      <img class="vector" src="{%  static 'svg/Group 19.svg'%}" />
+    </div>
+    <div class="overlap-2">
+      <div id="map" class="map-container">
+        {% include 'map/korea_map.svg' %}
+      </div>
+      <img class="line" src="{% static 'svg/line-24.svg' %}" />
+      <div class="rectangle">
+        <canvas id="party-chart" width="550" height="550"></canvas>
+      </div>
+      <div class="title-2">
+        <div class="text-wrapper-2">지역</div>
+        <div class="text-wrapper-3">정당별 의원 비율</div>
+      </div>
+    </div>
+    <div class="view-wrapper">
+      <div id="region-info" class="info-box hidden">
+        <h3 id="region-name">지역명</h3>
+        <ul id="party-list">
+          <li><strong>정당 분포</strong></li>
+          <!-- 동적 항목 -->
+        </ul>
+        <ul id="rep-list">
+          <li><strong>국회의원</strong></li>
+          <!-- 동적 의원 목록 -->
+        </ul>
+      </div>
+      <div class="view-3">
+        <div id="scroll-thumb"></div>
+      </div>
+    </div>
 
-                <div class="menu-right">
-                  <a href="/" class="menu_b">홈 화면</a>
-                  <a href="/api/map" class="menu_b">지도</a>
-                  <a href="/api/calendar" class="menu_b">캘린더</a>
-                </div>
-              </div>         
-            </div>
-                          
-        </div>
+  </div>
+  <div class="menu-bar">
+    <div class="menu_asona">ASONA</div>
 
-        <script>
-          // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
-            document.addEventListener('DOMContentLoaded', function () {
-              const menuIcon = document.querySelector('.MENU');
-              const menuBox = document.querySelector('.menu-bar');
-              const logoIcon = document.querySelector('.logo');
+    <div class="menu-right">
+      <a href="/" class="menu_b">홈 화면</a>
+      <a href="/api/map" class="menu_b">지도</a>
+      <a href="/api/calendar" class="menu_b">캘린더</a>
+    </div>
+  </div>
+  </div>
 
-              if (menuIcon && menuBox) {
-                menuIcon.addEventListener('click', () => {
-                  menuBox.classList.toggle('show');
-                  logoIcon.classList.toggle('hidden');
-                });
-              }
-            });
-        </script>
-    </body>
+  </div>
+
+  <script>
+    // 메뉴 아이콘 누르면 메뉴바 내려오게 설정
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuIcon = document.querySelector('.MENU');
+      const menuBox = document.querySelector('.menu-bar');
+      const logoIcon = document.querySelector('.logo');
+
+      if (menuIcon && menuBox) {
+        menuIcon.addEventListener('click', () => {
+          menuBox.classList.toggle('show');
+          logoIcon.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+</body>
+
 </html>

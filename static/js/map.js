@@ -484,11 +484,4 @@ document.addEventListener('DOMContentLoaded', () => {
   selectedDaesu.textContent = `${slider.value}대`;
   loadAllData(slider.value);
 
-  const menuBtn = document.getElementById('menu-button');
-  const slideMenu = document.getElementById('slide-menu');
-
-  menuBtn.addEventListener('click', function () {
-    slideMenu.classList.toggle('active');
-  });
-
 });
